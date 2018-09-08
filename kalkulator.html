@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+
+<!DOCTYPE  html>
+<!--    
+Szkielet HTML Kalkulatora
+    By Lukasz26671
+     (Wersja PL)
+-->
+<html lang="pl">
+<head>
+ <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+ <title>Kalkulator</title>
+ <link href="CSS/text.css" rel="stylesheet" type="text/css"/>
+ <link href="CSS/checkboxes.css" rel="stylesheet" type="text/css" />
+ <link href="CSS/buttons.css" rel="stylesheet" type="text/css" />
+<script src="Skrypty/Redirect.js"></script>
+</head>
+<body>
+
+    <script src="Skrypty/Dodawanie.js"></script> <!--Skrypt Dodawania-->
+    <script src="Skrypty/Odejmowanie.js"></script> <!--Skrypt Odejmowania-->
+    <script src="Skrypty/Mnozenie.js"></script> <!--Skrypt Mnozenia-->
+    <script src="Skrypty/Dzielenie.js"></script> <!--Skrypt Dzielenia-->
+
+<p align="center">
+<button class="button button1 black top" onclick="redirectBack();">Powróć do strony głównej</button>
+</p>
+
+    <h1 class="h1 center">Kalkulator</h1>
+
+    <h2 class="h2 left">Lista dzialan:</h2>
+    
+    <p><button class="button button0 blue" onclick="Dodawanie()">Dodawanie</button></p> <!--Przycisk uruchamiający funkcję Dodawanie()-->
+    <p><button class="button button0 blue" onclick="Odejmowanie()">Odejmowanie</button></p> <!--Przycisk uruchamiający funkcję Odejmowanie()-->
+    <p><button class="button button0 blue" onclick="Mnozenie()">Mnozenie</button></p> <!--Przycisk uruchamiający funkcję Mnozenie()-->
+    <p><button class="button button0 blue" onclick="Dzielenie()">Dzielenie</button></p> <!--Przycisk uruchamiający funkcję Dzielenie()-->
+
+    <h2 class="h2 left">Wynik:</h2>
+    <div class="div absolute_30">
+    <p id="Dzialanie"></p> <!--Miejsce działania i wyniku [zastąpiany przez działanie i wynik po zakończeniu działania]-->
+    </div>
+
+
+</body>
+</html>

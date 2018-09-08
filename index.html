@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <title>Strona główna</title>
+      <link href="CSS/buttons.css" rel="stylesheet" type="text/css"/>
+      <link href="CSS/checkboxes.css" rel="stylesheet" type="text/css" />
+      <link href="CSS/text.css" rel="stylesheet" type="text/css" />
+      <script src="Skrypty/Redirect.js"></script>
+      <script>
+      function helloWorld() {
+        alert("Witaj świecie!!");
+      }
+      </script>
+
+      
+</head>
+<body bgcolor="white">
+<marquee>Strona  wykonana przez Łukasza Piwowar</marquee>
+
+<div>
+ <h1 class="h1 center">Strona główna odsyłacza</h1>
+  <div class="div relative left">
+   <p>Odsyłacze:</p>
+  </div>
+</div>
+
+<p align="left">
+<button class="button button1 green" onclick="redirectMain();">Krajobraz</button><br  /><br />
+<button class="button button1 red" onclick="redirectMain2();">Kalkulator</button><br /><br />
+<button class="button button1 black" onclick="redirectMain3();">Podziękowania</button><br /><br />
+<button class="button button1 blue" onclick="helloWorld();">Witaj świecie!</button>
+</p>
+
+
+<!--
+<label id="Powiadomienia" class="container">Otrzymuj powiadomienia
+  <input type="checkbox" />
+  <span class="checkmark"></span>
+</label>
+-->
+
+</body>
+</html>
