@@ -1,3 +1,4 @@
+
 function Pierwiastkowanie(liczba) {	
 	alert("Wybrałeś/aś pierwiastkowanie!");
 	liczba = prompt("Wpisz liczbę", "liczba");
@@ -6,7 +7,7 @@ function Pierwiastkowanie(liczba) {
 	
 	alert(Wynik);
 	
-	document.getElementById("Dzialanie") = "Pierwiastek kwadratowy z " + liczba + " = " + Wynik;
+	document.getElementById("Dzialanie").innerHTML = "&#8730;" + liczba + " = " + Wynik;
 };
 
 function Potegowanie(liczba, wykladnik) {
@@ -18,5 +19,5 @@ function Potegowanie(liczba, wykladnik) {
 	
 	alert(Wynik);
 	
-	document.getElementById("Dzialanie") =  liczba + "^" + wykladnik + " = " + Wynik;
+	document.getElementById("Dzialanie").innerHTML =  liczba + "^" + wykladnik + " = " + Wynik;
 };
