@@ -8,41 +8,37 @@ Szkielet HTML Kalkulatora
 -->
 <html lang="pl">
 <head>
- <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
- <title>Kalkulator</title>
- <link href="CSS/text.css" rel="stylesheet" type="text/css"/>
- <link href="CSS/checkboxes.css" rel="stylesheet" type="text/css" />
- <link href="CSS/buttons.css" rel="stylesheet" type="text/css" />
-<script src="Skrypty/Redirect.js"></script>
-</head>
-<body>
-
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <title>Kalkulator</title>
+    <link href="CSS/text.css" rel="stylesheet" type="text/css"/>
+    <link href="CSS/checkboxes.css" rel="stylesheet" type="text/css" />
+    <link href="CSS/buttons.css" rel="stylesheet" type="text/css" />
+    <script src="Skrypty/Redirect.js"></script>
     <script src="Skrypty/Dodawanie.js"></script> <!--Skrypt Dodawania-->
     <script src="Skrypty/Odejmowanie.js"></script> <!--Skrypt Odejmowania-->
     <script src="Skrypty/Mnozenie.js"></script> <!--Skrypt Mnozenia-->
     <script src="Skrypty/Dzielenie.js"></script> <!--Skrypt Dzielenia-->
 	<script src="Skrypty/Pierwiastkowanie i Potegowanie.js"></script><!--Skrypt Potegowania i Pierwiastkowania-->
-
+</head>
+<body> 
 <p align="center">
-<button class="button button1 black top" onclick="redirectBack();">Powróć do strony głównej</button>
+<button class="button1" id="black" onclick="redirectBack();">Powróć do strony głównej</button>
 </p>
 
-    <h1 class="h1 center">Kalkulator</h1>
+    <h1 class="center">Kalkulator</h1>
 
-    <h2 class="h2 left">Lista dzialan:</h2>
+    <h2 class="left">Lista dzialan:</h2>
     
-    <p><button class="button button0 blue" onclick="Dodawanie()">Dodawanie</button></p> <!--Przycisk uruchamiający funkcję Dodawanie()-->
-    <p><button class="button button0 blue" onclick="Odejmowanie()">Odejmowanie</button></p> <!--Przycisk uruchamiający funkcję Odejmowanie()-->
-    <p><button class="button button0 blue" onclick="Mnozenie()">Mnozenie</button></p> <!--Przycisk uruchamiający funkcję Mnozenie()-->
-    <p><button class="button button0 blue" onclick="Dzielenie()">Dzielenie</button></p> <!--Przycisk uruchamiający funkcję Dzielenie()-->
-	<p><button class="button button0 blue" onclick="Potegowanie()">Potegowanie</button></p> <!--Przycisk uruchamiający funkcję Potegowanie()-->
-	<p><button class="button button0 blue" onclick="Pierwiastkowanie()">Pierwiastkowanie</button></p> <!--Przycisk uruchamiający funkcję Pierwiastkowanie()-->
+    <p><button class="button0" id="blue" onclick="Dodawanie()">Dodawanie</button></p> <!--Przycisk uruchamiający funkcję Dodawanie()-->
+    <p><button class="button0" id="blue" onclick="Odejmowanie()">Odejmowanie</button></p> <!--Przycisk uruchamiający funkcję Odejmowanie()-->
+    <p><button class="button0" id="blue" onclick="Mnozenie()">Mnozenie</button></p> <!--Przycisk uruchamiający funkcję Mnozenie()-->
+    <p><button class="button0" id="blue" onclick="Dzielenie()">Dzielenie</button></p> <!--Przycisk uruchamiający funkcję Dzielenie()-->
+	<p><button class="button0" id="blue" onclick="Potegowanie()">Potegowanie</button></p> <!--Przycisk uruchamiający funkcję Potegowanie()-->
+	<p><button class="button0" id="blue" onclick="Pierwiastkowanie()">Pierwiastkowanie</button></p> <!--Przycisk uruchamiający funkcję Pierwiastkowanie()-->
 
-    <h2 class="h2 left">Wynik:</h2>
-    <div class="div absolute_30">
+    <h2 class="left">Wynik:</h2>
+    <div class="absolute-left-30">
     <p id="Dzialanie"><b> </b></p> <!--Miejsce działania i wyniku [zastąpiany przez działanie i wynik po zakończeniu działania]-->
     </div>
-
-
 </body>
 </html>

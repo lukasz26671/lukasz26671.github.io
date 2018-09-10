@@ -1,216 +1,70 @@
-div.border {
-  text-align: left;
+/*CENTER*/
+.center {  
+  text-align: center;
   color: black;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #ff9999;
 }
-div.absolute.center {
+.absolute-center {
     position: absolute;
     bottom: 10px;
     width: 50%;
     text-align: center;
 }
-div.absolute.left {
-    position: absolute;
-    bottom: 10px;
-    width: 90%;
-    text-align: left;
-}
-div.absolute.right {
-    position: absolute;
-    bottom: 10px;
-    width: 90%;
-    text-align: right;
-}
-div.relative.center {
+.relative-center {
     position: relative;
     top: 10px;
     text-align: center;
 }
-div.relative.left {
+
+/*LEFT*/
+.left {  
+  text-align: left;
+  color: black;
+}
+.relative-left {
     position: relative;
     top: 10px;
     text-align: left;
 }
-div.relative.right {
+.absolute-left {
+    position: absolute;
+    bottom: 10px;
+    width: 90%;
+    text-align: left;
+}
+
+/*Headery typu right*/
+.right {  
+  text-align: right;
+  color: black;
+}
+
+.relative-right {
     position: relative;
     top: 10px;
     text-align: right;
 }
-/*H E A D E R Y - - - H E A D E R Y*/
-
-/*Headery typu center*/
-h1.center {  
-  text-align: center;
-  color: black;
+.absolute-right {
+    position: absolute;
+    bottom: 10px;
+    width: 90%;
+    text-align: right;
 }
 
-h1.center.border{
-  text-align: center;
-  color: black;
-  border-style: solid;
-  border-width: 2px;
-  border-color: #ff9999;
-}
-
-h2.center {  
-  text-align: center;
-  color: black;
-}
-
-h3.center {  
-  text-align: center;
-  color: black;
-}
-
-h4.center {  
-  text-align: center;
-  color: black;
-}
-
-h5.center {  
-  text-align: center;
-  color: black;
-}
-
-h6.center {  
-  text-align: center;
-  color: black;
-}
-/*Koniec headerów typu center*/
-
-/*Headery typu left*/
-h1.left {  
-  text-align: left;
-  color: black;
-}
-
-h2.left {  
-  text-align: left;
-  color: black;
-}
-
-h3.left {  
-  text-align: left;
-  color: black;
-}
-
-h4.left {  
-  text-align: left;
-  color: black;
-}
-
-h4.left.border {
-  text-align: left;
-  color: black;
-  border-style: solid;
-  border-width: 2px; 
-  border-color: #ff9999;
-}
-
-h5.left {  
-  text-align: left;
-  color: black;
-}
-
-h6.left {  
-  text-align: left;
-  color: black;
-}
-/*Koniec headerów typu left*/
-
-/*Headery typu right*/
-h1.right {  
-  text-align: right;
-  color: black;
-}
-
-h2.right {  
-  text-align: right;
-  color: black;
-}
-
-h3.right {  
-  text-align: right;
-  color: black;
-}
-
-h4.right {  
-  text-align: right;
-  color: black;
-}
-
-h5.right {  
-  text-align: right;
-  color: black;
-}
-
-h6.right {  
-  text-align: right;
-  color: black;
-}
-/*Koniec headerów typu right*/
-
-/*Headery typu bottom*/
-h1.bottom {  
+/*BOTTOM*/
+.bottom {  
   vertical-align: text-bottom;
   color: black;
 }
 
-h2.bottom {  
-  vertical-align: text-bottom;
-  color: black;
-}
-
-h3.bottom {  
-  vertical-align: text-bottom;
-  color: black;
-}
-
-h4.bottom {  
-  vertical-align: text-bottom;
-  color: black;
-}
-
-h5.bottom {  
-  vertical-align: text-bottom;
-  color: black;
-}
-
-h6.bottom {  
-  vertical-align: text-bottom;
-  color: black;
-}
-/*Koniec headerów typu bottom*/
-
-/*Headery typu up*/
-h1.top {  
+/*TOP*/
+.top {  
   vertical-align: text-top;
   color: black;
 }
-
-h2.top {  
-  vertical-align: text-top;
-  color: black;
-}
-
-h3.top {  
-  vertical-align: text-top;
-  color: black;
-}
-
-h4.top {  
-  vertical-align: text-top;
-  color: black;
-}
-
-h5.top {  
-  vertical-align: text-top;
-  color: black;
-}
-
-h6.top {  
-  vertical-align: text-top;
-  color: black;
+/**/
+.absolute-left-30 {
+	position: absolute;
+	bottom: 10px;
+	width: 30%;
+	text-align:left;
 }
