@@ -2,7 +2,7 @@
 function Pierwiastkowanie(liczba) {	
 	alert("Wybrałeś/aś pierwiastkowanie!");
 	
-		alert("Uwaga! Na razie maksymalny stopień pierwiastka to 3!");
+	alert("Uwaga! Na razie maksymalny stopień pierwiastka to 3!");
 	stopien = prompt("Wpisz stopień", "stopień");
 
 	liczba = prompt("Wpisz liczbę", "liczba");	
@@ -12,17 +12,10 @@ function Pierwiastkowanie(liczba) {
 			alert("Pierwiastek 1 stopnia jest taki sam jak liczba, którą chce się spierwiastkować!");
 			return liczba;
 			document.getElementById("Dzialanie").innerHTML = "&#8730;" + liczba + " = " + liczba;
-	} else if (stopien == 2) {
-		
-		
-		} if (liczba >= 0) {
+	} else if (stopien == 2) {	
 			Wynik = Math.sqrt(liczba);
 			alert(Wynik);
-			document.getElementById("Dzialanie").innerHTML = "&#8730;" + liczba + " = " + Wynik;
-		} else if (liczba < 0) {
-			alert("Pierwiastek kwadratowy nie może być liczbą ujemną!")
-			document.getElementById("Dzialanie").innerHTML = "&#8730;" + liczba + " = " + "niemożliwe"
-		
+			document.getElementById("Dzialanie").innerHTML = "&#8730;" + liczba + " = " + Wynik;			
 	} else if (stopien == 3) {
 			Wynik = Math.cbrt(liczba);
 			alert(Wynik);
