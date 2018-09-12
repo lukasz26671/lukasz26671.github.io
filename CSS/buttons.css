@@ -28,22 +28,22 @@
 	font-size: 35px;
 }
 
-#green {
+#b-green {
   background-color: #4CAF50;
   border: none;
   color: white;
 }
-#red {
+#b-red {
   background-color: #f44336;
   border: none;
   color: white;	
 }
-#black {
+#b-black {
   background-color: #555555;
   border: none;
   color: white;
 }
-#blue {
+#b-blue {
   background-color: #008CBA;
   border: none;
   color: white;	
