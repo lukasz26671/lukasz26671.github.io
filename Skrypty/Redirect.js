@@ -1,4 +1,5 @@
-//Skrypt sterujacy przyciskami by Lukasz26671
+//Skrypt sterujacy przyciskami by Lukasz26671  
+//Copyright © 2018 lukasz26671
 
 /*
 
@@ -20,3 +21,5 @@ function redirectMain2() { //funkcja przekieruj do strony 3
 function redirectMain3() { //funkcja przekieruj do strony 4
   	setTimeout("location.href='podstrona2.html';", 50);
 };
+
+// ©Copyright by Lukasz26671
