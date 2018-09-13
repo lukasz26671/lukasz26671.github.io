@@ -1,4 +1,4 @@
-
+//Copyright © 2018 lukasz26671
 function Pierwiastkowanie(liczba) {	
 	alert("Wybrałeś/aś pierwiastkowanie!");
 	
