@@ -1,5 +1,4 @@
 /*Copyright © 2018 lukasz26671*/
-/*Copyright © 2018 lukasz26671*/
 .button0 {
 	padding: 5px 10px;
 	text-align: center;
@@ -40,8 +39,53 @@
     transition: 0.3s;
 }
 
-.zaokraglony {
+.button0.round {
    border-radius: 12px;	
+   padding: 10px 15px;
+   text-align: center;
+   font-size: 20px;
+   cursor: pointer;
+   opacity: 0.8;
+   transition: 0.3s;
+}
+
+.button1.round {
+   padding: 10px 15px;
+   text-align: center;
+   font-size: 20px;
+   cursor: pointer;
+   opacity: 0.8;
+   transition: 0.3s;
+   border-radius: 12px;	
+}
+
+.button2.round {
+    padding: 20px 25px;
+	text-align: center;
+	font-size: 25px;
+	cursor: pointer;
+	opacity: 0.8;
+    transition: 0.3s;
+    border-radius: 12px;	
+}
+
+.button3.round {
+    padding: 30px 35px;
+	text-align: center;
+	font-size: 30px;
+	cursor: pointer;
+	opacity: 0.8;
+    transition: 0.3s;
+    border-radius: 12px;	
+}
+
+.button4.round {
+    padding: 40px 45px;
+	text-align: center;
+	font-size: 35px;
+	opacity: 0.8;
+    transition: 0.3s;
+    border-radius: 12px;	
 }
 
 #b-green {
@@ -66,7 +110,7 @@
 }
 #b-gray {
   background-color: #e7e7e7;
-  border: none;
+  border: 1px solid grey;
   color: black;
 }
 
