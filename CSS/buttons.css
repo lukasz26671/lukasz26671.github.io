@@ -61,6 +61,6 @@
 
 #b-white {
   background-color: white;
-  border: 1px;
+  border: 1px solid black;
   color: black
 }
