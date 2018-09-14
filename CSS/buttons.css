@@ -29,6 +29,10 @@
 	font-size: 35px;
 }
 
+.zaokraglony {
+   border-radius: 12px;	
+}
+
 #b-green {
   background-color: #4CAF50;
   border: none;
@@ -48,4 +52,15 @@
   background-color: #008CBA;
   border: none;
   color: white;	
+}
+#b-gray {
+  background-color: #e7e7e7;
+  border: none;
+  color: black;
+}
+
+#b-white {
+  background-color: white;
+  border: 1px;
+  color: black
 }
