@@ -22,4 +22,6 @@ function redirectMain3() { //funkcja przekieruj do strony 4
   	setTimeout("location.href='podstrona2.html';", 50);
 };
 
-// ©Copyright by Lukasz26671
+function redirectSchl() {
+  setTimeout("location.href='http://spkg.pl.html';", 50);
+};
