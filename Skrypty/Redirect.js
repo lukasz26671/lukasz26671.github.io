@@ -22,6 +22,6 @@ function redirectMain3() { //funkcja przekieruj do strony 4
   	setTimeout("location.href='podstrona2.html';", 50);
 };
 
-function redirectSchl() {
-  setTimeout("location.href='http://spkg.pl.html';", 50);
+function redirectSchl() { //funkcja przekieruj do strony 4
+  	setTimeout("window.open('http://spkg.pl', '_blank');", 50);
 };
