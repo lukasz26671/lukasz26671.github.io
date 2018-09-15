@@ -3,7 +3,6 @@
 /*CENTER*/
 .center {  
   text-align: center;
-  color: black;
 }
 .absolute-center {
     position: absolute;
@@ -20,7 +19,6 @@
 /*LEFT*/
 .left {  
   text-align: left;
-  color: black;
 }
 .relative-left {
     position: relative;
@@ -37,7 +35,6 @@
 /*Headery typu right*/
 .right {  
   text-align: right;
-  color: black;
 }
 
 .relative-right {
@@ -55,13 +52,11 @@
 /*BOTTOM*/
 .bottom {  
   vertical-align: text-bottom;
-  color: black;
 }
 
 /*TOP*/
 .top {  
   vertical-align: text-top;
-  color: black;
 }
 /**/
 .absolute-left-30 {
