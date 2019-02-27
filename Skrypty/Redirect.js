@@ -37,7 +37,7 @@ Powiadomienia = document.getElementById("Powiadomienia").checked; ----WYŁĄCZON
 	};
 
 	function redirectMcMod() { //funkcja przekieruj do video3
-		setTimeout("location.href='mcmody';", 50);
+		setTimeout("location.href='mcmod';", 50);
 	};
 
 	function redirectChn() {
