@@ -12,10 +12,6 @@ Powiadomienia = document.getElementById("Powiadomienia").checked; ----WYŁĄCZON
 		setTimeout("location.href='index';", 50);
 	};
 
-	function redirectMain() { //funkcja przekieruj do strony 3
-		setTimeout("location.href='podstrona';", 50);
-	};
-
 	function redirectMain2() { //funkcja przekieruj do strony 2
 		setTimeout("location.href='kalkulator';", 50);
 	};
@@ -38,6 +34,10 @@ Powiadomienia = document.getElementById("Powiadomienia").checked; ----WYŁĄCZON
 	};
 	function redirectVid4() { //funkcja przekieruj do video3
 		setTimeout("location.href='Video04';", 50);
+	};
+
+	function redirectMcMod() { //funkcja przekieruj do video3
+		setTimeout("location.href='mcmody';", 50);
 	};
 
 	function redirectChn() {
