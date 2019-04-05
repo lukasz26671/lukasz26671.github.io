@@ -1,41 +1,55 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
-      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
       <title>Strona główna</title>
       <link href="CSS/buttons.css" rel="stylesheet" type="text/css"/>
       <link href="CSS/text.css" rel="stylesheet" type="text/css" />
+	  <link href="CSS/UL.css" rel="stylesheet" type="text/css" />
+      <link href="CSS/custom.css" rel="stylesheet" type="text/css" />
+	  
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
       <script src="Skrypty/Redirect.js"></script>
       <script>
       function helloWorld() {
         alert("Witaj świecie!");
       }
       </script>
-
+	  <style>
+		body {
+			background-image: url("background.gif");
+			background-size: 1850px 1000px;
+			background-color: #303232;
+		}
+		</style>
       
 </head>
-<body bgcolor="white">
-<marquee>Strona  wykonana przez Łukasza Piwowar</marquee>
-
+<body>
 <div>
- <h1 class="center">Strona główna odsyłacza</h1>
-  <div class="relative-left">
-   <p>Odsyłacze:</p>
-  </div>
+ <h1 align="center" class="unselectable-black">Strona główna odsyłacza</h1>
 </div>
 
 <p align="left">
-<button class="button1 round" id="b-green" onclick="redirectMcMod();">Minecraft Mody</button><br  /><br />
-<button class="button1 round" id="b-red" onclick="redirectMain2();">Kalkulator</button><br /><br />
-<button class="button1 round" id="b-black" onclick="redirectMain3();">Podziękowania</button><br /><br />
-<button class="button1 round" id="b-blue" onclick="helloWorld();">Witaj świecie!</button><br /> <br />
-<button class="button1 round" id="b-gray" onclick="redirectChVid();">Moje video</button><br /> <br />
+<div style = "width: 10%">
+	<ul id="myUL">
+		<li class="li2" id="u-green" onClick="redirectMcMod();">Minecraft Mody</li>
+		<li class="li2" id="u-red" onclick="redirectMain2();">Kalkulator</li>
+		<li class="li2" id="u-black" onClick="redirectMain3();">Źródła</li>
+		<li class="li2" id="u-blue" onClick="helloWorld();">Hello world!</li>
+		<!--<li class="li2" id="u-gray" onClick="redirectChVid();">Moje video</li>-->
+	</ul>
+</div>
 
 <!--<button class="button1 round" id="b-gray" onclick="redirectSchl();">Strona szkoły W Kamienicy Górnej</button>-->
 </p>
+<div class="absolute-right">
+		<p style="color: white; font-size: 10px; text-align: right; ">ZAYDE WOLF - COLD BLODED</p>
+</div>
 
-
-
-
+<audio autoplay loop preload>
+	<source src="audio/audio.mp3" type="audio/mpeg"></source>
+</audio>
 </body>
 </html>

@@ -65,3 +65,10 @@
 	width: 30%;
 	text-align:left;
 }
+
+br {
+	-webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}

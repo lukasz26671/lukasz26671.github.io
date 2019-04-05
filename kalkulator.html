@@ -12,12 +12,37 @@ Szkielet HTML Kalkulatora
     <title>Kalkulator</title>
     <link href="CSS/text.css" rel="stylesheet" type="text/css"/>
     <link href="CSS/buttons.css" rel="stylesheet" type="text/css" />
+	<link href="CSS/UL.css" rel="stylesheet" type="text/css" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="Skrypty/Redirect.js"></script>
     <script src="Skrypty/Dodawanie.js"></script> <!--Skrypt Dodawania-->
     <script src="Skrypty/Odejmowanie.js"></script> <!--Skrypt Odejmowania-->
     <script src="Skrypty/Mnozenie.js"></script> <!--Skrypt Mnozenia-->
     <script src="Skrypty/Dzielenie.js"></script> <!--Skrypt Dzielenia-->
 	<script src="Skrypty/Pierwiastkowanie i Potegowanie.js"></script><!--Skrypt Potegowania i Pierwiastkowania-->
+	
+	<style>
+		h1 {
+		color: white;
+		}
+		h2 {
+		color: white;
+		}
+		h3 {
+		color: white;
+		}
+		p {
+		color: white;
+		}
+		
+		body {
+			background-image: url("background3.gif");
+			background-size: 1850px 1000px;
+			background-color: #303232;
+		}
+	</style>
 </head>
 <body> 
 <p align="center">
@@ -36,6 +61,13 @@ Szkielet HTML Kalkulatora
 	<p><button class="button0" id="b-blue" onclick="Pierwiastkowanie()">Pierwiastkowanie</button></p> <!--Przycisk uruchamiający funkcję Pierwiastkowanie()-->
 
 	<h3 class="left">Wynik:</h3>
-    <p id="Dzialanie"><b> </b></p> <!--Miejsce działania i wyniku [zastąpiany przez działanie i wynik po zakończeniu działania]-->
+    <p id="Dzialanie"><b> </b></p>
+<div class="absolute-right">
+		<p style="color: white; font-size: 8px; text-align: right; margin-bottom:0px; ">ALAN WALKER, SABRINA CARPENTER, </p>
+		<p style="color: white; font-size: 8px; text-align: right; ">FARRUKO - ON MY WAY</p>
+</div>	
+<audio autoplay loop preload>
+	<source src="audio/audio3.mp3" type="audio/mpeg"></source>
+</audio>	
 </body>
 </html>
