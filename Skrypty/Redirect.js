@@ -24,11 +24,11 @@ Powiadomienia = document.getElementById("Powiadomienia").checked; ----WYŁĄCZON
 		setTimeout("location.href='mcmod.html';", 50);
 	};
 
-	function redirectContact() { //funkcja przekieruj do video3
-		setTimeout("location.href='kontakt.html';", 50);
-	};
-	
 	function redirectMod() {
 		setTimeout("window.open('https://github.com/lukasz26671/Lukasz26671Utils/releases', '_blank');", 50);
 	};
 
+	function redirectContact() { //funkcja przekieruj do kontakt
+	setTimeout("location.href='kontakt.html';", 50);
+	};
+	
