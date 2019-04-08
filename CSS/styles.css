@@ -9,7 +9,8 @@
   overflow-x: hidden;
   padding-top: 20px;
   opacity: 0.75;
-  transition: 0.5s;	
+  transition: 0.5s;
+  text-decoration: none;
   
 }
 
@@ -21,6 +22,7 @@
   display: block;
   font-style: normal;
   transition: 0.1s;
+  
 }
 
 .sidenav a:hover {
