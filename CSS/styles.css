@@ -9,6 +9,7 @@
   overflow-x: hidden;
   padding-top: 20px;
   opacity: 0.75;
+  transition: 0.5s;	
   
 }
 
