@@ -6,7 +6,7 @@
       <link href="CSS/buttons.css" rel="stylesheet" type="text/css"/>
       <link href="CSS/text.css" rel="stylesheet" type="text/css" />
 	  <link href="CSS/UL.css" rel="stylesheet" type="text/css" />
-      <link href="CSS/custom.css" rel="stylesheet" type="text/css" />
+      <link href="CSS/styles.css" rel="stylesheet" type="text/css" />
 	  
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -28,28 +28,39 @@
 </head>
 <body>
 <div>
- <h1 align="center" class="unselectable-black">Strona główna odsyłacza</h1>
+ <span style="position: fixed; left: 10px;font-size:30px;cursor:pointer; color:white;" onclick="openNav()">&#9776;</span>
+ <h1 align="center" class="unselectable-black">Lukasz26671</h1>
+ <h3 align="center" class="unselectable-black">Witaj na mojej stronie :D</h3>
 </div>
 
-<p align="left">
-<div style = "width: 10%">
-	<ul id="myUL">
-		<li class="li2" id="u-green" onClick="redirectMcMod();">Minecraft Mody</li>
-		<li class="li2" id="u-red" onclick="redirectMain2();">Kalkulator</li>
-		<li class="li2" id="u-black" onClick="redirectMain3();">Źródła</li>
-		<li class="li2" id="u-blue" onClick="helloWorld();">Hello world!</li>
-		<!--<li class="li2" id="u-gray" onClick="redirectChVid();">Moje video</li>-->
-	</ul>
-</div>
 
+
+<div class="sidenav" id="sidebar">
+	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a>
+	<a onClick="redirectMcMod();" href="#MinecraftMody">Mody</a>
+	<a onClick="redirectMain2();" href="#Kalkulator">Kalkulator</a>
+	<a onClick="redirectMain3();" href="#Źródła">Źródła</a>
+	<a onClick="helloWorld();" href="#HelloWorld">Hello World</a>
+</div>
 
 </p>
 <div class="absolute-right">
 		<p style="color: white; font-size: 10px; text-align: right; ">ZAYDE WOLF - COLD BLODED</p>
 </div>
 
-<audio autoplay loop preload volume="0.2">
+<audio volume="0.2" autoplay loop preload>
 	<source src="audio/audio.mp3" type="audio/mpeg"></source>
 </audio>
+
+<script>
+function openNav() {
+  document.getElementById("sidebar").style.width = "250px";
+}
+
+function closeNav() {
+  document.getElementById("sidebar").style.width = "0";
+}
+</script>
+
 </body>
 </html>
