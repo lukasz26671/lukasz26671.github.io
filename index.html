@@ -28,7 +28,7 @@
 </head>
 <body>
 <div>
- <span style="position: fixed; left: 10px;font-size:30px;cursor:pointer; color:white;" onclick="openNav()">&#9776;</span>
+ <span style="position: fixed; left: 10px;font-size:30px;cursor:pointer; color:white;" id="openSideBar"onclick="openNav()">&#9776;</span>
  <h1 align="center" class="unselectable-black">Lukasz26671</h1>
  <h3 align="center" class="unselectable-black">Witaj na mojej stronie :D</h3>
 </div>
@@ -55,11 +55,15 @@
 <script>
 function openNav() {
   document.getElementById("sidebar").style.width = "250px";
+  document.getElementById("openSideBar").style.opacity = "0";
 }
 
 function closeNav() {
   document.getElementById("sidebar").style.width = "0";
+    document.getElementById("openSideBar").style.opacity = "1";
+
 }
+
 </script>
 
 </body>

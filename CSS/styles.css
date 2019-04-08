@@ -46,3 +46,7 @@
   -ms-user-select: none;
   user-select: none;
 }
+
+#openSideBar {
+	opacity: 1;
+}
