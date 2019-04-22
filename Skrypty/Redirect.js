@@ -1,13 +1,5 @@
 //Skrypt sterujacy przyciskami by Lukasz26671
 
-/*
-
-Powiadomienia = document.getElementById("Powiadomienia").checked; ----WYŁĄCZONE Z POWODU BRAKU ZASTOSOWANIA
-
-*/
-
-
-	
 	function redirectBack() { //funkcja przekieruj spowrotem do strony 1
 		setTimeout("location.href='index.html';", 50);
 	};
@@ -31,4 +23,4 @@ Powiadomienia = document.getElementById("Powiadomienia").checked; ----WYŁĄCZON
 	function redirectContact() { //funkcja przekieruj do kontakt
 	setTimeout("location.href='kontakt.html';", 50);
 	};
-	
+

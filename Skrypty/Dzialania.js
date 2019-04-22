@@ -1,12 +1,6 @@
 
 	function pokazDzialanie(tekst) {
-	  var newDiv = document.createElement("div"); 
-	  var newContent = document.createTextNode(tekst); 
-
-	  newDiv.appendChild(newContent);  
-
-	  var currentDiv = document.getElementById("div1"); 
-	  document.body.insertBefore(newDiv, currentDiv); 
+		var dzialanie = document.getElementById('Dzialanie').innerHTML = tekst;
 	}
 
 	function Dodawanie() { //Funkcja dodawania
@@ -75,3 +69,7 @@
 
 		}	
 	};
+
+	window.addEventListener('load', ()=>{
+		site = "kalkulator";
+	})

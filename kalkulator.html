@@ -1,6 +1,6 @@
 
-<!DOCTYPE  html>
-<!--Copyright © 2018 lukasz26671-->
+<!DOCTYPE html>
+<!--Copyright © 2018-2019 lukasz26671-->
 <!--    
 Szkielet HTML Kalkulatora
     By Lukasz26671
@@ -8,66 +8,44 @@ Szkielet HTML Kalkulatora
 -->
 <html lang="pl">
 <head>
-    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
     <title>Kalkulator</title>
-    <link href="CSS/text.css" rel="stylesheet" type="text/css"/>
-    <link href="CSS/buttons.css" rel="stylesheet" type="text/css" />
-	<link href="CSS/UL.css" rel="stylesheet" type="text/css" />
+	<link href="CSS/buttons.css" rel="stylesheet" type="text/css" />
+	<link href="CSS/styles.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <script src="Skrypty/Redirect.js"></script>
-    <script src="Skrypty/Dodawanie.js"></script> <!--Skrypt Dodawania-->
-    <script src="Skrypty/Odejmowanie.js"></script> <!--Skrypt Odejmowania-->
-    <script src="Skrypty/Mnozenie.js"></script> <!--Skrypt Mnozenia-->
-    <script src="Skrypty/Dzielenie.js"></script> <!--Skrypt Dzielenia-->
+	<script src="Skrypty/Dzialania.js"></script> <!--Skrypt Dzielenia-->
 	<script src="Skrypty/Pierwiastkowanie i Potegowanie.js"></script><!--Skrypt Potegowania i Pierwiastkowania-->
-	
-	<style>
-		h1 {
-		color: white;
-		}
-		h2 {
-		color: white;
-		}
-		h3 {
-		color: white;
-		}
-		p {
-		color: white;
-		}
-		
-		body {
-			background-image: url("background3.gif");
-			background-size: 1850px 1000px;
-			background-color: #303232;
-		}
-	</style>
 </head>
-<body> 
-<p align="center">
-<button class="button1" id="b-black" onclick="redirectBack();">Powróć do strony głównej</button>
-</p>
-
-    <h1 class="center">Kalkulator</h1>
-
-    <h2 class="left">Lista dzialan:</h2>
-    
-    <p><button class="button0" id="b-blue" onclick="Dodawanie()">Dodawanie</button></p> <!--Przycisk uruchamiający funkcję Dodawanie()-->
-    <p><button class="button0" id="b-blue" onclick="Odejmowanie()">Odejmowanie</button></p> <!--Przycisk uruchamiający funkcję Odejmowanie()-->
-    <p><button class="button0" id="b-blue" onclick="Mnozenie()">Mnozenie</button></p> <!--Przycisk uruchamiający funkcję Mnozenie()-->
-    <p><button class="button0" id="b-blue" onclick="Dzielenie()">Dzielenie</button></p> <!--Przycisk uruchamiający funkcję Dzielenie()-->
-	<p><button class="button0" id="b-blue" onclick="Potegowanie()">Potegowanie</button></p> <!--Przycisk uruchamiający funkcję Potegowanie()-->
-	<p><button class="button0" id="b-blue" onclick="Pierwiastkowanie()">Pierwiastkowanie</button></p> <!--Przycisk uruchamiający funkcję Pierwiastkowanie()-->
-
-	<h3 class="left">Wynik:</h3>
-    <p id="Dzialanie"><b> </b></p>
-<div class="absolute-right">
-		<p style="color: white; font-size: 8px; text-align: right; margin-bottom:0px; ">ALAN WALKER, SABRINA CARPENTER, </p>
-		<p style="color: white; font-size: 8px; text-align: right; ">FARRUKO - ON MY WAY</p>
-</div>	
+<body style="background-image:  url('background3.gif');	"> 
+<div class="back">
+	<button onclick="redirectBack();" class="medium black round">Powroc do strony glownej</button> <br/>
+</div>
+<div class="info">
+		<h1 class="title">Kalkulator</h1>
+</div>
+<div class="Calc">
+	<h2 class="actions">Lista dzialan</h2>
+	<div class="buttons">
+		<button onclick="Dodawanie();" class="small blue rect">Dodawanie</button> <br/>
+		<button onclick="Odejmowanie();" class="small blue rect">Odejmowanie</button> <br/>
+		<button onclick="Mnozenie();" class="small blue rect">Mnozenie</button> <br/>
+		<button onclick="Dzielenie();" class="small blue rect">Dzielenie</button> <br/>
+		<button onclick="Potegowanie();" class="small blue rect">Potegowanie</button> <br/>
+		<button onclick="Pierwiastkowanie();" class="small blue rect">Pierwiastkowanie</button> 
+		<p id="Dzialanie"></p>
+	</div>
+</div>
+<div class="tytulPiosenki">
+	<p>ALAN WALKER, SABRINA CARPENTER,</p>
+	<p>FARRUKO - ON MY WAY</p>
+</div>
 <audio autoplay loop preload>
 	<source src="audio/audio3.mp3" type="audio/mpeg"></source>
 </audio>	
+	<script src="Skrypty/main.js"></script>
+	<script></script>
 </body>
 </html>

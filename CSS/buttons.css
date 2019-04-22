@@ -1,127 +1,86 @@
-/*Copyright © 2018 lukasz26671*/
-.button0 {
-	padding: 5px 10px;
-	text-align: center;
-	font-size: 15px;
-	cursor: pointer;
-    opacity: 0.8;
-    transition: 0.3s;
+/*Copyright © 2018-2019 lukasz26671*/
+
+.small:hover {opacity: 1;}
+.medium:hover {opacity: 1;}
+.big:hover {opacity: 1;}
+
+button {
+  color: white;
+  transition: 0.3s;
+  background-color: white;
+  border: none;
 }
-.button1 {
-	padding: 10px 15px;
-	text-align: center;
-	font-size: 20px;
-	cursor: pointer;
-	opacity: 0.8;
-    transition: 0.3s;
+
+.small {
+  padding: 5px 10px;
+  text-align: center;
+  font-size: 20px;
+  margin-bottom: 5px;
+  opacity: 0.8;
+  margin-left: 2px;
 }
-.button2 {
-	padding: 20px 25px;
+.medium {
+  padding: 10px 15px;
+  text-align: center;
+  font-size: 20px;
+  cursor: pointer;
+  margin-bottom: 5px;
+  opacity: 0.8;
+  margin-left: 2px;
+}
+
+.big {
+  padding: 20px 25px;
 	text-align: center;
 	font-size: 25px;
-	cursor: pointer;
-	opacity: 0.8;
-    transition: 0.3s;
-}
-.button3 {
-	padding: 30px 35px;
-	text-align: center;
-	font-size: 30px;
-	cursor: pointer;
-	opacity: 0.8;
-    transition: 0.3s;
-}
-.button4 {
-	padding: 40px 45px;
-	text-align: center;
-	font-size: 35px;
-	opacity: 0.8;
-    transition: 0.3s;
+  cursor: pointer;
+  margin-bottom: 5px;
+  opacity: 0.8;
+  margin-left: 2px;
 }
 
-.button0.round {
-   border-radius: 12px;	
-   padding: 10px 15px;
-   text-align: center;
-   font-size: 20px;
-   cursor: pointer;
-   opacity: 0.8;
-   transition: 0.3s;
+.blue {
+  color: white;
+  background-color: #008CBA;
+  border: none;
 }
-
-.button1.round {
-   padding: 10px 15px;
-   text-align: center;
-   font-size: 20px;
-   cursor: pointer;
-   opacity: 0.8;
-   transition: 0.3s;
-   border-radius: 12px;	
+.red {
+  color: white;
+  background-color: #f44336;
+  border: none;
 }
-
-.button2.round {
-    padding: 20px 25px;
-	text-align: center;
-	font-size: 25px;
-	cursor: pointer;
-	opacity: 0.8;
-    transition: 0.3s;
-    border-radius: 12px;	
-}
-
-.button3.round {
-    padding: 30px 35px;
-	text-align: center;
-	font-size: 30px;
-	cursor: pointer;
-	opacity: 0.8;
-    transition: 0.3s;
-    border-radius: 12px;	
-}
-
-.button4.round {
-    padding: 40px 45px;
-	text-align: center;
-	font-size: 35px;
-	opacity: 0.8;
-    transition: 0.3s;
-    border-radius: 12px;	
-}
-
-#b-green {
+.green {
   background-color: #4CAF50;
   border: none;
   color: white;
 }
-#b-red {
-  background-color: #f44336;
-  border: none;
-  color: white;	
-}
-#b-black {
+.black {
   background-color: #555555;
   border: none;
   color: white;
 }
-#b-blue {
-  background-color: #008CBA;
-  border: none;
-  color: white;	
-}
-#b-gray {
+.grey {
+  color: white;
   background-color: #e7e7e7;
   border: 1px solid grey;
-  color: black;
 }
-
-#b-white {
+.white {
+  color: black;
   background-color: white;
   border: 1px solid black;
-  color: black
+}
+.round {
+  border-radius: 12px;
+}
+.rect {
+  border-radius: 0px
 }
 
-.button0:hover {opacity: 1}
-.button1:hover {opacity: 1}
-.button2:hover {opacity: 1}
-.button3:hover {opacity: 1}
-.button4:hover {opacity: 1}
+#Dzialanie {
+  color: greenyellow;
+  font-size: 15px;
+  margin-top: 10px;
+  font-family: sans-serif;
+  text-decoration: bold;
+  margin-left: 2px;
+}

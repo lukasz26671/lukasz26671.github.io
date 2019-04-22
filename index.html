@@ -3,68 +3,32 @@
 <head>
       <meta http-equiv="Content-Type" content="text/html" charset="UTF-8" />
       <title>Strona główna</title>
-      <link href="CSS/buttons.css" rel="stylesheet" type="text/css"/>
-      <link href="CSS/text.css" rel="stylesheet" type="text/css" />
-	  <link href="CSS/UL.css" rel="stylesheet" type="text/css" />
       <link href="CSS/styles.css" rel="stylesheet" type="text/css" />
-	  
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-      <script src="Skrypty/Redirect.js"></script>
-      <script>
-      function helloWorld() {
-        alert("Hello world!");
-      }
-      </script>
-	  <style>
-		body {
-			background-image: url("background.gif");
-			background-size: 1850px 1000px;
-			background-color: #303232;
-		}
-		</style>
-      
 </head>
-<body>
-<div>
- <span style="position: fixed; left: 10px;font-size:30px;cursor:pointer; color:white;" id="openSideBar"onclick="openNav()">&#9776;</span>
- <h1 align="center" class="unselectable-black">Lukasz26671</h1>
- <h3 align="center" class="unselectable-black">Witaj na mojej stronie :D</h3>
+<body style="background-image: url('background.gif');">
+ <span id="openSideBar" onclick="openNav()">&#9776;</span>
+<div class="title">
+	<h1 class="info">Lukasz26671</h1>
+	<h3 class="info">Witaj na mojej stronie :D</h3>
 </div>
-
-
-
 <div class="sidenav" id="sidebar">
 	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a><br/>
 	<a onClick="redirectMcMod();" href="#MinecraftMody">Mody</a>
 	<a onClick="redirectMain2();" href="#Kalkulator">Kalkulator</a>
 	<a onClick="redirectMain3();" href="#Źródła">Źródła</a>
 	<a onClick="redirectContact();" href="#Kontakt">Kontakt</a>
-	<a onClick="helloWorld();" href="#HelloWorld">Hello World</a>
+	<a onClick="alert('Hello World!');"href="#HelloWorld">Hello World</a>
 </div>
-
-</p>
-<div class="absolute-right">
-		<p style="color: white; font-size: 10px; text-align: right; ">ZAYDE WOLF - COLD BLODED</p>
+<div class="tytulPiosenki">
+	<p>ZAYDE WOLF - COLD BLOODED</p>
 </div>
-
-<audio volume="0.2" autoplay loop preload>
+<audio autoplay loop preload>
 	<source src="audio/audio.mp3" type="audio/mpeg"></source>
 </audio>
-
-<script>
-function openNav() {
-  document.getElementById("sidebar").style.width = "250px";
-  document.getElementById("openSideBar").style.opacity = "0";
-}
-
-function closeNav() {
-  document.getElementById("sidebar").style.width = "0";
-  setTimeout("document.getElementById('openSideBar').style.opacity = '1';", 550);
-}
-
-</script>
-
+	<script src="Skrypty/main.js"></script>
+	<script src="Skrypty/Redirect.js"></script>
 </body>
 </html>

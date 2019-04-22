@@ -1,3 +1,66 @@
+* {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #303232;
+	-webkit-background-size: cover;
+  -moz-background-size: cover;
+  -o-background-size: cover;
+  background-size: cover;
+	margin: 0;
+ 	padding: 0;
+}
+.title {
+  color: white;
+  font-family: sans-serif;
+  z-index: 5;
+}
+
+.tytulPiosenki {
+  color: white;
+  font-family: sans-serif;
+  text-decoration: italic;
+  position: fixed;
+  bottom: 5px;
+  right: 15px;
+  font-size: 10px;
+}
+.buttons {
+  display: block;
+}
+.back {
+  display: flex;
+  justify-content: center;
+}
+
+.info {
+  display: flex;
+  justify-content: center;
+}
+
+.actions {
+  color: white;
+  font-family: sans-serif;
+  display: flex;
+  justify-content: space-around;
+  border-bottom: 1px dotted #4bf562;
+  
+}
+
+.Calc {
+  display: block;
+  width: 250px;
+  background-color: #30323288;
+  z-index: 1;
+  border: 1px solid rgba(60, 209, 247, 0.5);
+  resize: block;
+}
+
 .sidenav {
   height: 100%;
   width: 0;
@@ -13,7 +76,13 @@
   text-decoration: none;
   
 }
-
+.closebtn {
+  position: absolute;
+  top: 0;
+  right: 25px;
+  font-size: 36px;
+  margin-left: 50px;
+}
 .sidenav a {
   padding: 6px 8px 6px 16px;
   text-decoration: none;
@@ -51,5 +120,14 @@
 }
 
 #openSideBar {
-	opacity: 1;
+  opacity: 1;
+  position: fixed; 
+  left: 10px;
+  font-size:30px;
+  cursor:pointer; 
+  color:white;
+}
+
+a {
+  text-decoration: none;
 }
