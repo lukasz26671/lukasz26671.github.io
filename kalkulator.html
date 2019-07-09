@@ -12,6 +12,7 @@ Szkielet HTML Kalkulatora
     <title>Kalkulator</title>
 	<link href="CSS/buttons.css" rel="stylesheet" type="text/css" />
 	<link href="CSS/styles.css" rel="stylesheet" type="text/css" />
+	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -38,14 +39,26 @@ Szkielet HTML Kalkulatora
 		<p id="Dzialanie"></p>
 	</div>
 </div>
-<div class="tytulPiosenki">
-	<p>ALAN WALKER, SABRINA CARPENTER,</p>
-	<p>FARRUKO - ON MY WAY</p>
-</div>
-<audio autoplay loop preload>
-	<source src="audio/audio3.mp3" type="audio/mpeg"></source>
+<div class="songTitle">
+		<br/>
+		<div class="content">
+			<p id="song"></p>
+			<div class="controls">
+				<div class="controlbuttons">
+					<i class="material-icons" id="prev">fast_rewind</i>
+					<i class="material-icons" id="playpause">play_arrow</i><!--playpause - changes-->
+					<i class="material-icons" id="next">fast_forward</i>
+				</div>		
+			</div>
+			</p><div id="progresscontainer">
+				<div id="progressbar"></div>
+			</div>	
+		</div>
+	</div>
+<audio id="audiosource">
+	<source type="audio/mpeg"></source>
 </audio>	
 	<script src="Skrypty/main.js"></script>
-	<script></script>
+	<script src="Skrypty/audio.js"></script>
 </body>
 </html>

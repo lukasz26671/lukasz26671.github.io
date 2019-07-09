@@ -1,21 +1,37 @@
+let wynikDzialania = document.getElementById('Dzialanie');
+let mode;
+var Wynik;
 
-	function pokazDzialanie(tekst) {
-		var dzialanie = document.getElementById('Dzialanie').innerHTML = tekst;
+window.addEventListener('load', ()=>{
+	changeCalcType();
+});
+
+function changeCalcType() {
+	if(confirm("Wybierz typ kalkulatora. Ok = alertowy, Cancel = inputowy")) {
+		alert("Wybrales kalukator alertowy");
+		setCookie("calcType", cookieType, 365);
+	} else {
+		alert("Wybrales kalkulator inputowy")
+		setCookie("calcType", cookieType, 365);	
 	}
+}	
 
-	function Dodawanie() { //Funkcja dodawania
+function pokazDzialanie(tekst) {
+	wynikDzialania.innerHTML = tekst;
+}
 
-		alert("Wybrales/as dodawanie!"); //Powiadomienie o typie działania
+function Dodawanie() { //Funkcja dodawania
 
-		Liczba1 = prompt("Wpisz pierwsza liczbe", "Liczba"); //Wpisz wartość liczby 1
-		Liczba2 = prompt("Wpisz druga liczbe", "Liczba"); //Wpisz wartość liczby 2
-		Wynik = +Liczba1 + +Liczba2; //Zmienna Wynik
+	alert("Wybrales/as dodawanie!"); //Powiadomienie o typie działania
 
-		alert(Liczba1 + "+" + Liczba2 + "=" + Wynik); //Ostrzeż o wyniku
+	Liczba1 = prompt("Wpisz pierwsza liczbe", "Liczba"); //Wpisz wartość liczby 1
+	Liczba2 = prompt("Wpisz druga liczbe", "Liczba"); //Wpisz wartość liczby 2
+	Wynik = +Liczba1 + +Liczba2; //Zmienna Wynik
+	
 
-			pokazDzialanie(Liczba1 + "+" + Liczba2 + "=" + Wynik);
-
-	}
+	alert(`${Liczba1}+${Liczba2}=${Wynik}`); //Ostrzeż o wyniku
+		pokazDzialanie(`${Liczba1}+${Liczba2}=${Wynik}`);
+}
 
 	function Odejmowanie() { //Funkcja odejmowania
 
@@ -25,10 +41,9 @@
 		Liczba2 = prompt("Wpisz druga liczbe", "Liczba"); //Wpisz wartość liczby 2
 
 		Wynik = +Liczba1 - +Liczba2; //Zmienna wynik
-
-		alert(Liczba1 + "-" + Liczba2 + "=" + Wynik); //Ostrzeż o wyniku
-
-			pokazDzialanie(Liczba1 + "-" + Liczba2 + "=" + Wynik);
+        
+		alert(`${Liczba1}+${Liczba2}=${Wynik}`); //Ostrzeż o wyniku
+			pokazDzialanie(`${Liczba1}-${Liczba2}=${Wynik}`);
 	}
 	
 	function Mnozenie() { //Funkcja mnożenia
@@ -40,9 +55,8 @@
 
 		Wynik = +Liczba1 * +Liczba2; //Zmienna wynik
 
-		alert(Liczba1 + "*" + Liczba2 + "=" + Wynik); //Ostrzeż o wyniku
-
-			pokazDzialanie(Liczba1 + "*" + Liczba2 + "=" + Wynik);
+		alert(`${Liczba1}*${Liczba2}=${Wynik}`); //Ostrzeż o wyniku
+			pokazDzialanie(`${Liczba1}*${Liczba2}=${Wynik}`);
 
 	}	
 	
@@ -63,13 +77,7 @@
 
 			Wynik = +Liczba1 / +Liczba2; //Zmienna wynik
 
-			alert(+Liczba1 + "/" + Liczba2 + "=" + Wynik); //Ostrzeż o wyniku
-
-					pokazDzialanie(Liczba1 + "/" + Liczba2 + "=" + Wynik);
-
+			alert(`${Liczba1}/${Liczba2}=${Wynik}`); //Ostrzeż o wyniku
+				pokazDzialanie(`${Liczba1}/${Liczba2}=${Wynik}`);
 		}	
 	};
-
-	window.addEventListener('load', ()=>{
-		site = "kalkulator";
-	})

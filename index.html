@@ -5,30 +5,46 @@
       <title>Strona główna</title>
       <link href="CSS/styles.css" rel="stylesheet" type="text/css" />
 	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+	  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 </head>
-<body style="background-image: url('background.gif');">
- <span id="openSideBar" onclick="openNav()">&#9776;</span>
+<body style="background-image: url('background.gif')">
+ <span id="openSidebar" >&#9776;</span>
 <div class="title">
 	<h1 class="info">Lukasz26671</h1>
 	<h3 class="info">Witaj na mojej stronie :D</h3>
 </div>
 <div class="sidenav" id="sidebar">
-	<a href="javascript:void(0)" class="closebtn" onclick="closeNav()">&times;</a><br/>
+	<a href="javascript:void(0)" class="closebtn" id="closebtn">&times;</a><br/>
 	<a onClick="redirectMcMod();" href="#MinecraftMody">Mody</a>
 	<a onClick="redirectMain2();" href="#Kalkulator">Kalkulator</a>
 	<a onClick="redirectMain3();" href="#Źródła">Źródła</a>
 	<a onClick="redirectContact();" href="#Kontakt">Kontakt</a>
 	<a onClick="alert('Hello World!');"href="#HelloWorld">Hello World</a>
 </div>
-<div class="tytulPiosenki">
-	<p>ZAYDE WOLF - COLD BLOODED</p>
+<div class="songTitle">
+	<br/>
+	<div class="content" id="content">
+		<p id="song"></p>
+		<div class="controls">
+			<div class="controlbuttons">
+				<i class="material-icons" id="prev">fast_rewind</i>
+				<i class="material-icons" id="playpause">play_arrow</i><!--playpause - changes-->
+				<i class="material-icons" id="next">fast_forward</i>
+			</div>		
+		</div>
+		<div id="progresscontainer">
+			<div id="progressbar"></div>
+		</div>	
+	</div>
 </div>
-<audio autoplay loop preload>
-	<source src="audio/audio.mp3" type="audio/mpeg"></source>
+<audio id="audiosource">
+	<source type="audio/mpeg"></source>
 </audio>
+	<script src="Skrypty/index.js"></script>
 	<script src="Skrypty/main.js"></script>
 	<script src="Skrypty/Redirect.js"></script>
+	<script src="Skrypty/audio.js"></script>
 </body>
 </html>

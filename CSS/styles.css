@@ -4,16 +4,24 @@
   -ms-user-select: none;
   user-select: none;
   box-sizing: border-box;
+  overflow: hidden;
+}
+
+body, html {
+  height: 100%;
 }
 
 body {
   background-color: #303232;
+  background-size: cover;
+	margin: 0;
+  padding: 0;
+  height: 100%;
+  width:100%;
+  background-repeat: no-repeat;
 	-webkit-background-size: cover;
   -moz-background-size: cover;
   -o-background-size: cover;
-  background-size: cover;
-	margin: 0;
- 	padding: 0;
 }
 .title {
   color: white;
@@ -21,7 +29,7 @@ body {
   z-index: 5;
 }
 
-.tytulPiosenki {
+.songTitle {
   color: white;
   font-family: sans-serif;
   text-decoration: italic;
@@ -29,6 +37,8 @@ body {
   bottom: 5px;
   right: 15px;
   font-size: 10px;
+  background-color: rgb(63, 65, 63);
+  opacity:0.3;
 }
 .buttons {
   display: block;
@@ -119,7 +129,7 @@ body {
   user-select: none;
 }
 
-#openSideBar {
+#openSidebar {
   opacity: 1;
   position: fixed; 
   left: 10px;
@@ -130,4 +140,46 @@ body {
 
 a {
   text-decoration: none;
+}
+
+#progresscontainer {
+  width: 100%;
+  border: 1px solid black;
+  background-color: rgb(44, 43, 43);
+  margin: 0;
+}
+
+#progressbar {
+  width: 1%;
+  height: 7.5px;
+  background-color: rgb(255, 255, 255);
+  text-align: center;
+  line-height: 30px;
+  color: white;
+  margin: 0;
+  transition: width .1s linear;
+}
+
+.controlbuttons {
+  color: white;
+  text-align:center;
+  margin: 0;
+  font-size: 20px;
+}
+#content, .content {
+  opacity: 1;
+  min-width: 220px;
+  min-height: 70px;
+}
+
+#song {
+  border: 1px solid #303232;
+  text-align:center;
+}
+#prev, #next {
+  cursor:pointer;
+}
+
+#playpause {
+  transition: transform 150ms ease-out;
 }

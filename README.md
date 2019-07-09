@@ -1,16 +1,15 @@
 # lukasz26671.github.io
+///////////////////////////////INFO//////////////////////////////////////////////////
 
-Basically it's my first website project in HTML, CSS and JS, 
-I tried to get the most out of this based on my current skills
-and I think that it went quite good.
+Basically it's my first website project in HTML, CSS and JS 
+which turned out to be quite good. 
+It's not very advanced cuz I'm still a student in a primary school, 
+but I tried my best to do so :) 
 
 I hope you'll like this :D
 
 P.S. 
+I could use some advice to programming.
+If You could be so kind and tell me what I could do better and optimize my code :)
 
-I'm constantly updating it do keep it up-to-date with latest
-solutions but I'm still a human - I can miss something.
-
-If you have any questions or tips for me please send me an email :)
-lukasz266713@gmail.com
-
+///////////////////////////////INFO//////////////////////////////////////////////////
