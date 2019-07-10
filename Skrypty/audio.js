@@ -1,27 +1,34 @@
 var songnames = [
-"THE SCORE, BLACKBEAR - DREAMIN",  
+"THE SCORE, BLACKBEAR - DREAMIN",
+"THE SCORE - UNSTOPPABLE", 
 "THE SCORE - HIGHER", 
 "ZAYDE WOLF - WE GOT THE POWER", 
 "THE SCORE - MIRACLE",
 "ALAN WALKER - ON MY WAY", 
+"AXOL & ALBAN CHELA - PSYCHE (NIGHTCORE)",
 "THE SCORE - UNDER THE PRESSURE",
-"Axol & Alban Chela - Psyche (Nightcore)",
-"ZAYDE WOLF - COLD BLODED"
+"ZAYDE WOLF - COLD BLODED",
+"THE SCORE - MIRACLE (NIGHTCORE)",
+"THE SCORE - REVOLUTION (NIGHTCORE)",
+"THE SCORE - THE HEAT (NIGHTCORE)",
+"THE SCORE - HIGHER (NIGHTCORE)"
 ];
+
 var audiosource = document.getElementById("audiosource");
 var playpausebtn = document.getElementById("playpause");
 var prevbtn = document.getElementById("prev");
 var nextbtn = document.getElementById("next");
 var songname = document.getElementById("song");
 var content = document.getElementById("content");
-var source = `audio/audio1.mp3` //default src
+var rnd = Math.floor(Math.random() * songnames.length+1);
+var source = `audio/audio${rnd}.mp3` //random src
 
-let audioindex = 1;
+let audioindex = rnd;
 let isPlaying = false;
 
 //#region sourceassign
 function JoinSuffix(num) {
-    if(num > 0 || num < 8) {
+    if(num > 0 || num < songnames.length) {
         audioindex = num;
     }
     songname.innerHTML = songnames[num-1];
@@ -39,10 +46,10 @@ function SetSource(object, num) {
 //#region soundcontrols
 let song2;
 function NextSong() {
-    if(audioindex < 8){
+    if(audioindex < songnames.length){
         SetSource(audiosource, audioindex+1);
     }    
-    if(audioindex == 8) {
+    if(audioindex == songnames.length) {
         SetSource(audiosource, 1);
     }
 
@@ -71,8 +78,8 @@ function PreviousSong() {
     }
 
     if(audioindex == 0) {
-        SetSource(audiosource, 8);
-        audioindex = 8;
+        SetSource(audiosource, songnames.length);
+        audioindex = songnames.length;
     }
     songname.innerHTML = songnames[audioindex-1];
     audiosource.play();
@@ -80,8 +87,7 @@ function PreviousSong() {
 //#endregion
 //#region eventlisteners
 window.addEventListener('load', ()=>{
-    audioindex = 1;
-    songname.innerHTML = songnames[0];
+    SetSource(audiosource, rnd);
 });
 audiosource.addEventListener('ended', NextSong);
 
