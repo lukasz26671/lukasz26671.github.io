@@ -178,8 +178,11 @@ a {
 }
 #prev, #next {
   cursor:pointer;
+  opacity: 1;
 }
 
 #playpause {
   transition: transform 150ms ease-out;
+  cursor: pointer;
+  opacity: 1;
 }
