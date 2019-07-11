@@ -1,162 +1,87 @@
 <!DOCTYPE html>
-<html class="fontawesome-i2svg-active fontawesome-i2svg-complete" lang="pl">
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-		<title>Blockfriends</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="stylesheet" href="CSS/main.css">	
+<html lang="pl">
+<head>
+      <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+      <title>Strona główna</title>
+<<<<<<< HEAD
+      <link href="CSS/styles.css" rel="stylesheet" type="text/css" />
+	  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css"/>
+	  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+	  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+</head>
+<body style="background-image: url('images/background.gif'); background-position: center;">
+ <span id="openSidebar" >&#9776;</span>
+<div class="title">
+	<h1 class="info">Lukasz26671</h1>
+	<h3 class="info">Witaj na mojej stronie :D</h3>
+</div>
+<div class="sidenav" id="sidebar">
+	<a href="javascript:void(0)" class="closebtn" id="closebtn">&times;</a><br/>
+	<a onClick="redirectMcMod();" href="#MinecraftMody">Mody</a>
+	<a onClick="redirectMain2();" href="#Kalkulator">Kalkulator</a>
+	<a onClick="redirectMain3();" href="#Źródła">Źródła</a>
+	<a onClick="redirectContact();" href="#Kontakt">Kontakt</a>
+	<a onClick="alert('Hello World!');"href="#HelloWorld">Hello World</a>
+</div>
+<div class="songTitle">
+	<br/>
+	<div class="content" id="content">
+		<p id="song"></p>
+		<div class="controls">
+			<div class="controlbuttons">
+				<i class="material-icons" id="prev">fast_rewind</i>
+				<i class="material-icons" id="playpause">play_arrow</i><!--playpause - changes-->
+				<i class="material-icons" id="next">fast_forward</i>
+			</div>		
+		</div>
+		<div id="progresscontainer">
+			<div id="progressbar"></div>
+		</div>	
+	</div>
+</div>
+<audio id="audiosource">
+	<source type="audio/mpeg"></source>
+</audio>
+	<script src="Skrypty/index.js"></script>
+	<script src="Skrypty/main.js"></script>
+	<script src="Skrypty/Redirect.js"></script>
+	<script src="Skrypty/audio.js"></script>
+=======
+      <link href="CSS/buttons.css" rel="stylesheet" type="text/css"/>
+      <link href="CSS/text.css" rel="stylesheet" type="text/css" />
+      <script src="Skrypty/Redirect.js"></script>
+      <script>
+      function helloWorld() {
+        alert("Witaj świecie!");
+      }
+      </script>
 
-		<style type="text/css">#header > #main {background-image: -moz-linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("images/bg-1.jpg");background-image: -webkit-linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("images/bg-1.jpg");background-image: -ms-linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("images/bg-1.jpg");background-image: linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("images/bg-1.jpg");}
-            body.landing #page-wrapper { background-image: -moz-linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("images/bg-1.jpg");background-image: -webkit-linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("images/bg-1.jpg");background-image: -ms-linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("images/bg-1.jpg"); background-image: linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("images/bg-1.jpg"); }
-            body.is-mobile.landing #banner,body.is-mobile.landing .wrapper.style4 {background-image: -moz-linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("images/bg-1.jpg");background-image: -webkit-linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("images/bg-1.jpg");background-image: -ms-linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("images/bg-1.jpg");background-image: linear-gradient(top, rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url("images/bg-1.jpg");}svg:not(:root).svg-inline--fa{overflow:visible}.svg-inline--fa{display:inline-block;font-size:inherit;height:1em;overflow:visible;vertical-align:-.125em}.svg-inline--fa.fa-lg{vertical-align:-.225em}.svg-inline--fa.fa-w-1{width:.0625em}.svg-inline--fa.fa-w-2{width:.125em}.svg-inline--fa.fa-w-3{width:.1875em}.svg-inline--fa.fa-w-4{width:.25em}.svg-inline--fa.fa-w-5{width:.3125em}.svg-inline--fa.fa-w-6{width:.375em}.svg-inline--fa.fa-w-7{width:.4375em}.svg-inline--fa.fa-w-8{width:.5em}.svg-inline--fa.fa-w-9{width:.5625em}.svg-inline--fa.fa-w-10{width:.625em}.svg-inline--fa.fa-w-11{width:.6875em}.svg-inline--fa.fa-w-12{width:.75em}.svg-inline--fa.fa-w-13{width:.8125em}.svg-inline--fa.fa-w-14{width:.875em}.svg-inline--fa.fa-w-15{width:.9375em}.svg-inline--fa.fa-w-16{width:1em}.svg-inline--fa.fa-w-17{width:1.0625em}.svg-inline--fa.fa-w-18{width:1.125em}.svg-inline--fa.fa-w-19{width:1.1875em}.svg-inline--fa.fa-w-20{width:1.25em}.svg-inline--fa.fa-pull-left{margin-right:.3em;width:auto}.svg-inline--fa.fa-pull-right{margin-left:.3em;width:auto}.svg-inline--fa.fa-border{height:1.5em}.svg-inline--fa.fa-li{width:2em}.svg-inline--fa.fa-fw{width:1.25em}.fa-layers svg.svg-inline--fa{bottom:0;left:0;margin:auto;position:absolute;right:0;top:0}.fa-layers{display:inline-block;height:1em;position:relative;text-align:center;vertical-align:-.125em;width:1em}.fa-layers svg.svg-inline--fa{-webkit-transform-origin:center center;transform-origin:center center}.fa-layers-counter,.fa-layers-text{display:inline-block;position:absolute;text-align:center}.fa-layers-text{left:50%;top:50%;-webkit-transform:translate(-50%,-50%);transform:translate(-50%,-50%);-webkit-transform-origin:center center;transform-origin:center center}.fa-layers-counter{background-color:#ff253a;border-radius:1em;color:#fff;height:1.5em;line-height:1;max-width:5em;min-width:1.5em;overflow:hidden;padding:.25em;right:0;text-overflow:ellipsis;top:0;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:top right;transform-origin:top right}.fa-layers-bottom-right{bottom:0;right:0;top:auto;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:bottom right;transform-origin:bottom right}.fa-layers-bottom-left{bottom:0;left:0;right:auto;top:auto;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:bottom left;transform-origin:bottom left}.fa-layers-top-right{right:0;top:0;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:top right;transform-origin:top right}.fa-layers-top-left{left:0;right:auto;top:0;-webkit-transform:scale(.25);transform:scale(.25);-webkit-transform-origin:top left;transform-origin:top left}.fa-lg{font-size:1.33333em;line-height:.75em;vertical-align:-.0667em}.fa-xs{font-size:.75em}.fa-sm{font-size:.875em}.fa-1x{font-size:1em}.fa-2x{font-size:2em}.fa-3x{font-size:3em}.fa-4x{font-size:4em}.fa-5x{font-size:5em}.fa-6x{font-size:6em}.fa-7x{font-size:7em}.fa-8x{font-size:8em}.fa-9x{font-size:9em}.fa-10x{font-size:10em}.fa-fw{text-align:center;width:1.25em}.fa-ul{list-style-type:none;margin-left:2.5em;padding-left:0}.fa-ul>li{position:relative}.fa-li{left:-2em;position:absolute;text-align:center;width:2em;line-height:inherit}.fa-border{border:solid .08em #eee;border-radius:.1em;padding:.2em .25em .15em}.fa-pull-left{float:left}.fa-pull-right{float:right}.fa.fa-pull-left,.fab.fa-pull-left,.fal.fa-pull-left,.far.fa-pull-left,.fas.fa-pull-left{margin-right:.3em}.fa.fa-pull-right,.fab.fa-pull-right,.fal.fa-pull-right,.far.fa-pull-right,.fas.fa-pull-right{margin-left:.3em}.fa-spin{-webkit-animation:fa-spin 2s infinite linear;animation:fa-spin 2s infinite linear}.fa-pulse{-webkit-animation:fa-spin 1s infinite steps(8);animation:fa-spin 1s infinite steps(8)}@-webkit-keyframes fa-spin{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}@keyframes fa-spin{0%{-webkit-transform:rotate(0);transform:rotate(0)}100%{-webkit-transform:rotate(360deg);transform:rotate(360deg)}}.fa-rotate-90{-webkit-transform:rotate(90deg);transform:rotate(90deg)}.fa-rotate-180{-webkit-transform:rotate(180deg);transform:rotate(180deg)}.fa-rotate-270{-webkit-transform:rotate(270deg);transform:rotate(270deg)}.fa-flip-horizontal{-webkit-transform:scale(-1,1);transform:scale(-1,1)}.fa-flip-vertical{-webkit-transform:scale(1,-1);transform:scale(1,-1)}.fa-flip-horizontal.fa-flip-vertical{-webkit-transform:scale(-1,-1);transform:scale(-1,-1)}:root .fa-flip-horizontal,:root .fa-flip-vertical,:root .fa-rotate-180,:root .fa-rotate-270,:root .fa-rotate-90{-webkit-filter:none;filter:none}.fa-stack{display:inline-block;height:2em;position:relative;width:2em}.fa-stack-1x,.fa-stack-2x{bottom:0;left:0;margin:auto;position:absolute;right:0;top:0}.svg-inline--fa.fa-stack-1x{height:1em;width:1em}.svg-inline--fa.fa-stack-2x{height:2em;width:2em}.fa-inverse{color:#fff}.sr-only{border:0;clip:rect(0,0,0,0);height:1px;margin:-1px;overflow:hidden;padding:0;position:absolute;width:1px}.sr-only-focusable:active,.sr-only-focusable:focus{clip:auto;height:auto;margin:0;overflow:visible;position:static;width:auto}</style>
-	<body class="landing">
+      
+</head>
+<body bgcolor="white">
+<marquee>Strona  wykonana przez Łukasza Piwowar</marquee>
 
-		<!-- Page Wrapper -->
-			<div id="page-wrapper">
+<div>
+ <h1 class="center">Strona główna odsyłacza</h1>
+  <div class="relative-left">
+   <p>Odsyłacze:</p>
+  </div>
+</div>
 
-				<!-- Header -->
-					<header id="header" class="alt">
-						<h1><a href="index.html">Blockfriends</a></h1>
-						<nav id="nav">
-							<ul>
-								<li class="special">
-									<a href="#menu" class="menuToggle"><span>Menu</span></a>			
-								</li>
-							</ul>
-						</nav>
-					</header>
+<p align="left">
+<button class="button1 round" id="b-green" onclick="redirectMcMod();">Minecraft Mody</button><br  /><br />
+<button class="button1 round" id="b-red" onclick="redirectMain2();">Kalkulator</button><br /><br />
+<button class="button1 round" id="b-black" onclick="redirectMain3();">Podziękowania</button><br /><br />
+<button class="button1 round" id="b-blue" onclick="helloWorld();">Witaj świecie!</button><br /> <br />
+<button class="button1 round" id="b-gray" onclick="redirectChVid();">Moje video</button><br /> <br />
 
-				<!-- Banner -->
-					<section id="banner">
-						<div class="inner">
-							<h2 onclick="location.href='index.html';" style="cursor: pointer;">Blockfriends</h2>
-							<p>Najlepszy serwer minecraft w Polsce<br></p>
-							<ul class="actions">
-						<li><a href="#" onclick="window.prompt(&#39;Server IP:&#39;, text);" class="button special big">IPtutaj</a></li>
-                  </ul>
-				            <ul class="actions">
-				                <li><a href="sklep.html" class="button">Sklep</a></li>
-								<li><a href="https://www.facebook.com/BlockFriends-Najlepszy-serwer-w-Polsce-1169206619928434/" target="_blank"
-									 class="button">Facebook</a></li>
-								<li><a href="https://discordapp.com/invite/uPXwReu" target="_blank"class="button">Discord</a></li>
-								<li><a href="kontakt.html" class="button">Kontakt</a></li>
-				            </ul>
-						</div>
-						<a href="#one" class="more scrolly">Sprawdźcie!</a>
-					</section>
+<!--<button class="button1 round" id="b-gray" onclick="redirectSchl();">Strona szkoły W Kamienicy Górnej</button>-->
+</p>
 
-				<!-- One -->
-					<section id="one" class="wrapper style1 special">
-						<div class="inner">
-							<header class="major">
-								<h2>Niesamowite doznania</h2>
-								<p>Przemierzaj naszą krainę i zabijaj niezliczone ilości potworów i graczy.<br>
-                Załóż frakcję, znajdź i zniszcz bazę przeciwników<br>
-                Podbij mapę!</p>
-							</header>
-							<ul class="icons major">
-                <li><svg class="svg-inline--fa fa-gamepad fa-w-20 icon major style1" aria-hidden="true" data-prefix="fas" data-icon="gamepad" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg=""><path fill="currentColor" d="M480 96H160C71.6 96 0 167.6 0 256s71.6 160 160 160c44.8 0 85.2-18.4 114.2-48h91.5c29 29.6 69.5 48 114.2 48 88.4 0 160-71.6 160-160S568.4 96 480 96zM256 276c0 6.6-5.4 12-12 12h-52v52c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-52H76c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h52v-52c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h52c6.6 0 12 5.4 12 12v40zm184 68c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm80-80c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48z"></path></svg><!-- <span class="icon fas fa-gamepad major style1"><span class="label">Trophy</span></span> --></li>
-                <li><svg class="svg-inline--fa fa-gamepad fa-w-20 icon major style2" aria-hidden="true" data-prefix="fas" data-icon="gamepad" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg=""><path fill="currentColor" d="M480 96H160C71.6 96 0 167.6 0 256s71.6 160 160 160c44.8 0 85.2-18.4 114.2-48h91.5c29 29.6 69.5 48 114.2 48 88.4 0 160-71.6 160-160S568.4 96 480 96zM256 276c0 6.6-5.4 12-12 12h-52v52c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-52H76c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h52v-52c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h52c6.6 0 12 5.4 12 12v40zm184 68c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm80-80c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48z"></path></svg><!-- <span class="icon fas fa-gamepad major style2"><span class="label">Trophy</span></span> --></li>
-                <li><svg class="svg-inline--fa fa-gamepad fa-w-20 icon major style3" aria-hidden="true" data-prefix="fas" data-icon="gamepad" role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512" data-fa-i2svg=""><path fill="currentColor" d="M480 96H160C71.6 96 0 167.6 0 256s71.6 160 160 160c44.8 0 85.2-18.4 114.2-48h91.5c29 29.6 69.5 48 114.2 48 88.4 0 160-71.6 160-160S568.4 96 480 96zM256 276c0 6.6-5.4 12-12 12h-52v52c0 6.6-5.4 12-12 12h-40c-6.6 0-12-5.4-12-12v-52H76c-6.6 0-12-5.4-12-12v-40c0-6.6 5.4-12 12-12h52v-52c0-6.6 5.4-12 12-12h40c6.6 0 12 5.4 12 12v52h52c6.6 0 12 5.4 12 12v40zm184 68c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48zm80-80c-26.5 0-48-21.5-48-48s21.5-48 48-48 48 21.5 48 48-21.5 48-48 48z"></path></svg><!-- <span class="icon fas fa-gamepad major style3"><span class="label">Trophy</span></span> --></li>
-							</ul>
-						</div>
-					</section>
 
-				<!-- Two -->
-					<section id="two" class="wrapper alt style2">
-						<section class="spotlight">
-							<div class="image"><img src="images/1.jpg" alt=""></div><div class="content">
-								<h2>Skyblock</h2>
-								<p>Zbieraj surowce, wykonuj zadania i zbuduj wielką wyspę!</p>
-							</div>
-						</section>
-						<section class="spotlight">
-							<div class="image"><img src="images/2.jpg" alt=""></div><div class="content">
-									<h3>Survival + frakcje</h3>
-									<p>Zbieraj surowce, zbierz przyjaciół i załóż potężną gildię. Podbij całą mapę. Bądźcie najsilniejszą frakcją na serwerze!</p>
-							</div>
-						</section>
-						<section class="spotlight">
-							<div class="image"><img src="images/3.jpg" alt=""></div><div class="content">
-								<h2>Creative</h2>
-								<p>Zbuduj sobie wymarzoną strukturę, pokaż ją nam, a my cię nagrodzimy :)</p>
-							</div>
-						</section>
-						<section class="spotlight">
-							<div class="image"><img src="images/4.jpg" alt=""></div><div class="content">
-								<h2>Freebuild + działki</h2>
-								<p>Marzyłeś kiedykolwiek o własnej działce? Dzięki nam twoje marzenie się spełni!</p>
-							</div>
-						</section>
-					</section>
 
-				<!-- Three -->
-					<section id="three" class="wrapper style3 special">
-						<div class="inner">
-							<header class="major">
-								<h2>Więcej wyjątkowych rzeczy na naszym serwerze frakcji</h2>
-								<p>Lekki posmak przygody, która czeka właśnie na ciebie!</p>
-							</header>
-							<ul class="features">
-								<li class="fas fa-bolt">
-									<h3>Uzbrój się</h3>
-									<p>Zabijaj swoich przeciwników nowymi potężnymi brońmi, stworzonymi na potrzebę serwera frakcji</p>
-								</li>
-								<li class="fas fa-grin">
-									<h3>Uczestnicz w eventach</h3>
-									<p>Zrelaksuj się w wielu eventach organizowanych przez administrację i wygrywaj fajne nagrody</p>
-								</li>
-								<li class="fas fa-users">
-									<h3>Poznawaj przyjaciół</h3>
-									<p>Poznaj nowych przyjaciół, zawieraj nowe sojusze i wypowiadaj wojny innym frakcjom</p>
-								</li>
-								<li class="fas fa-bomb">
-									<h3>Podbijaj</h3>
-									<p><strong>Zmieć z powierzchni ziemi</strong> swoich przeciwników i ich bazy</p>
-								</li>
-							</ul>
-						</div>
-					</section>
-          <section id="one" class="wrapper style6 special">
-            <div class="inner">
-              <header class="major">
-                <h2>Na co czekasz?</h2>
-                <p>Dołącz do nas już dziś!</p>
-                <a href="index.html#" onclick="window.prompt(&#39;Server IP:&#39;, text);" class="button special big">IP</a>
-              </header>
-            </div>
-          </section>
 
-				<!-- Footer -->
-					<footer id="footer">
-						<ul class="copyright">
-							<a href="blockfriends.github.io">©Lukasz26671, EIRE_DEV</a>
-						</ul>
-					</footer>
-			</div>
-
-		<!-- Scripts -->
-			<script src="js/jquery.min.js"></script>
-			<script src="js/jquery.scrollex.min.js"></script>
-			<script src="js/jquery.scrolly.min.js"></script>
-			<script src="js/skel.min.js"></script>
-			<script src="js/util.js"></script>
-			<script src="js/main.js"></script>
-			<script src="https://kit.fontawesome.com/c453ad6d0a.js"></script>
-
-	
-<div id="menu">
-		<ul>
-			<!-- Links | link 2, 4 and link 8 will open in a new tab change this by adding or removing the: target="_blank" -->
-			<li><a href="index.html" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Strona główna</a></li>
-			<li><a href="#" onclick="alert('nie posiadamy jeszcze strony do głosowania ;)')"style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Głosuj</a></li>
-			<li><a href="https://discordapp.com/invite/uPXwReu" target="_blank" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Discord</a></li>
-			<li><a href="bany.html" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Bany</a></li>
-			<li><a href="sklep.html" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Sklep</a></li>
-			<li><a href="https://www.facebook.com/BlockFriends-Najlepszy-serwer-w-Polsce-1169206619928434/" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Facebook</a></li>
-			<li><a href="#" target="_blank" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Youtube</a></li>
-			<li><a href="kontakt.html" target="_blank" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);">Kontakt</a></li>
-		</ul>
-		<a href="index.html#menu" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a></div>
-	</body>
+>>>>>>> parent of 1811f65... general update xDDDD
+</body>
 </html>
