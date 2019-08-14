@@ -1,6 +1,6 @@
-let wynikDzialania = document.getElementById('Dzialanie');
+const wynikDzialania = document.getElementById('Dzialanie');
 let mode;
-var Wynik;
+let Wynik;
 
 window.addEventListener('load', ()=>{
 	changeCalcType();

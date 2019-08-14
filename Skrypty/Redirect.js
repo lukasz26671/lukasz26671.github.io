@@ -1,7 +1,7 @@
 //Skrypt sterujacy przyciskami by Lukasz26671
 
 	function redirectBack() { //funkcja przekieruj spowrotem do strony 1
-		setTimeout("location.href='index';", 50);
+		setTimeout("location.href='index.html';", 50);
 	};
 
 	function redirectMain2() { //funkcja przekieruj do strony 2

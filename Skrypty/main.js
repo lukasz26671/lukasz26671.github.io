@@ -34,3 +34,18 @@ function checkCookie(cname) {
   }
 
 }
+
+let url = 'https://raw.githubusercontent.com/lukasz26671/lukasz26671.github.io/master/songs.json';
+
+let json_file;
+fetch(url)
+.then(res => res.json())
+.then((out) => {
+  console.log('Checkout this JSON! ', out);
+  json_file = out;
+})
+.then(() => {
+  songnames = json_file.songs.names;
+  songauthors = json_file.songs.authors;
+})
+.catch(err => { throw err });
