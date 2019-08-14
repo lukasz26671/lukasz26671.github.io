@@ -47,5 +47,6 @@ fetch(url)
 .then(() => {
   songnames = json_file.songs.names;
   songauthors = json_file.songs.authors;
+  num = songnames.length;
 })
 .catch(err => { throw err });

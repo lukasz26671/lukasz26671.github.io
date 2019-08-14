@@ -19,6 +19,7 @@ let audioindex = rnd;
 let isPlaying = false;
 
 //#region sourceassign
+let num;
 function JoinSuffix(num) {
     if(num > 0 || num < songnames.length) {
         audioindex = num;
