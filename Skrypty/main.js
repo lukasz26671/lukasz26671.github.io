@@ -48,5 +48,6 @@ fetch(url)
   songnames = json_file.songs.names;
   songauthors = json_file.songs.authors;
   num = songnames.length;
+  rnd = Math.floor(Math.random() * songnames.length+1);
 })
 .catch(err => { throw err });

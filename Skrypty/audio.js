@@ -12,7 +12,7 @@ const prevbtn = document.getElementById("prev");
 const nextbtn = document.getElementById("next");
 const songname = document.getElementById("song");
 const content = document.getElementById("content");
-let rnd = Math.floor(Math.random() * songnames.length+1);
+let rnd;
 let source = `audio/audio${rnd}.mp3` //random src
 
 let audioindex = rnd;
