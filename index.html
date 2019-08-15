@@ -21,7 +21,20 @@
             background: -webkit-linear-gradient(to right, #1D2671, #C33764);  /* Chrome 10-25, Safari 5.1-6 */
             background: linear-gradient(to right, #1D2671, #C33764); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
         }
-
+        @media screen and (max-width: 736px){
+            body{
+                height: 100vh
+                
+            }
+            #page-wrapper{
+                height: 100vh   
+            }
+            #footer {
+                position: absolute;
+                bottom: 0px;
+                width: 100%;
+            }
+        }
         #opener h2 {
 			-moz-transform: scale(1);
 			-webkit-transform: scale(1);
@@ -135,5 +148,6 @@
     <script src="Skrypty/audio.js"></script>
 	<script src="https://kit.fontawesome.com/c453ad6d0a.js"></script>
 	<script src="Skrypty/Redirect.js"></script>
+
 </body>
 </html>
