@@ -82,7 +82,7 @@ fetch(url)
   source = `audio/audio${rnd}.mp3`
   songname.innerHTML = songauthors[num-1] + "-" + songnames[num-1];
   SetSource(audiosource, rnd)
-  audiosource.volume = 0.1;
+  audiosource.volume = 0.06;
 })
 .catch(err => { throw err });
 

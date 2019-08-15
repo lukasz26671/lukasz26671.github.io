@@ -33,26 +33,15 @@ function NextSong() {
 function PreviousSong() {
     if(audioindex > 0) {
         SetSource(audiosource, audioindex-1);
-    }
-
-    if(audioindex == 5) {
-        song2 = document.createElement("p");
-        songname.appendChild(song2);
-        song2.innerHTML = "CARPENTER, FARRUKO - ON MY WAY"; 
-        content.style.height = "80px";
-    } else {
-        if(song2!=null){
-            song2.innerHTML = ""; 
-            songname.parentNode.removeChild(song2);
-        }
-        content.style.height = "70px";
+        songname.innerHTML = songauthors[audioindex-1] + "-" + songnames[audioindex-1];
     }
 
     if(audioindex == 0) {
         SetSource(audiosource, songnames.length);
         audioindex = songnames.length;
+        songname.innerHTML = songauthors[audioindex-1] + "-" + songnames[audioindex-1];
+
     }
-    songname.innerHTML = songauthors[audioindex-1] + "-" + songnames[audioindex-1];
     audiosource.play();
 }
 //#endregion
@@ -110,4 +99,4 @@ function togglePlay (e) {
 }
 //#endregion
 
-audiosource.volume = 0.1;
+audiosource.volume = 0.06;
