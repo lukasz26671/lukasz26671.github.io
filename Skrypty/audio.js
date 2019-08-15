@@ -110,4 +110,4 @@ function togglePlay (e) {
 }
 //#endregion
 
-audiosource.volume = 0.06;
+audiosource.volume = 0.1;
