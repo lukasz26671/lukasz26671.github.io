@@ -5,7 +5,7 @@
 	};
 
 	function redirectMain2() { //funkcja przekieruj do strony 2
-		setTimeout("location.href='kalkulator';", 50);
+		setTimeout("location.href='kalkulator.html';", 50);
 	};
 
 	function redirectMain3() { //funkcja przekieruj do strony 4
@@ -24,3 +24,6 @@
 	setTimeout("location.href='kontakt.html';", 50);
 	};
 
+	function redirectBot() {
+		location.href = 'bot.html';
+	}

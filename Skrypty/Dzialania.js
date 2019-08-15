@@ -2,18 +2,6 @@ const wynikDzialania = document.getElementById('Dzialanie');
 let mode;
 let Wynik;
 
-window.addEventListener('load', ()=>{
-	changeCalcType();
-});
-
-function changeCalcType() {
-	if(confirm("Wybierz typ kalkulatora. Ok = alertowy, Cancel = inputowy")) {
-		alert("Wybrales kalukator alertowy");
-	} else {
-		alert("Wybrales kalkulator inputowy")
-	}
-}	
-
 function pokazDzialanie(tekst) {
 	wynikDzialania.innerHTML = tekst;
 }

@@ -1,5 +1,16 @@
+let url = 'https://raw.githubusercontent.com/lukasz26671/lukasz26671.github.io/master/songs.json';
+const songname = document.getElementById("song");
 
 const ytapi = ``;
+
+let songnames;
+let songauthors;
+let rnd;
+let num
+let source; //random src
+let audioindex;
+
+let json_songs = fetch(url)
 
 function setCookie(cname, cvalue, exdays) {
   var d = new Date();
@@ -7,6 +18,17 @@ function setCookie(cname, cvalue, exdays) {
   var expires = "expires="+ d.toUTCString();
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
+
+//#region sourceassign
+function JoinSuffix(num) {
+  if(num > 0 || num < 21) {
+      audioindex = num;
+  }
+  source = `audio/audio${audioindex}.mp3`;
+  return `audio/audio${audioindex}.mp3`;
+}
+
+//#endregion
 
 function getCookie(cname) {
   var name = cname + "=";
@@ -35,7 +57,14 @@ function checkCookie(cname) {
 
 }
 
-let url = 'https://raw.githubusercontent.com/lukasz26671/lukasz26671.github.io/master/songs.json';
+
+function SetSource(object, num) {
+
+  object.src = JoinSuffix(num);
+  setCookie("soundindex", num, 0.01)
+     
+}
+
 
 let json_file;
 fetch(url)
@@ -47,7 +76,13 @@ fetch(url)
 .then(() => {
   songnames = json_file.songs.names;
   songauthors = json_file.songs.authors;
-  num = songnames.length;
   rnd = Math.floor(Math.random() * songnames.length+1);
+  num = rnd
+  audioindex = rnd
+  source = `audio/audio${rnd}.mp3`
+  songname.innerHTML = songauthors[num-1] + "-" + songnames[num-1];
+  SetSource(audiosource, rnd)
+  audiosource.volume = 0.06;
 })
 .catch(err => { throw err });
+

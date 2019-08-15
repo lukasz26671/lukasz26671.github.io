@@ -1,70 +1,34 @@
-let json_songs = fetch(url)
-let songnames;
-let songauthors;
-
-window.addEventListener('load', ()=>{
-    json_songs = json_file
-})
 
 const audiosource = document.getElementById("audiosource");
 const playpausebtn = document.getElementById("playpause");
 const prevbtn = document.getElementById("prev");
 const nextbtn = document.getElementById("next");
-const songname = document.getElementById("song");
 const content = document.getElementById("content");
-let rnd;
-let source = `audio/audio${rnd}.mp3` //random src
 
-let audioindex = rnd;
 let isPlaying = false;
 
-//#region sourceassign
-let num;
-function JoinSuffix(num) {
-    if(num > 0 || num < songnames.length) {
-        audioindex = num;
-    }
-    songname.innerHTML = songauthors[num-1] + "-" + songnames[num-1];
-    source = `audio/audio${audioindex}.mp3`;
-    return `audio/audio${audioindex}.mp3`;
-}
 
-function SetSource(object, num) {
-
-    object.src = JoinSuffix(num);
-    setCookie("soundindex", num, 0.01)
-       
-}
-
-//#endregion
-
-//#region autoplay
-    window.addEventListener('click', ()=>{
-
-        let startedYet = false;
-        if(!startedYet) {
-            togglePlay();
-            playpausebtn.innerHTML = "pause";
-            startedYet = true;
-        }
-    })
-//#endregion
+let didInteract;
+window.addEventListener('click', ()=>{
+    if(!didInteract)
+        didInteract = true;
+});
 
 //#region soundcontrols
 let song2;
 function NextSong() {
-    if(audioindex < songnames.length){
-        SetSource(audiosource, audioindex+1);
-    }    
-    if(audioindex == songnames.length) {
-        SetSource(audiosource, 1);
-    }
+        if(audioindex < songnames.length){
+            SetSource(audiosource, audioindex+1);
+        }    
+        if(audioindex == songnames.length) {
+            SetSource(audiosource, 1);
+        }
 
-    if(audioindex == 0) {
-        SetSource(audiosource, 1);
-    }
-    songname.innerHTML = songauthors[audioindex-1] + "-" + songnames[audioindex-1];
-    audiosource.play();
+        if(audioindex == 0) {
+            SetSource(audiosource, 1);
+        }
+        songname.innerHTML = songauthors[audioindex-1] + "-" + songnames[audioindex-1];
+        audiosource.play();
 }
 function PreviousSong() {
     if(audioindex > 0) {
@@ -93,9 +57,6 @@ function PreviousSong() {
 }
 //#endregion
 //#region eventlisteners
-window.addEventListener('load', ()=>{
-    SetSource(audiosource, rnd);
-});
 audiosource.addEventListener('ended', NextSong);
 
 playpausebtn.addEventListener('click', ()=>{
@@ -106,7 +67,7 @@ playpausebtn.addEventListener('click', ()=>{
         playpausebtn.innerHTML = "play_arrow";
     }
 });
-prevbtn.addEventListener('click', PreviousSong);
+prevbtn.addEventListener('click', PreviousSong);;
 nextbtn.addEventListener('click', NextSong);
 //#endregion
 //#region musicprogressbar
@@ -141,12 +102,12 @@ function togglePlay (e) {
     isPlaying = false;
   } else {
     btn.classList.add('active');
-    audiosource.play();
+    if(didInteract)
+        audiosource.src = source;
+        audiosource.play();
     isPlaying = true;
   }
 }
 //#endregion
 
 audiosource.volume = 0.06;
-audiosource.src = source;
-audiosource.load();
