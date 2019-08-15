@@ -25,5 +25,5 @@
 	};
 
 	function redirectBot() {
-		location.href = 'bot.html';
-	}
+		setTimeout("location.href='bot.html';", 50);
+	};
