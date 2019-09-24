@@ -24,8 +24,8 @@ function JoinSuffix(num) {
   if(num > 0 || num < 21) {
       audioindex = num;
   }
-  source = `audio/audio${audioindex}.mp3`;
-  return `audio/audio${audioindex}.mp3`;
+  source = `https://lukasz26671.github.io/audio/audio${audioindex}.mp3`;
+  return `https://lukasz26671.github.io/audio/audio${audioindex}.mp3`;
 }
 
 //#endregion
@@ -79,7 +79,7 @@ fetch(url)
   rnd = Math.floor(Math.random() * songnames.length+1);
   num = rnd
   audioindex = rnd
-  source = `audio/audio${rnd}.mp3`
+  source = `https://lukasz26671.github.io/audio/audio${rnd}.mp3`
   songname.innerHTML = songauthors[num-1] + "-" + songnames[num-1];
   SetSource(audiosource, rnd)
   audiosource.volume = 0.15;
