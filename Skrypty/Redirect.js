@@ -25,5 +25,5 @@
 	};
 
 	function redirectBot() {
-		setTimeout("location.href='bot.html';", 50);
+		setTimeout("location.href='https://lukasz26671.github.io/LukasBot';", 50);
 	};
