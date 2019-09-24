@@ -1,4 +1,4 @@
-let url = 'https://raw.githubusercontent.com/lukasz26671/lukasz26671.github.io/master/songs.json';
+const url = 'https://raw.githubusercontent.com/lukasz26671/lukasz26671.github.io/master/songs.json';
 const songname = document.getElementById("song");
 
 const ytapi = ``;
