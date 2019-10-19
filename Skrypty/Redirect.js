@@ -5,7 +5,7 @@
 	};
 
 	function redirectMain2() { //funkcja przekieruj do strony 2
-		setTimeout("location.href='kalkulator.html';", 50);
+		setTimeout("location.href='https://lukasz26671.github.io/Kalkulator';", 50);
 	};
 
 	function redirectMain3() { //funkcja przekieruj do strony 4
