@@ -21,14 +21,14 @@ loopBox.addEventListener('click', toggleLoop)
 
 function toggleLoop() {
     loop = !loop;
-    updateLoopBox()
+    updateLoopBox(loop)
 }
 
-function updateLoopBox() {
-    if(loop){
+function updateLoopBox(v) {
+    if(v == true){
         loopBox.innerHTML = "loop = T"        
     }
-    else {
+    else if(v == false) {
         loopBox.innerHTML = "loop = F"
     }
 }
@@ -36,10 +36,11 @@ function updateLoopBox() {
 //#region soundcontrols
 let song2;
 function NextSong() {
-        if(audioindex < songnames.length-1){
+    try{
+        if(audioindex < songnames.length){
             SetSource(audiosource, audioindex+1);
         }    
-        if(audioindex == songnames.length-1) {
+        if(audioindex == songnames.length) {
             SetSource(audiosource, 1);
         }
 
@@ -48,6 +49,10 @@ function NextSong() {
         }
         songname.innerHTML = songauthors[audioindex-1] + "-" + songnames[audioindex-1];
         audiosource.play();
+    }
+    catch(DOMException e) {
+        Console.log(e);   
+    }
 }
 function PreviousSong() {
     if(audioindex > 0) {
