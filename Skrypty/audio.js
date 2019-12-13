@@ -40,7 +40,7 @@ function NextSong() {
         if(audioindex < songnames.length){
             SetSource(audiosource, audioindex+1);
         }    
-        if(audioindex == songnames.length) {
+        if(audioindex == songnames.length+1) {
             SetSource(audiosource, 1);
         }
 
