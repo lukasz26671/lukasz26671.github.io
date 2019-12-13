@@ -71,7 +71,7 @@ function PreviousSong() {
 //#endregion
 //#region eventlisteners
 audiosource.addEventListener('ended', ()=>{
-        if(loop) {SetSource(audiosource, audioindex); audiosource.play(); return;}
+        if(loop) {audiosource.play(); return;}
         else {NextSong();}
 });
 
