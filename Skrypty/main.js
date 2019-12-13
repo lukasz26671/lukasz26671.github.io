@@ -59,10 +59,10 @@ function checkCookie(cname) {
 
 
 function SetSource(object, num) {
-
+  try{
   object.src = JoinSuffix(num);
   setCookie("soundindex", num, 0.01)
-     
+  } catch(error) {console.log(error)}
 }
 
 
