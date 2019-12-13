@@ -10,16 +10,27 @@ let isPlaying = false;
 let loop = false;
 let didInteract;
 
-window.addEventListener('load', ()=>{loopBox.checked = loop;});
+window.addEventListener('load', updateLoopBox);
 
 window.addEventListener('click', ()=>{
     if(!didInteract)
         didInteract = true;
 });
 
-loopBox.onChange(()=> {
+loopBox.addEventListener('click', toggleLoop)
+
+function toggleLoop() {
     loop = !loop;
-});
+}
+
+function updateLoopBox() {
+    if(loop){
+        loopBox.innerHTML = "loop = T"        
+    }
+    else {
+        loopBox.innerHTML = "loop = F"
+    }
+}
 
 //#region soundcontrols
 let song2;
