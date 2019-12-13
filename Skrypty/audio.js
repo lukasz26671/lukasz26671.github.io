@@ -21,6 +21,7 @@ loopBox.addEventListener('click', toggleLoop)
 
 function toggleLoop() {
     loop = !loop;
+    updateLoopBox()
 }
 
 function updateLoopBox() {
