@@ -10,7 +10,7 @@ let isPlaying = false;
 let loop = false;
 let didInteract;
 
-window.addEventListener('load', loopBox.checked = loop);
+window.addEventListener('load', ()=>{loopBox.checked = loop;});
 
 window.addEventListener('click', ()=>{
     if(!didInteract)
@@ -24,7 +24,6 @@ loopBox.onChange(()=> {
 //#region soundcontrols
 let song2;
 function NextSong() {
-    if(loop) {return;}
         if(audioindex < songnames.length){
             SetSource(audiosource, audioindex+1);
         }    
@@ -54,7 +53,10 @@ function PreviousSong() {
 }
 //#endregion
 //#region eventlisteners
-audiosource.addEventListener('ended', NextSong);
+audiosource.addEventListener('ended', ()=>{
+        if(loop) {return;}
+        else {NextSong();}
+});
 
 playpausebtn.addEventListener('click', ()=>{
     togglePlay();
