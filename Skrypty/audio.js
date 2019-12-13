@@ -4,19 +4,27 @@ const playpausebtn = document.getElementById("playpause");
 const prevbtn = document.getElementById("prev");
 const nextbtn = document.getElementById("next");
 const content = document.getElementById("content");
+const loopBox = document.getElementById("loop");
 
 let isPlaying = false;
-
-
+let loop = false;
 let didInteract;
+
+window.addEventListener('load', loopBox.checked = loop);
+
 window.addEventListener('click', ()=>{
     if(!didInteract)
         didInteract = true;
 });
 
+loopBox.onChange(()=> {
+    loop = !loop;
+});
+
 //#region soundcontrols
 let song2;
 function NextSong() {
+    if(loop) {return;}
         if(audioindex < songnames.length){
             SetSource(audiosource, audioindex+1);
         }    
