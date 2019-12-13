@@ -50,8 +50,8 @@ function NextSong() {
         songname.innerHTML = songauthors[audioindex-1] + "-" + songnames[audioindex-1];
         audiosource.play();
     }
-    catch(DOMException e) {
-        Console.log(e);   
+    catch(error) {
+        Console.log(error);   
     }
 }
 function PreviousSong() {
