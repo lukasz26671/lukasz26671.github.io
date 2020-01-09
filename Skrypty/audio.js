@@ -17,7 +17,11 @@ window.addEventListener('click', ()=>{
         didInteract = true;
 });
 
-loopBox.addEventListener('click', toggleLoop)
+try{
+    loopBox.addEventListener('click', toggleLoop)
+} catch (error) {
+    
+}
 
 function toggleLoop() {
     loop = !loop;
