@@ -6,11 +6,11 @@ const nextbtn = document.getElementById("next");
 const content = document.getElementById("content");
 const loopBox = document.getElementById("loop");
 
-let isPlaying, loop = false;
+let isPlaying = false;
+let loop = false;
 let didInteract;
 
 window.addEventListener('load', updateLoopBox);
-
 window.addEventListener('click', ()=>{
     if(!didInteract)
         didInteract = true;
@@ -24,17 +24,17 @@ try{
 
 function toggleLoop() {
     loop = !loop;
-    updateLoopBox(loop)
+    updateLoopBox(loop);
 }
 
-function updateLoopBox(v) {
-    if(v){
-        loopBox.innerHTML = "loop = T"        
-    }
-    else
-        loopBox.innerHTML = "loop = F"
+let updateLoopBox = (v) => {
+    if(v) {
+        loopBox.innerHTML = "loop = T";
+    } else {
+        loopBox.innerHTML = "loop = F";
     }
 }
+
 
 //#region soundcontrols
 function NextSong() {
