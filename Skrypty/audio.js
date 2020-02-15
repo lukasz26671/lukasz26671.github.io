@@ -6,8 +6,7 @@ const nextbtn = document.getElementById("next");
 const content = document.getElementById("content");
 const loopBox = document.getElementById("loop");
 
-let isPlaying = false;
-let loop = false;
+let isPlaying, loop = false;
 let didInteract;
 
 window.addEventListener('load', updateLoopBox);
@@ -29,16 +28,15 @@ function toggleLoop() {
 }
 
 function updateLoopBox(v) {
-    if(v == true){
+    if(v){
         loopBox.innerHTML = "loop = T"        
     }
-    else if(v == false) {
+    else
         loopBox.innerHTML = "loop = F"
     }
 }
 
 //#region soundcontrols
-let song2;
 function NextSong() {
     try{
         if(audioindex < songnames.length){
@@ -51,69 +49,80 @@ function NextSong() {
         if(audioindex == 0) {
             SetSource(audiosource, 1);
         }
-        songname.innerHTML = songauthors[audioindex-1] + "-" + songnames[audioindex-1];
+        songname.innerHTML = `${songauthors[audioindex-1]} - ${songnames[audioindex-1]}`;
         audiosource.play();
     }
-    catch(error) {
-        Console.log(error);   
-    }
+    catch(error) {console.log(error);}
 }
 function PreviousSong() {
-    if(audioindex > 0) {
-        SetSource(audiosource, audioindex-1);
-        songname.innerHTML = songauthors[audioindex-1] + "-" + songnames[audioindex-1];
-    }
+    try{
+        if(audioindex > 0) {
+            SetSource(audiosource, audioindex-1);
+            songname.innerHTML = `${songauthors[audioindex-1]} - ${songnames[audioindex-1]}`;
+        }
 
-    if(audioindex == 0) {
-        SetSource(audiosource, songnames.length);
-        audioindex = songnames.length;
-        songname.innerHTML = songauthors[audioindex-1] + "-" + songnames[audioindex-1];
-
-    }
-    audiosource.play();
+        if(audioindex == 0) {
+            SetSource(audiosource, songnames.length);
+            audioindex = songnames.length;
+            songname.innerHTML = `${songauthors[audioindex-1]} - ${songnames[audioindex-1]}`;
+        }
+        audiosource.play();
+    } catch(error) {console.log(error);}
 }
 //#endregion
-//#region eventlisteners
-audiosource.addEventListener('ended', ()=>{
-        if(loop) {audiosource.play(); return;}
-        else {NextSong();}
-});
 
-playpausebtn.addEventListener('click', ()=>{
-    togglePlay();
-    if(isPlaying) {
-        playpausebtn.innerHTML = "pause";
-    } else {
-        playpausebtn.innerHTML = "play_arrow";
-    }
-});
-prevbtn.addEventListener('click', PreviousSong);;
-nextbtn.addEventListener('click', NextSong);
-//#endregion
+
+
 //#region musicprogressbar
 let timer;
 let percent = 0;
-audiosource.addEventListener("playing", function(_event) {
+audiosource.addEventListener("playing", (_event) => {
   let duration = _event.target.duration;
   advance(duration, audiosource);
+  if(!isPlaying) {
+    isPlaying = true;
+    }
+    if(playpausebtn.innerHTML != "play_arrow") {
+        playpausebtn.innerHTML = "play_arrow";
+    }
 });
-audiosource.addEventListener("pause", function(_event) {
+
+audiosource.addEventListener('ended', ()=>{
+    if(loop) {audiosource.play(); return;}
+    else {NextSong();}
+});
+
+playpausebtn.addEventListener('click', ()=>{
+togglePlay();
+if(isPlaying) {
+    playpausebtn.innerHTML = "pause";
+} else {
+    playpausebtn.innerHTML = "play_arrow";
+}
+});
+
+prevbtn.addEventListener('click', PreviousSong);
+nextbtn.addEventListener('click', NextSong);
+
+audiosource.addEventListener("pause", (_event) => {
   clearTimeout(timer);
+  playpausebtn.innerHTML = "pause";
 });
-const advance = function(duration, element) {
+
+const advance = (duration, element) => {
   const progress = document.getElementById("progressbar");
   increment = 10/duration
   percent = Math.min(increment * element.currentTime * 10, 100);
   progress.style.width = percent+'%'
   startTimer(duration, element);
 }
-const startTimer = function(duration, element){ 
+const startTimer = (duration, element) => { 
   if(percent < 100) {
     timer = setTimeout(function (){advance(duration, element)}, 100);
   }
 }
 
-function togglePlay (e) {
+let togglePlay = (e) => {
   e = e || window.event;
   var btn = e.target;
   if (!audiosource.paused) {

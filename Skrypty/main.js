@@ -3,14 +3,8 @@ const songname = document.getElementById("song");
 
 const ytapi = ``;
 
-let songnames;
-let songauthors;
-let rnd;
-let num
-let source; //random src
-let audioindex;
+let songnames, songauthors, rnd, num, source, audioindex;
 
-let json_songs = fetch(url)
 
 function setCookie(cname, cvalue, exdays) {
   var d = new Date();
@@ -30,7 +24,7 @@ function JoinSuffix(num) {
 
 //#endregion
 
-function getCookie(cname) {
+const getCookie = (cname) => {
   var name = cname + "=";
   var decodedCookie = decodeURIComponent(document.cookie);
   var ca = decodedCookie.split(';');
@@ -43,11 +37,9 @@ function getCookie(cname) {
       return c.substring(name.length, c.length);
     }
   }
-  
 }
 
-function checkCookie(cname) {
-
+const checkCookie = (cname) => {
   var cookie = getCookie(cname)
   if(cookie != null || cookie != "") {
     return true;
@@ -57,31 +49,32 @@ function checkCookie(cname) {
 
 }
 
-
-function SetSource(object, num) {
+const SetSource = (object, num) => {
   try{
-  object.src = JoinSuffix(num);
-  setCookie("soundindex", num, 0.01)
+    object.src = JoinSuffix(num);
+    setCookie("soundindex", num, 0.01)
   } catch(error) {console.log(error)}
 }
 
-
 let json_file;
-fetch(url)
-.then(res => res.json())
-.then((out) => {
-  console.log('Checkout this JSON! ', out);
-  json_file = out;
+(()=>{
+  fetch(url)
+  .then(res => res.json())
+  .then((out) => {
+    json_file = out;
+  })
+  .then(() => {
+    songnames = json_file.songs.names;
+    songauthors = json_file.songs.authors;
+    rnd = Math.floor(Math.random() * songnames.length+1);
+    num = rnd
+    audioindex = rnd
+    source = `https://lukasz26671.github.io/audio/audio${rnd}.mp3`
+    songname.innerHTML = songauthors[num-1] + "-" + songnames[num-1];
+    SetSource(audiosource, rnd)
+    audiosource.volume = 0.15;
+  })
+  .catch(err => { throw err });
 })
-.then(() => {
-  songnames = json_file.songs.names;
-  songauthors = json_file.songs.authors;
-  rnd = Math.floor(Math.random() * songnames.length+1);
-  num = rnd
-  audioindex = rnd
-  source = `https://lukasz26671.github.io/audio/audio${rnd}.mp3`
-  songname.innerHTML = songauthors[num-1] + "-" + songnames[num-1];
-  SetSource(audiosource, rnd)
-  audiosource.volume = 0.15;
-})
-.catch(err => { throw err });
+
+
