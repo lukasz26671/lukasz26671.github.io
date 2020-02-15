@@ -27,7 +27,7 @@ function toggleLoop() {
     updateLoopBox(loop);
 }
 
-let updateLoopBox = (v) => {
+var updateLoopBox = (v) => {
     if(v) {
         loopBox.innerHTML = "loop = T";
     } else {
