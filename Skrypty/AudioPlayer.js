@@ -110,6 +110,7 @@ class AudioPlayer {
         }
     }
     setSources(i) {
+        this.audioindex = i;
         this.source = `https://lukasz26671.github.io/audio/audio${i}.mp3`;
         this.audiosource.src = this.source;
         this.songName.innerHTML = `${this.songAuthors[i-1]} - ${this.songNames[i-1]}`;
@@ -160,14 +161,12 @@ class AudioPlayer {
     }
     controls = {
         previousSong: ()=> {
-            if(this.audioindex < this.maxLen) {
+            if(this.audioindex <= this.maxLen) {
                 this.audioindex -=1;
                 this.setSources(this.audioindex);
             }
-            if(this.audiosource == this.maxLen) {
-                this.setSources(1);
-            }
             if(this.audioindex == 0) {
+                this.audioindex = this.maxLen;
                 this.setSources(this.maxLen);
             }
             this.play();
@@ -177,10 +176,8 @@ class AudioPlayer {
                 this.audioindex +=1;
                 this.setSources(this.audioindex);
             }
-            if(this.audiosource == this.maxLen) {
-                this.setSources(0);
-            }
-            if(this.audioindex == 0) {
+            if(this.audioindex >= this.maxLen) {
+                this.audioindex = 1;
                 this.setSources(1);
             }
             this.play();
