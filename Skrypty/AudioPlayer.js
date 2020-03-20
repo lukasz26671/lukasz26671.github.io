@@ -81,7 +81,7 @@ class AudioPlayer {
                 return;
             }
             else {
-                this.nextSong();
+                this.controls.nextSong();
             }
         });
 
