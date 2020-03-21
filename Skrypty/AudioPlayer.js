@@ -183,7 +183,7 @@ class AudioPlayer {
                 this.audioindex -=1;
                 this.setSources(this.audioindex);
             }
-            if(this.audioindex == 0) {
+            if(this.audioindex == -1) {
                 this.audioindex = this.maxLen;
                 this.setSources(this.maxLen);
             }
@@ -195,8 +195,8 @@ class AudioPlayer {
                 this.setSources(this.audioindex);
             }
             if(this.audioindex >= this.maxLen) {
-                this.audioindex = 1;
-                this.setSources(1);
+                this.audioindex = 0;
+                this.setSources(0);
             }
             this.play();
         }
