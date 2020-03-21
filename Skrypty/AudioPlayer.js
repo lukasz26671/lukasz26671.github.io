@@ -1,9 +1,11 @@
 class AudioPlayer {
     songs = null;
-    constructor(volume) {
+    streamingMode = true;
+    constructor(volume, streamingMode=false) {
         this.volume = volume;
         this.initStart = new Date();
         this.init = true;
+        this.streamingMode = streamingMode;
         this.parseSongs();
     }
     parseSongs() {  
@@ -13,8 +15,14 @@ class AudioPlayer {
             this.songJSON = out;
         })
         .then(() => {
-            this.songNames = this.songJSON.songs.names;
-            this.songAuthors = this.songJSON.songs.authors;
+            if(this.streamingMode) {
+                this.ids = this.songJSON.streamingSongs.ID;
+                this.songNames = this.songJSON.streamingSongs.names;
+                this.songAuthors = this.songJSON.streamingSongs.authors;
+            } else {
+                this.songNames = this.songJSON.songs.names;
+                this.songAuthors = this.songJSON.songs.authors;
+            }
             this.maxLen = this.songNames.length;
             this.resolveReferences();
         })
@@ -81,7 +89,7 @@ class AudioPlayer {
                 return;
             }
             else {
-                this.controls.nextSong();
+                this.nextSong();
             }
         });
 
@@ -100,9 +108,14 @@ class AudioPlayer {
             this.rnd = Math.floor(Math.random() * this.maxLen+1);
             this.audioindex = this.rnd;
 
-            this.source = `https://lukasz26671.github.io/audio/audio${this.rnd}.mp3`;
+            if(this.streamingMode) {
+                this.source = `https://website-audioprovider.herokuapp.com/${this.ids[this.rnd]}`
+                this.songName.innerHTML = `${this.songAuthors[this.rnd]} - ${this.songNames[this.rnd]}`;
+            } else {
+                this.source = `https://lukasz26671.github.io/audio/audio${this.rnd}.mp3`;
+                this.songName.innerHTML = `${this.songAuthors[this.rnd-1]} - ${this.songNames[this.rnd-1]}`;
+            }
             this.audiosource.src = this.source;
-            this.songName.innerHTML = `${this.songAuthors[this.rnd-1]} - ${this.songNames[this.rnd-1]}`;
 
             this.init = false;
             this.setListeners();
@@ -111,9 +124,14 @@ class AudioPlayer {
     }
     setSources(i) {
         this.audioindex = i;
-        this.source = `https://lukasz26671.github.io/audio/audio${i}.mp3`;
+        if(this.streamingMode) {
+            this.source = `https://website-audioprovider.herokuapp.com/${this.ids[i]}`
+            this.songName.innerHTML = `${this.songAuthors[i]} - ${this.songNames[i]}`;
+        } else {
+            this.source = `https://lukasz26671.github.io/audio/audio${i}.mp3`;
+            this.songName.innerHTML = `${this.songAuthors[i-1]} - ${this.songNames[i-1]}`;
+        }
         this.audiosource.src = this.source;
-        this.songName.innerHTML = `${this.songAuthors[i-1]} - ${this.songNames[i-1]}`;
     }
     finalizeInitialization() {
         this.audiosource.volume = this.volume;

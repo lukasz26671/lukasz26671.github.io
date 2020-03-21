@@ -1,4 +1,4 @@
-let audioPlayer = new AudioPlayer(0.15);
+let audioPlayer = new AudioPlayer(0.15, true);
 
 window.addEventListener('load', ()=>{
     setTimeout(()=>{
