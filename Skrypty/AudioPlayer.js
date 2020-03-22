@@ -184,8 +184,8 @@ class AudioPlayer {
                 this.setSources(this.audioindex);
             }
             if(this.audioindex == 0) {
-                this.audioindex = this.maxLen;
-                this.setSources(this.maxLen);
+                this.audioindex = this.maxLen-1;
+                this.setSources(this.audioindex);
             }
             this.play();
         },
