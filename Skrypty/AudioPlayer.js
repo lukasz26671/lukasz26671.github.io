@@ -53,45 +53,51 @@ class AudioPlayer {
         }
     }
     updateLoopBox() {
-        this.loop = !this.loop;
-        if(this.loop) {
-            this.loopBox.innerHTML = "loop = TRUE";
-        } else {
-            this.loopBox.innerHTML = "loop = FALSE";
+        try {
+            this.loop = !this.loop;
+            if(this.loop) {
+                this.loopBox.innerHTML = "loop = TRUE";
+            } else {
+                this.loopBox.innerHTML = "loop = FALSE";
+            } 
+        } catch (error) {
+            console.log(error);
         }
     }
     setListeners() {
-        this.loopBox.addEventListener('click', ()=>{
-            this.updateLoopBox();
-        });
-        window.addEventListener('click', ()=>{
-            if(!this.didInteract) {
-                this.didInteract =  true;
-            }
-        })
+        try {
+            this.loopBox.addEventListener('click', ()=>{
+                this.updateLoopBox();
+            });
+        } catch(err) {console.log(err)}
+            window.addEventListener('click', ()=>{
+                if(!this.didInteract) {
+                    this.didInteract =  true;
+                }
+            })
 
-        window.addEventListener('load', ()=> {
-            this.updateLoopBox();
-        })
+            window.addEventListener('load', ()=> {
+                this.updateLoopBox();
+            })
 
-        this.playpausebtn.addEventListener('click', ()=>{
-            this.togglePlay()
-            this.updateControls();
-        });
+            this.playpausebtn.addEventListener('click', ()=>{
+                this.togglePlay()
+                this.updateControls();
+            });
 
-        this.audiosource.addEventListener("pause", (_event) => {
-            clearTimeout(this.timer);
-        });
+            this.audiosource.addEventListener("pause", (_event) => {
+                clearTimeout(this.timer);
+            });
 
-        audiosource.addEventListener('ended', ()=>{
-            if(this.loop) {
-                this.play(); 
-                return;
-            }
-            else {
-                this.nextSong();
-            }
-        });
+            audiosource.addEventListener('ended', ()=>{
+                if(this.loop) {
+                    this.play(); 
+                    return;
+                }
+                else {
+                    this.controls.nextSong();
+                }
+            });
 
         this.audiosource.addEventListener("playing", (_event) => {
             let duration = _event.target.duration;
