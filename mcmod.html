@@ -13,25 +13,24 @@
 	  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<script src="Skrypty/Redirect.js"></script>
 	<script type="text/javascript" src="songs.json"></script>
-<style>
+	<style>
 		body {
 			background-image: url("images/background2.jpg");
 			background-color: #303232;
 		}
-		</style>
+	</style>
 </head>
 <body>
-	
-<div class="back">
-	<button class="medium black round" onclick="redirectBack();">Powróć do strony głównej</button>
-</div>
-<div class="modContainer">
-	<ul>
-		<li class="li2" style="color:#008CBA";><a href="https://github.com/lukasz26671/Lukasz26671Utils/releases" style="text-decoration:none;color:#008CBA;>Lukasz26671 Utils Mod (1.7.10)</a></li>
-	</ul>
-</div>
+	<div class="back">
+		<button class="medium black round" onclick="redirectBack();">Powróć do strony głównej</button>
+	</div>
+	<div class="modContainer">
+		<ul>
+			<li class="li2" style="color:#008CBA";><a href="https://github.com/lukasz26671/Lukasz26671Utils/releases" style="text-decoration:none;color:#008CBA;">Lukasz26671 Utils Mod (1.7.10)</a></li>
+		</ul>
+	</div>
 
-<div class="songTitle">
+	<div class="songTitle">
 		<br/>
 		<div class="content">
 			<p id="song"></p>
@@ -47,9 +46,10 @@
 			</div>	
 		</div>
 	</div>	
-<audio id="audiosource">
-	<source type="audio/mpeg"></source>
-</audio>
+	<audio id="audiosource">
+		<source type="audio/mpeg"></source>
+	</audio>
+	<script defer src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>    
 	<script defer src="Skrypty/AudioPlayer.js"></script>
 	<script defer src="Skrypty/mainrework.js"></script>
 </div>
