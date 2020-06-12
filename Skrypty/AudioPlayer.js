@@ -1,6 +1,7 @@
 class AudioPlayer {
     songs = null;
     streamingMode = true;
+    streamingProvider = 'https://website-audioprovider.herokuapp.com';
     constructor(volume, streamingMode=false) {
         this.volume = volume;
         this.initStart = new Date();
@@ -39,6 +40,7 @@ class AudioPlayer {
             this.nextbtn = document.getElementById("next");
             this.content = document.getElementById("content");
             this.loopBox = document.getElementById("loop");
+            this.sourceInfoParent = document.getElementsByClassName("controlbuttons")[0];
             this.isPlaying = false;
             this.loop = false;
             this.didInteract = false;
@@ -46,6 +48,16 @@ class AudioPlayer {
             this.prevbtn.style.cursor = "pointer";
             this.nextbtn.style.cursor = "pointer";
             this.playpausebtn.style.cursor = "pointer";
+            
+            try {
+                if(document.getElementById("audioSrcInfo") == null) {
+                    let a = document.createElement("p");
+                    a.id = "audioSrcInfo"
+                    this.sourceInfo = this.sourceInfoParent.appendChild(a);
+                }
+                this.sourceInfo.innerHTML = this.streamingMode ? "via Youtube" : "via Local"; 
+            } catch(e) {console.log(e)}
+            
 
             this.setSourcesInit();
         } catch(err) {
@@ -110,6 +122,15 @@ class AudioPlayer {
         this.nextbtn.addEventListener('click', this.controls.nextSong);
     }
     setSourcesInit() {
+        if(this.streamingMode) {
+            fetch(this.streamingProvider, {mode: "no-cors"}).then((res)=>{
+                if(!res.ok) {
+                    this.init = true;
+                    this.reinitialize();
+                }
+            })
+        }
+
         if(this.init) {
             this.rnd = Math.floor(Math.random() * this.maxLen+1);
             this.audioindex = this.rnd;
@@ -127,6 +148,7 @@ class AudioPlayer {
             this.setListeners();
             this.finalizeInitialization();
         }
+ 
     }
     setSources(i) {
         this.audioindex = i;
@@ -145,6 +167,12 @@ class AudioPlayer {
         this.initTime = this.initEnd - this.initStart;
 
         console.log(`Initialization complete after ${this.initTime} ms`);
+    }
+    reinitialize() {
+        console.warn("Streaming mode unavailable, reverting to local audio");
+        this.init = true;
+        this.streamingMode = false;
+        this.parseSongs();
     }
     startTimer(duration, element) {
         if(this.percent < 100) {
