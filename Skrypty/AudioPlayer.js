@@ -76,8 +76,21 @@ class AudioPlayer {
             console.log(error);
         }
     }
+    removeListeners() {
+        this.loopBox.removeEventListener('click');
+        window.removeEventListener('click');
+        window.removeEventListener('load');
+        this.playpausebtn.removeEventListener('click');
+        this.audiosource.removeEventListener('pause');
+        this.audiosource.removeEventListener('ended');
+        this.audiosource.removeEventListener('playing');
+        this.nextbtn.removeEventListener('click');
+        this.prevbtn.removeEventListener('click');
+    }
     setListeners() {
         try {
+            this.removeListeners();
+
             this.loopBox.addEventListener('click', ()=>{
                 this.updateLoopBox();
             });
@@ -101,7 +114,7 @@ class AudioPlayer {
                 clearTimeout(this.timer);
             });
 
-            audiosource.addEventListener('ended', ()=>{
+            this.audiosource.addEventListener('ended', ()=>{
                 if(this.loop) {
                     this.play(); 
                     return;
@@ -123,8 +136,9 @@ class AudioPlayer {
     }
     setSourcesInit() {
         if(this.streamingMode) {
-            fetch(this.streamingProvider, {mode: "no-cors"}).then((res)=>{
+            fetch(this.streamingProvider, {method: "GET"}).then((res)=>{
                 if(!res.ok) {
+                    console.log(res)
                     this.init = true;
                     this.reinitialize();
                 }
@@ -145,7 +159,7 @@ class AudioPlayer {
             this.audiosource.src = this.source;
 
             this.init = false;
-            this.setListeners();
+            if(!this.reinit) this.setListeners();
             this.finalizeInitialization();
         }
  
@@ -171,6 +185,7 @@ class AudioPlayer {
     reinitialize() {
         console.warn("Streaming mode unavailable, reverting to local audio");
         this.init = true;
+        this.reinit = true;
         this.streamingMode = false;
         this.parseSongs();
     }
@@ -178,6 +193,9 @@ class AudioPlayer {
         if(this.percent < 100) {
             this.timer = setTimeout(()=>{this.advance(duration, element)}, 100);
         }
+    }
+    destroy() {
+        this.removeListeners();
     }
     togglePlay(e) {
         e = e || window.event;
@@ -242,7 +260,10 @@ class AudioPlayer {
         this.audiosource.pause();
     }
 }
-
+var removeAudioPlayer = function(audioPlayer) {
+    audioPlayer.destroy();
+    audioPlayer = null;
+}
             /*rnd = Math.floor(Math.random() * songnames.length+1);
             num = rnd
             audioindex = rnd
