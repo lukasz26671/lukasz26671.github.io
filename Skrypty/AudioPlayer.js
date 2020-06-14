@@ -123,7 +123,7 @@ class AudioPlayer {
     }
     setSourcesInit() {
         if(this.streamingMode) {
-            fetch(this.streamingProvider, {mode: "no-cors"}).then((res)=>{
+            fetch(this.streamingProvider, {method: "GET"}).then((res)=>{
                 if(!res.ok) {
                     this.init = true;
                     this.reinitialize();
