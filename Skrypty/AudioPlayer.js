@@ -65,7 +65,7 @@ class AudioPlayer {
             this.sourceInfo.innerHTML = this.streamingMode
                 ? "via Youtube"
                 : "via Local";
-            this.sourceInfo.style.fontSize = '10px';
+            this.sourceInfo.style.fontSize = "10px";
             g.playbackSource = this.streamingMode ? "via Youtube" : "via Local";
 
             this.setSourcesInit();
@@ -75,13 +75,13 @@ class AudioPlayer {
     }
     updateToggles(t) {
         try {
-            if(t == 'loop') {
+            if (t == "loop") {
                 this.loop = !this.loop;
-                this.loopBox.style.opacity = this.loop ? '1' : '0.3';
-            } 
-            if(t == 'randomize') {
+                this.loopBox.style.opacity = this.loop ? "1" : "0.3";
+            }
+            if (t == "randomize") {
                 this.randomMode = !this.randomMode;
-                this.randomize.style.opacity = this.randomMode ? '1' : '0.3';
+                this.randomize.style.opacity = this.randomMode ? "1" : "0.3";
             }
         } catch (error) {
             console.log(error);
@@ -92,10 +92,10 @@ class AudioPlayer {
         if (!g.audioPlayerListenersSet) {
             try {
                 this.loopBox.addEventListener("click", () => {
-                    this.updateToggles('loop');
+                    this.updateToggles("loop");
                 });
                 this.randomize.addEventListener("click", () => {
-                    this.updateToggles('randomize');
+                    this.updateToggles("randomize");
                 });
             } catch (err) {
                 console.log(err);
@@ -242,16 +242,24 @@ class AudioPlayer {
 
     controls = {
         previousSong: () => {
-            if(this.randomMode) {
-                if(this.double == true) {
+            if (this.randomMode) {
+                if (this.double == true) {
                     this.double = false;
-                    this.audioindex--;
-                    this.setSources(this.audioindex - 1);
+                    this.audioindex =
+                        this.audioindex <= 0
+                            ? this.maxLen - 1
+                            : this.audioindex - 1;
+
+                    this.setSources(this.audioindex);
+
                     clearInterval(this.rewindtimer);
                 } else {
                     this.setSources(this.audioindex);
                     this.double = true;
-                    this.rewindtimer = setInterval(() => this.double = false, 10000)
+                    this.rewindtimer = setInterval(
+                        () => (this.double = false),
+                        10000
+                    );
                 }
             } else {
                 if (this.audioindex <= this.maxLen) {
@@ -263,13 +271,12 @@ class AudioPlayer {
                     this.setSources(this.audioindex);
                 }
             }
-            
 
             this.play();
         },
         nextSong: () => {
-            if(this.randomMode) {
-                this.audioindex = getRandomInt(0, this.maxLen+1)
+            if (this.randomMode) {
+                this.audioindex = getRandomInt(0, this.maxLen + 1);
                 this.setSources(this.audioindex);
             } else {
                 if (this.audioindex < this.maxLen) {
@@ -310,6 +317,6 @@ function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
     let f = Math.floor(Math.random() * (max - min + 1)) + min;
-    if (f < 0) f*=-1;
+    if (f < 0) f *= -1;
     return f;
 }
