@@ -277,7 +277,7 @@ class AudioPlayer {
         },
         nextSong: () => {
             if (this.randomMode) {
-                this.audioindex = getRandomInt(0, this.maxLen + 1);
+                this.audioindex = getRandomInt(0, this.maxLen);
                 this.setSources(this.audioindex);
             } else {
                 if (this.audioindex < this.maxLen) {
