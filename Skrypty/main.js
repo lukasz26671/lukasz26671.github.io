@@ -6,9 +6,6 @@ const audioInit = new Promise((resolve, reject) => {
     }
 }).then((ap) => {
     audioPlayer = ap;
-    setTimeout(() => {
-        ap.updateLoopBox();
-    }, 100);
 });
 
 const redirectInit = new Promise((resolve, reject) => {

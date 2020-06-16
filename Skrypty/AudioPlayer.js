@@ -2,6 +2,9 @@ class AudioPlayer {
     songs = null;
     streamingMode = true;
     streamingProvider = "https://website-audioprovider.herokuapp.com";
+    randomMode = false;
+    double = false; //double confirm to go back on random mode
+
     constructor(volume, streamingMode = false) {
         this.volume = volume;
         this.initStart = new Date();
@@ -42,6 +45,7 @@ class AudioPlayer {
             this.nextbtn = document.getElementById("next");
             this.content = document.getElementById("content");
             this.loopBox = document.getElementById("loop");
+            this.randomize = document.getElementById("random");
             this.sourceInfoParent = document.getElementsByClassName(
                 "controlbuttons"
             )[0];
@@ -69,10 +73,16 @@ class AudioPlayer {
             throw err;
         }
     }
-    updateLoopBox() {
+    updateToggles(t) {
         try {
-            this.loop = !this.loop;
-            this.loopBox.innerHTML = this.loop ? "loop = TRUE" : "loop = FALSE";
+            if(t == 'loop') {
+                this.loop = !this.loop;
+                this.loopBox.style.opacity = this.loop ? '1' : '0.3';
+            } 
+            if(t == 'randomize') {
+                this.randomMode = !this.randomMode;
+                this.randomize.style.opacity = this.randomMode ? '1' : '0.3';
+            }
         } catch (error) {
             console.log(error);
         }
@@ -82,7 +92,10 @@ class AudioPlayer {
         if (!g.audioPlayerListenersSet) {
             try {
                 this.loopBox.addEventListener("click", () => {
-                    this.updateLoopBox();
+                    this.updateToggles('loop');
+                });
+                this.randomize.addEventListener("click", () => {
+                    this.updateToggles('randomize');
                 });
             } catch (err) {
                 console.log(err);
@@ -224,27 +237,52 @@ class AudioPlayer {
                 break;
         }
     }
+
+    rewindtimer = null;
+
     controls = {
         previousSong: () => {
-            if (this.audioindex <= this.maxLen) {
-                this.audioindex -= 1;
-                this.setSources(this.audioindex);
+            if(this.randomMode) {
+                if(this.double == true) {
+                    this.double = false;
+                    this.audioindex--;
+                    this.setSources(this.audioindex - 1);
+                    clearInterval(this.rewindtimer);
+                } else {
+                    this.setSources(this.audioindex);
+                    this.double = true;
+                    this.rewindtimer = setInterval(() => this.double = false, 5000)
+                }
+            } else {
+                if (this.audioindex <= this.maxLen) {
+                    this.audioindex -= 1;
+                    this.setSources(this.audioindex);
+                }
+                if (this.audioindex == 0) {
+                    this.audioindex = this.maxLen - 1;
+                    this.setSources(this.audioindex);
+                }
             }
-            if (this.audioindex == 0) {
-                this.audioindex = this.maxLen - 1;
-                this.setSources(this.audioindex);
-            }
+            
+
             this.play();
         },
         nextSong: () => {
-            if (this.audioindex < this.maxLen) {
-                this.audioindex += 1;
+            if(this.randomMode) {
+                this.audioindex = getRandomInt(0, this.maxLen+1)
                 this.setSources(this.audioindex);
+            } else {
+                if (this.audioindex < this.maxLen) {
+                    this.audioindex += 1;
+                    this.setSources(this.audioindex);
+                }
+                if (this.audioindex >= this.maxLen) {
+                    this.audioindex = 0;
+                    this.setSources(0);
+                }
             }
-            if (this.audioindex >= this.maxLen) {
-                this.audioindex = 0;
-                this.setSources(0);
-            }
+            this.double = false;
+            clearInterval(this.rewindtimer);
             this.play();
         },
     };
@@ -268,3 +306,8 @@ var removeAudioPlayer = function (audioPlayer) {
     SetSource(audiosource, rnd)
     audiosource.volume = 0.15;
 */
+function getRandomInt(min, max) {
+    min = Math.ceil(min);
+    max = Math.floor(max);
+    return Math.floor(Math.random() * (max - min + 1)) + min;
+}

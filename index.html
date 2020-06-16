@@ -564,6 +564,16 @@
         #menu2>ul>li:last-child {
             cursor: default;
         }
+        .controlbuttons > i {
+            cursor: pointer;
+        }
+        .controlbuttons > i::selection {
+            background: transparent;
+        }
+        .noselect {
+            -moz-user-select: none;
+            -webkit-user-select: none;
+        }
     </style>
     <script src="https://kit.fontawesome.com/c453ad6d0a.js"></script>
 </head>
@@ -623,14 +633,14 @@
             <li style="cursor: default;">
                 <br>
                 <p id="song"></p>
-                <div class="content" id="content">
+                <div class="content noselect" id="content">
                     <div class="controls">
-                        <div class="controlbuttons">
-                            <i class="material-icons" id="prev">fast_rewind</i>
+                        <div class="controlbuttons ">
+                            <i class="material-icons " id="prev">fast_rewind</i>
                             <i class="material-icons" id="playpause">play_arrow</i>
-                            <!--playpause - changes-->
                             <i class="material-icons" id="next">fast_forward</i>
-                            <span id="loop" style="cursor:pointer">Loop</span>
+                            <i class="material-icons" id="random" style="opacity: 0.3" aria-hidden="true">shuffle</i>
+                            <i class="material-icons" id="loop" style="opacity: 0.3;">loop</i>
                         </div>
                     </div>
                     <div id="progresscontainer">
