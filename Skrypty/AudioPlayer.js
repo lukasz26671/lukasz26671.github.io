@@ -251,7 +251,7 @@ class AudioPlayer {
                 } else {
                     this.setSources(this.audioindex);
                     this.double = true;
-                    this.rewindtimer = setInterval(() => this.double = false, 5000)
+                    this.rewindtimer = setInterval(() => this.double = false, 10000)
                 }
             } else {
                 if (this.audioindex <= this.maxLen) {
@@ -309,5 +309,7 @@ var removeAudioPlayer = function (audioPlayer) {
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
-    return Math.floor(Math.random() * (max - min + 1)) + min;
+    let f = Math.floor(Math.random() * (max - min + 1)) + min;
+    if (f < 0) f*=-1;
+    return f;
 }
