@@ -27,15 +27,6 @@ class Global {
     onload = [audioInit, redirectInit];
 
     constructor() {}
-
-    //#region initializing
-    initializeAudioPlayer() {
-        audioPlayer = new AudioPlayer(0.15, true);
-    }
-    initializeRedirectHandler() {
-        r = new RedirectHandler();
-    }
-    //#endregion
 }
 
 window.addEventListener("load", () => {

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="pl">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -566,19 +565,8 @@
             cursor: default;
         }
     </style>
-    <script defer>
-        const calc = document.getElementById("Kalkulator");
-        const mods = document.getElementById("MinecraftMody");
-        const sources = document.getElementById("Zrodla");
-        const contact = document.getElementById("Kontakt");
-        calc.addEventListener('click', () => r.redirect(r.destinations.calc))
-        mods.addEventListener('click', () => r.redirect(r.destinations.mods))
-        sources.addEventListener('click', () => r.redirect(r.destinations.sources))
-        contact.addEventListener('click', () => r.redirect(r.destinations.contact));
-    </script>
     <script src="https://kit.fontawesome.com/c453ad6d0a.js"></script>
 </head>
-
 <body class="landing">
     <audio id="audiosource">
         <source type="audio/mpeg">
@@ -665,4 +653,14 @@
     <script defer src="Skrypty/AudioPlayer.js"></script>
     <script defer src="Skrypty/main.js"></script>
 </body>
+    <script defer>
+        const calc = document.getElementById("Kalkulator");
+        const mods = document.getElementById("MinecraftMody");
+        const sources = document.getElementById("Zrodla");
+        const contact = document.getElementById("Kontakt");
+        calc.addEventListener('click', () => r.redirect(r.destinations.calc))
+        mods.addEventListener('click', () => r.redirect(r.destinations.mods))
+        sources.addEventListener('click', () => r.redirect(r.destinations.sources))
+        contact.addEventListener('click', () => r.redirect(r.destinations.contact));
+    </script>
 </html>
