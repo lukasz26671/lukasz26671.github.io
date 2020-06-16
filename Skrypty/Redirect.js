@@ -1,29 +1,39 @@
-//Skrypt sterujacy przyciskami by Lukasz26671
+class RedirectHandler {
+	initialized = false;
 
-	function redirectBack() { //funkcja przekieruj spowrotem do strony 1
-		setTimeout("location.href='index.html';", 50);
-	};
+	destinations = {
+		main: () => {
+			setTimeout("location.href='index.html';", 50);
+		},
+		calc: () => {
+			setTimeout("location.href='/Kalkulator';", 50);
+		},
+		sources: () => {
+			location.href='zrodla.html';
+		},
+		mods: () => {
+			location.href='mcmod.html';
+		},
+		contact: () => {
+			location.href='kontakt.html';		
+		},
+		channel: () => {
+			window.open('https://www.youtube.com/channel/UCWTjTkGZCSf5-XEZKUMQxoQ?view_as=subscriber', '_blank');
+		},
+		discordBot: () => {
+			location.href='/LukasBot';
+		}
+	}
 
-	function redirectMain2() { //funkcja przekieruj do strony 2
-		setTimeout("location.href='https://lukasz26671.github.io/Kalkulator';", 50);
-	};
+	redirect(destination) {
+		if(typeof destination != 'function') {
+			console.error(`Redirect destination must be a function and implement a redirect method.`);
+			return;
+		}
+		setTimeout(destination, 50);
+	}
 
-	function redirectMain3() { //funkcja przekieruj do strony 4
-		setTimeout("location.href='zrodla.html';", 50);
-	};
-
-	function redirectMcMod() { //funkcja przekieruj do video3
-		setTimeout("location.href='mcmod.html';", 50);
-	};
-
-	function redirectChn() {
-		setTimeout("window.open('https://www.youtube.com/channel/UCWTjTkGZCSf5-XEZKUMQxoQ?view_as=subscriber', '_blank');", 50);
-	};
-
-	function redirectContact() { //funkcja przekieruj do kontakt
-	setTimeout("location.href='kontakt.html';", 50);
-	};
-
-	function redirectBot() {
-		setTimeout("location.href='https://lukasz26671.github.io/LukasBot';", 50);
-	};
+	constructor() {
+		this.initialized = true;
+	}
+}

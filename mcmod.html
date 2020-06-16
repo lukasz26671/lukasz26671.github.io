@@ -22,7 +22,7 @@
 </head>
 <body>
 	<div class="back">
-		<button class="medium black round" onclick="redirectBack();">Powróć do strony głównej</button>
+		<button id="back" class="medium black round">Powróć do strony głównej</button>
 	</div>
 	<div class="modContainer">
 		<ul>
@@ -51,7 +51,10 @@
 	</audio>
 	<script defer src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>    
 	<script defer src="Skrypty/AudioPlayer.js"></script>
-	<script defer src="Skrypty/mainrework.js"></script>
+	<script defer src="Skrypty/Redirect.js"></script>
+	<script defer src="Skrypty/main.js"></script>
+	<script>document.getElementById("back").addEventListener('click', ()=> r.redirect(r.destinations.main))</script>
+
 </div>
 </body>
 </html>
