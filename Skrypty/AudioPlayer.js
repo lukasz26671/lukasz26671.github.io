@@ -271,6 +271,7 @@ class AudioPlayer {
                     this.setSources(this.audioindex);
                 }
             }
+            this.playpausebtn.innerHTML = "pause";
 
             this.play();
         },
@@ -287,6 +288,8 @@ class AudioPlayer {
                     this.audioindex = 0;
                     this.setSources(0);
                 }
+                this.playpausebtn.innerHTML = "pause";
+
             }
             this.double = false;
             clearInterval(this.rewindtimer);
