@@ -557,6 +557,25 @@
             background: none;
         }
     </style>
+    <style>
+        #menu2>ul>li {
+            cursor: pointer;
+        }
+
+        #menu2>ul>li:last-child {
+            cursor: default;
+        }
+    </style>
+    <script defer>
+        const calc = document.getElementById("Kalkulator");
+        const mods = document.getElementById("MinecraftMody");
+        const sources = document.getElementById("Zrodla");
+        const contact = document.getElementById("Kontakt");
+        calc.addEventListener('click', () => r.redirect(r.destinations.calc))
+        mods.addEventListener('click', () => r.redirect(r.destinations.mods))
+        sources.addEventListener('click', () => r.redirect(r.destinations.sources))
+        contact.addEventListener('click', () => r.redirect(r.destinations.contact));
+    </script>
     <script src="https://kit.fontawesome.com/c453ad6d0a.js"></script>
 </head>
 
@@ -634,15 +653,7 @@
         </ul>
         <a href="index.html#menu2" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a>
     </div>
-    <style>
-        #menu2>ul>li {
-            cursor: pointer;
-        }
-
-        #menu2>ul>li:last-child {
-            cursor: default;
-        }
-    </style>
+    
     <script defer src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script defer src="Skrypty/jquery.scrollex.min.js"></script>
@@ -653,16 +664,5 @@
     <script defer src="Skrypty/Redirect.js"></script>
     <script defer src="Skrypty/AudioPlayer.js"></script>
     <script defer src="Skrypty/main.js"></script>
-    <script>
-        const calc = document.getElementById("Kalkulator");
-        const mods = document.getElementById("MinecraftMody");
-        const sources = document.getElementById("Zrodla");
-        const contact = document.getElementById("Kontakt");
-        calc.addEventListener('click', () => r.redirect(r.destinations.calc))
-        mods.addEventListener('click', () => r.redirect(r.destinations.mods))
-        sources.addEventListener('click', () => r.redirect(r.destinations.sources))
-        contact.addEventListener('click', () => r.redirect(r.destinations.contact));
-    </script>
 </body>
-
 </html>
