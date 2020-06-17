@@ -148,7 +148,7 @@ class AudioPlayer {
         }
 
         if (this.init) {
-            this.rnd = Math.floor(Math.random() * this.maxLen + 1);
+            this.rnd = Math.floor(Math.random() * this.maxLen - 1);
             this.audioindex = this.rnd;
 
             if (this.streamingMode) {
@@ -266,7 +266,7 @@ class AudioPlayer {
                     this.audioindex -= 1;
                     this.setSources(this.audioindex);
                 }
-                if (this.audioindex == 0) {
+                if (this.audioindex <= 0) {
                     this.audioindex = this.maxLen - 1;
                     this.setSources(this.audioindex);
                 }
@@ -289,7 +289,6 @@ class AudioPlayer {
                     this.setSources(0);
                 }
                 this.playpausebtn.innerHTML = "pause";
-
             }
             this.double = false;
             clearInterval(this.rewindtimer);

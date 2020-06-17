@@ -1,3 +1,4 @@
+
 const audioInit = new Promise((resolve, reject) => {
     try {
         resolve(new AudioPlayer(0.15, true));
@@ -42,3 +43,7 @@ window.addEventListener("load", () => {
 var g = new Global();
 var audioPlayer;
 var r;
+
+document.addEventListener('swiped-left', ()=> {
+    document.body.classList.add("is-menu-visible");
+})

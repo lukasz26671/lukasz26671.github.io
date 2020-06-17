@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Lukasz26671</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="./CSS/style.css">
     <link rel="stylesheet" href="./CSS/main.css">
     <link rel="stylesheet" href="./CSS/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <script defer src="Skrypty/swiped-events.js"></script>
     <style>
         body.landing #page-wrapper {
             background: #c31432;
@@ -574,8 +576,35 @@
             -moz-user-select: none;
             -webkit-user-select: none;
         }
+        @media not screen and (max-device-width : 640px), not screen and (max-device-width: 768px) {
+            #song {
+                height: 50px; 
+                padding: 2px 1px; 
+                margin-top: 15px; 
+                margin-bottom: 30px;
+            }
+        }
+        @media only screen and (max-device-width : 640px), only screen and (max-device-width: 768px) {
+            #song {
+                height: 50px; 
+                padding: 2px 1px; 
+                margin-top: 15px; 
+                margin-bottom: 10px;
+            }
+        }
+
     </style>
     <script src="https://kit.fontawesome.com/c453ad6d0a.js"></script>
+    <script defer>
+        const calc = document.getElementById("Kalkulator");
+        const mods = document.getElementById("MinecraftMody");
+        const sources = document.getElementById("Zrodla");
+        const contact = document.getElementById("Kontakt");
+        calc.addEventListener('click', () => r.redirect(r.destinations.calc))
+        mods.addEventListener('click', () => r.redirect(r.destinations.mods))
+        sources.addEventListener('click', () => r.redirect(r.destinations.sources))
+        contact.addEventListener('click', () => r.redirect(r.destinations.contact));
+    </script>
 </head>
 <body class="landing">
     <audio id="audiosource">
@@ -630,16 +659,15 @@
             <li><a href="bashprot.html">Bash prototype</a></li>
             <li><a href="songlist.html">Track list playera</a></li>
             <li><a onClick="alert('Hello World!');" href="#HelloWorld">Hello World</a></li>
-            <li style="cursor: default;">
-                <br>
-                <p id="song"></p>
+            <li class="text-center" style="border-color: white;cursor: default">
+                <p id="song" style=" vertical-align: middle;"></p>
                 <div class="content noselect" id="content">
                     <div class="controls">
-                        <div class="controlbuttons ">
+                        <div class="controlbuttons">
+                            <i class="material-icons" id="random" style="opacity: 0.3" aria-hidden="true">shuffle</i>
                             <i class="material-icons " id="prev">fast_rewind</i>
                             <i class="material-icons" id="playpause">play_arrow</i>
                             <i class="material-icons" id="next">fast_forward</i>
-                            <i class="material-icons" id="random" style="opacity: 0.3" aria-hidden="true">shuffle</i>
                             <i class="material-icons" id="loop" style="opacity: 0.3;">loop</i>
                         </div>
                     </div>
@@ -651,7 +679,6 @@
         </ul>
         <a href="index.html#menu2" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a>
     </div>
-    
     <script defer src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script defer src="Skrypty/jquery.scrollex.min.js"></script>
@@ -663,14 +690,4 @@
     <script defer src="Skrypty/AudioPlayer.js"></script>
     <script defer src="Skrypty/main.js"></script>
 </body>
-    <script defer>
-        const calc = document.getElementById("Kalkulator");
-        const mods = document.getElementById("MinecraftMody");
-        const sources = document.getElementById("Zrodla");
-        const contact = document.getElementById("Kontakt");
-        calc.addEventListener('click', () => r.redirect(r.destinations.calc))
-        mods.addEventListener('click', () => r.redirect(r.destinations.mods))
-        sources.addEventListener('click', () => r.redirect(r.destinations.sources))
-        contact.addEventListener('click', () => r.redirect(r.destinations.contact));
-    </script>
 </html>
