@@ -149,7 +149,9 @@ class AudioPlayer {
 
         if (this.init) {
             this.rnd = Math.floor(Math.random() * this.maxLen - 1);
-            this.rnd = this.maxLen - 1;
+
+            this.rnd = this.maxLen - 1; //The Champion temporary 
+
             this.audioindex = this.rnd;
 
             if (this.streamingMode) {
