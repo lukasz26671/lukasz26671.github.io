@@ -48,13 +48,17 @@ document.addEventListener('swiped-left', ()=> {
     document.body.classList.add("is-menu-visible");
 })
 
-const calc = document.getElementById("Kalkulator");
-const mods = document.getElementById("MinecraftMody");
-const sources = document.getElementById("Zrodla");
-const contact = document.getElementById("Kontakt");
-
-calc.addEventListener('click', () => r.redirect(r.destinations.calc))
-mods.addEventListener('click', () => r.redirect(r.destinations.mods))
-sources.addEventListener('click', () => r.redirect(r.destinations.sources))
-contact.addEventListener('click', () => r.redirect(r.destinations.contact));
+try {
+    const calc = document.getElementById("Kalkulator");
+    const mods = document.getElementById("MinecraftMody");
+    const sources = document.getElementById("Zrodla");
+    const contact = document.getElementById("Kontakt");
+    
+    calc.addEventListener('click', () => r.redirect(r.destinations.calc))
+    mods.addEventListener('click', () => r.redirect(r.destinations.mods))
+    sources.addEventListener('click', () => r.redirect(r.destinations.sources))
+    contact.addEventListener('click', () => r.redirect(r.destinations.contact));
+} catch (error) {
+    console.log(error);
+}
 
