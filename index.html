@@ -7,6 +7,7 @@
     <title>Lukasz26671</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link rel="stylesheet" href="./CSS/style.css">
+    <link rel="stylesheet" href="./CSS/UL.css">
     <link rel="stylesheet" href="./CSS/main.css">
     <link rel="stylesheet" href="./CSS/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
@@ -573,10 +574,7 @@
         .controlbuttons > i::selection {
             background: transparent;
         }
-        .noselect {
-            -moz-user-select: none;
-            -webkit-user-select: none;
-        }
+
         @media not screen and (max-device-width : 640px), not screen and (max-device-width: 768px) {
             #song {
                 height: 50px; 
@@ -646,7 +644,7 @@
             <li><a onClick="alert('Hello World!');" href="#HelloWorld">Hello World</a></li>
             <li class="text-center" style="border-color: white;cursor: default">
                 <p id="song" style=" vertical-align: middle;"></p>
-                <div class="content noselect" id="content">
+                <div class="content unselectable" id="content">
                     <div class="controls">
                         <div class="controlbuttons">
                             <i class="material-icons" id="random" style="opacity: 0.3" aria-hidden="true">shuffle</i>
