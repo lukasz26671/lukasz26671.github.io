@@ -160,7 +160,7 @@ class AudioPlayer {
     }
     setSourcesInit() {
         if(this.spreadsheetMode) {
-            fetch(this.sourceProvider, { method: "GET" }).then((res) => {
+            fetch(this.sourceProvider + '/readplaylist').then((res) => { //todo remove 2 api calls
                 if (!res.ok) {
                     console.log(res);
                     this.init = true;
