@@ -2,20 +2,41 @@ class AudioPlayer {
     songs = null;
     streamingMode = true;
     streamingProvider = "https://website-audioprovider.herokuapp.com";
+    sourceProvider = "https://website-sourceprovider.herokuapp.com"
     randomMode = false;
     double = false; //double confirm to go back on random mode
 
-    constructor(volume, streamingMode = false) {
+    constructor(volume, streamingMode = false, spreadsheetMode = false) {
         this.volume = volume;
         this.initStart = new Date();
         this.init = true;
         this.streamingMode = streamingMode;
+        this.spreadsheetMode = spreadsheetMode;
         this.parseSongs();
     }
     parseSongs() {
-        fetch(
-            "https://raw.githubusercontent.com/lukasz26671/lukasz26671.github.io/master/songs.json"
-        )
+        if(this.spreadsheetMode && this.streamingMode) {
+            fetch(this.sourceProvider + '/readplaylist')
+            .then(res => res.json())
+            .then(songJSON => {
+                this.songJSON = songJSON
+
+                this.songAuthors = this.songJSON.authors;
+                this.songNames = this.songJSON.titles;
+                this.ids = this.songJSON.IDs;
+
+                this.maxLen = this.songNames.length;
+
+                this.resolveReferences()
+
+            }).catch((err) => {
+                throw err;
+            });
+        } else {
+            if(this.spreadsheetMode) console.warn("Google Sheet source enabled but streaming mode is disabled!")
+            fetch(
+                "https://raw.githubusercontent.com/lukasz26671/lukasz26671.github.io/master/songs.json"
+            )
             .then((res) => res.json())
             .then((out) => {
                 this.songJSON = out;
@@ -35,6 +56,7 @@ class AudioPlayer {
             .catch((err) => {
                 throw err;
             });
+        }
     }
     resolveReferences() {
         try {
@@ -137,12 +159,21 @@ class AudioPlayer {
         }
     }
     setSourcesInit() {
+        if(this.spreadsheetMode) {
+            fetch(this.sourceProvider, { method: "GET" }).then((res) => {
+                if (!res.ok) {
+                    console.log(res);
+                    this.init = true;
+                    this.reinitialize('source');
+                }
+            });
+        }
         if (this.streamingMode) {
             fetch(this.streamingProvider, { method: "GET" }).then((res) => {
                 if (!res.ok) {
                     console.log(res);
                     this.init = true;
-                    this.reinitialize();
+                    this.reinitialize('audio');
                 }
             });
         }
@@ -193,11 +224,12 @@ class AudioPlayer {
 
         console.log(`Initialization complete after ${this.initTime} ms`);
     }
-    reinitialize() {
+    reinitialize(type) {
         console.warn("Streaming mode unavailable, reverting to local audio");
         this.init = true;
         this.reinit = true;
-        this.streamingMode = false;
+        this.streamingMode = type == 'audio' ? false : this.streamingMode ? true : false
+        this.spreadsheetMode = type == 'source' ? false : this.spreadsheetMode ? true : false
         this.parseSongs();
     }
     startTimer(duration, element) {
