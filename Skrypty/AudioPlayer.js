@@ -36,7 +36,15 @@ class AudioPlayer {
             if(this.spreadsheetMode) console.warn("Google Sheet source enabled but streaming mode is disabled!")
             fetch(
                 "https://raw.githubusercontent.com/lukasz26671/lukasz26671.github.io/master/songs.json"
-            )
+            ).then((res) => {
+                if (!res.ok) {
+                    console.log(res);
+                    this.init = true;
+                    this.reinitialize('source');
+                    return;
+                }
+                return res;
+            })
             .then((res) => res.json())
             .then((out) => {
                 this.songJSON = out;
@@ -159,15 +167,6 @@ class AudioPlayer {
         }
     }
     setSourcesInit() {
-        if(this.spreadsheetMode) {
-            fetch(this.sourceProvider + '/readplaylist?a=ping').then((res) => { //todo remove 2 api calls
-                if (!res.ok) {
-                    console.log(res);
-                    this.init = true;
-                    this.reinitialize('source');
-                }
-            });
-        }
         if (this.streamingMode) {
             fetch(this.streamingProvider, { method: "GET" }).then((res) => {
                 if (!res.ok) {
