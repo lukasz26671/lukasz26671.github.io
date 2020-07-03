@@ -119,52 +119,50 @@ class AudioPlayer {
     }
 
     setListeners() {
-        if (!g.audioPlayerListenersSet) {
-            try {
-                this.loopBox.addEventListener("click", () => {
-                    this.updateToggles("loop");
-                });
-                this.randomize.addEventListener("click", () => {
-                    this.updateToggles("randomize");
-                });
-            } catch (err) {
-                console.log(err);
-            }
-            window.addEventListener("click", () => {
-                if (!this.didInteract) {
-                    this.didInteract = true;
-                }
+        try {
+            const lpBoxlistener = this.loopBox.addEventListener("click", () => {
+                this.updateToggles("loop");
+            });
+            const randomizeListener = this.randomize.addEventListener("click", () => {
+                this.updateToggles("randomize");
             });
 
-            this.playpausebtn.addEventListener("click", () => {
-                this.togglePlay();
-                this.updateControls();
-            });
-
-            this.audiosource.addEventListener("pause", (_event) => {
-                clearTimeout(this.timer);
-            });
-
-            this.audiosource.addEventListener("ended", () => {
-                if (this.loop) {
-                    this.play();
-                    return;
-                } else {
-                    this.controls.nextSong();
-                }
-            });
-
-            this.audiosource.addEventListener("playing", (_event) => {
-                let duration = _event.target.duration;
-                this.advance(duration, this.audiosource);
-                if (!this.isPlaying) {
-                    this.isPlaying = true;
-                }
-            });
-            this.prevbtn.addEventListener("click", this.controls.previousSong);
-            this.nextbtn.addEventListener("click", this.controls.nextSong);
-            g.audioPlayerListenersSet = true;
+        } catch (err) {
+            console.log(err);
         }
+        window.addEventListener("click", () => {
+            if (!this.didInteract) {
+                this.didInteract = true;
+            }
+        });
+
+        this.playpausebtn.addEventListener("click", () => {
+            this.togglePlay();
+        });
+
+        this.audiosource.addEventListener("pause", (_event) => {
+            clearTimeout(this.timer);
+        });
+
+        this.audiosource.addEventListener("ended", () => {
+            if (this.loop) {
+                this.play();
+                return;
+            } else {
+                this.controls.nextSong();
+            }
+        });
+
+        this.audiosource.addEventListener("playing", (_event) => {
+            let duration = _event.target.duration;
+            this.advance(duration, this.audiosource);
+            if (!this.isPlaying) {
+                this.isPlaying = true;
+            }
+        });
+        this.prevbtn.addEventListener("click", this.controls.previousSong);
+        this.nextbtn.addEventListener("click", this.controls.nextSong);
+
     }
     setSourcesInit() {
         if (this.streamingMode) {
@@ -259,15 +257,9 @@ class AudioPlayer {
         this.progress.style.width = this.percent + "%";
         this.startTimer(duration, element);
     }
-    updateControls() {
-        switch (this.playpausebtn.innerHTML) {
-            case "play_arrow":
-                this.playpausebtn.innerHTML = "pause";
-                break;
-            case "pause":
-                this.playpausebtn.innerHTML = "play_arrow";
-                break;
-        }
+
+    removeListeners() {
+        
     }
 
     rewindtimer = null;
@@ -328,14 +320,32 @@ class AudioPlayer {
         },
     };
     play() {
-        this.audiosource.play();
+        const playPromise = this.audiosource.play();
+        
+        if(playPromise !== undefined) {
+            playPromise.then( _ => {
+                if(this.playpausebtn.innerHTML === "play_arrow") {
+                    this.playpausebtn.innerHTML = "pause";
+                } 
+            }).catch((err)=>{
+                if(err.message.includes('The play() request was interrupted')) {
+                    console.warn("Audio stream interrupted by a new request")
+                } else {
+                    console.warn(err);
+                }
+                
+            })
+        }
     }
     pause() {
         this.audiosource.pause();
+        if(this.playpausebtn.innerHTML === "pause")
+            this.playpausebtn.innerHTML = "play_arrow";
     }
 }
-//It's safe to destroy audioPlayer by simply setting it's reference to null, since listeners won't be set again
+//It's safe to destroy audioPlayer by simply setting it's reference to null, since listeners will be reinitialized.
 var removeAudioPlayer = function (audioPlayer) {
+    audioPlayer.removeListeners();
     audioPlayer = null;
 };
 /*  

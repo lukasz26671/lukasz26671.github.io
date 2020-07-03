@@ -18,9 +18,9 @@ const redirectInit = new Promise((resolve, reject) => {
 }).then((rHandler) => (r = rHandler));
 
 class Global {
-    audioPlayerListenersSet = false;
     audioVolume = 0.0;
     playbackSource = "";
+    globalListeners = [];
 
     onload = [audioInit, redirectInit];
 
