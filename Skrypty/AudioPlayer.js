@@ -15,25 +15,25 @@ class AudioPlayer {
         this.parseSongs();
     }
     parseSongs() {
-        if(this.spreadsheetMode && this.streamingMode) {
+        if (this.spreadsheetMode && this.streamingMode) {
             fetch(this.sourceProvider + '/readplaylist')
-            .then(res => res.json())
-            .then(songJSON => {
-                this.songJSON = songJSON
+                .then(res => res.json())
+                .then(songJSON => {
+                    this.songJSON = songJSON
 
-                this.songAuthors = this.songJSON.authors;
-                this.songNames = this.songJSON.titles;
-                this.ids = this.songJSON.IDs;
+                    this.songAuthors = this.songJSON.authors;
+                    this.songNames = this.songJSON.titles;
+                    this.ids = this.songJSON.IDs;
 
-                this.maxLen = this.songNames.length;
+                    this.maxLen = this.songNames.length;
 
-                this.resolveReferences()
+                    this.resolveReferences()
 
-            }).catch((err) => {
-                throw err;
-            });
+                }).catch((err) => {
+                    throw err;
+                });
         } else {
-            if(this.spreadsheetMode) console.warn("Google Sheet source enabled but streaming mode is disabled!")
+            if (this.spreadsheetMode) console.warn("Google Sheet source enabled but streaming mode is disabled!")
             fetch(
                 "https://raw.githubusercontent.com/lukasz26671/lukasz26671.github.io/master/songs.json"
             ).then((res) => {
@@ -45,32 +45,32 @@ class AudioPlayer {
                 }
                 return res;
             })
-            .then((res) => res.json())
-            .then((out) => {
-                this.songJSON = out;
-            })
-            .then(() => {
-                if (this.streamingMode) {
-                    this.ids = this.songJSON.streamingSongs.ID;
-                    this.songNames = this.songJSON.streamingSongs.names;
-                    this.songAuthors = this.songJSON.streamingSongs.authors;
-                } else {
-                    this.songNames = this.songJSON.songs.names;
-                    this.songAuthors = this.songJSON.songs.authors;
-                }
-                this.maxLen = this.songNames.length;
-                this.resolveReferences();
-            })
-            .catch((err) => {
-                throw err;
-            });
+                .then((res) => res.json())
+                .then((out) => {
+                    this.songJSON = out;
+                })
+                .then(() => {
+                    if (this.streamingMode) {
+                        this.ids = this.songJSON.streamingSongs.ID;
+                        this.songNames = this.songJSON.streamingSongs.names;
+                        this.songAuthors = this.songJSON.streamingSongs.authors;
+                    } else {
+                        this.songNames = this.songJSON.songs.names;
+                        this.songAuthors = this.songJSON.songs.authors;
+                    }
+                    this.maxLen = this.songNames.length;
+                    this.resolveReferences();
+                })
+                .catch((err) => {
+                    throw err;
+                });
         }
     }
     resolveReferences() {
         try {
             this.songName = document.getElementById("song");
             this.audiosource = document.getElementById("audiosource");
-            this.playpausebtn = document.getElementById("playpause");
+            this.playPauseBtn = document.getElementById("playpause");
             this.prevbtn = document.getElementById("prev");
             this.nextbtn = document.getElementById("next");
             this.content = document.getElementById("content");
@@ -85,7 +85,7 @@ class AudioPlayer {
 
             this.prevbtn.style.cursor = "pointer";
             this.nextbtn.style.cursor = "pointer";
-            this.playpausebtn.style.cursor = "pointer";
+            this.playPauseBtn.style.cursor = "pointer";
 
             if (document.getElementById("audioSrcInfo") == null) {
                 let a = document.createElement("p");
@@ -136,7 +136,7 @@ class AudioPlayer {
             }
         });
 
-        this.playpausebtn.addEventListener("click", () => {
+        this.playPauseBtn.addEventListener("click", () => {
             this.togglePlay();
         });
 
@@ -178,20 +178,20 @@ class AudioPlayer {
         if (this.init) {
             this.rnd = Math.floor(Math.random() * this.maxLen - 1);
 
-            this.audioindex = this.rnd;
+            this.audioIndex = this.rnd;
 
             if (this.streamingMode) {
                 this.source = `https://website-audioprovider.herokuapp.com/${
                     this.ids[this.rnd]
-                }`;
+                    }`;
                 this.songName.innerHTML = `${this.songAuthors[this.rnd]} - ${
                     this.songNames[this.rnd]
-                }`;
+                    }`;
             } else {
                 this.source = `https://lukasz26671.github.io/audio/audio${this.rnd}.mp3`;
                 this.songName.innerHTML = `${
                     this.songAuthors[this.rnd - 1]
-                } - ${this.songNames[this.rnd - 1]}`;
+                    } - ${this.songNames[this.rnd - 1]}`;
             }
             this.audiosource.src = this.source;
 
@@ -201,7 +201,7 @@ class AudioPlayer {
         }
     }
     setSources(i) {
-        this.audioindex = i;
+        this.audioIndex = i;
         if (this.streamingMode) {
             this.source = `https://website-audioprovider.herokuapp.com/${this.ids[i]}`;
             this.songName.innerHTML = `${this.songAuthors[i]} - ${this.songNames[i]}`;
@@ -209,7 +209,7 @@ class AudioPlayer {
             this.source = `https://lukasz26671.github.io/audio/audio${i}.mp3`;
             this.songName.innerHTML = `${this.songAuthors[i - 1]} - ${
                 this.songNames[i - 1]
-            }`;
+                }`;
         }
         this.audiosource.src = this.source;
     }
@@ -259,7 +259,7 @@ class AudioPlayer {
     }
 
     removeListeners() {
-        
+
     }
 
     rewindtimer = null;
@@ -269,16 +269,16 @@ class AudioPlayer {
             if (this.randomMode) {
                 if (this.double == true) {
                     this.double = false;
-                    this.audioindex =
-                        this.audioindex <= 0
+                    this.audioIndex =
+                        this.audioIndex <= 0
                             ? this.maxLen - 1
-                            : this.audioindex - 1;
+                            : this.audioIndex - 1;
 
-                    this.setSources(this.audioindex);
+                    this.setSources(this.audioIndex);
 
                     clearInterval(this.rewindtimer);
                 } else {
-                    this.setSources(this.audioindex);
+                    this.setSources(this.audioIndex);
                     this.double = true;
                     this.rewindtimer = setInterval(
                         () => (this.double = false),
@@ -286,33 +286,33 @@ class AudioPlayer {
                     );
                 }
             } else {
-                if (this.audioindex <= this.maxLen) {
-                    this.audioindex -= 1;
-                    this.setSources(this.audioindex);
+                if (this.audioIndex <= this.maxLen) {
+                    this.audioIndex -= 1;
+                    this.setSources(this.audioIndex);
                 }
-                if (this.audioindex <= 0) {
-                    this.audioindex = this.maxLen - 1;
-                    this.setSources(this.audioindex);
+                if (this.audioIndex <= 0) {
+                    this.audioIndex = this.maxLen - 1;
+                    this.setSources(this.audioIndex);
                 }
             }
-            this.playpausebtn.innerHTML = "pause";
+            this.playPauseBtn.innerHTML = "pause";
 
             this.play();
         },
         nextSong: () => {
             if (this.randomMode) {
-                this.audioindex = getRandomInt(0, this.maxLen);
-                this.setSources(this.audioindex);
+                this.audioIndex = getRandomInt(0, this.maxLen);
+                this.setSources(this.audioIndex);
             } else {
-                if (this.audioindex < this.maxLen) {
-                    this.audioindex += 1;
-                    this.setSources(this.audioindex);
+                if (this.audioIndex < this.maxLen) {
+                    this.audioIndex += 1;
+                    this.setSources(this.audioIndex);
                 }
-                if (this.audioindex >= this.maxLen) {
-                    this.audioindex = 0;
+                if (this.audioIndex >= this.maxLen) {
+                    this.audioIndex = 0;
                     this.setSources(0);
                 }
-                this.playpausebtn.innerHTML = "pause";
+                this.playPauseBtn.innerHTML = "pause";
             }
             this.double = false;
             clearInterval(this.rewindtimer);
@@ -320,27 +320,27 @@ class AudioPlayer {
         },
     };
     play() {
-        const playPromise = this.audiosource.play();
-        
-        if(playPromise !== undefined) {
-            playPromise.then( _ => {
-                if(this.playpausebtn.innerHTML === "play_arrow") {
-                    this.playpausebtn.innerHTML = "pause";
-                } 
-            }).catch((err)=>{
-                if(err.message.includes('The play() request was interrupted')) {
+        const playPromise = this.audiosource.play(); 
+
+        if (playPromise !== undefined) { 
+            playPromise.then(_ => {
+                if (this.playPauseBtn.innerHTML === "play_arrow") {
+                    this.playPauseBtn.innerHTML = "pause";
+                }
+            }).catch((err) => {
+                if (err.message.includes('The play() request was interrupted')) {
                     console.warn("Audio stream interrupted by a new request")
                 } else {
                     console.warn(err);
                 }
-                
+
             })
         }
     }
     pause() {
         this.audiosource.pause();
-        if(this.playpausebtn.innerHTML === "pause")
-            this.playpausebtn.innerHTML = "play_arrow";
+        if (this.playPauseBtn.innerHTML === "pause")
+            this.playPauseBtn.innerHTML = "play_arrow";
     }
 }
 //It's safe to destroy audioPlayer by simply setting it's reference to null, since listeners will be reinitialized.
