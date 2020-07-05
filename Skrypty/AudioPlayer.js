@@ -76,6 +76,7 @@ class AudioPlayer {
             this.content = document.getElementById("content");
             this.loopBox = document.getElementById("loop");
             this.randomize = document.getElementById("random");
+            this.audioPlayerInterface = document.getElementById("audioPlayer");
             this.sourceInfoParent = document.getElementsByClassName(
                 "controlbuttons"
             )[0];
@@ -214,6 +215,11 @@ class AudioPlayer {
         this.audiosource.src = this.source;
     }
     finalizeInitialization() {
+
+        if(this.audioPlayerInterface.classList.contains("invisible")) {
+            this.audioPlayerInterface.classList.remove("invisible")
+        }
+
         this.audiosource.volume = this.volume;
         g.audioVolume = this.volume;
         this.initEnd = new Date();
@@ -222,6 +228,9 @@ class AudioPlayer {
         console.log(`Initialization complete after ${this.initTime} ms`);
     }
     reinitialize(type) {
+        if(!this.audioPlayerInterface.classList.contains("invisible")) {
+            this.audioPlayerInterface.classList.add("invisible")
+        }
         console.warn("Streaming mode unavailable, reverting to local audio");
         this.init = true;
         this.reinit = true;
