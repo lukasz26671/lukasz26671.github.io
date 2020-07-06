@@ -13,6 +13,10 @@
     <link rel="stylesheet" href="./CSS/font-awesome.min.css">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <script defer src="Skrypty/swiped-events.js"></script>
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js"
+    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+    <script src="Skrypty/jquery.scrollex.min.js"></script>
+    <script src="Skrypty/jquery.scrolly.min.js"></script>
     <style>
         body.landing #page-wrapper {
             background: #c31432;
@@ -641,8 +645,15 @@
                     <p>Witaj na mojej stronie :D</p>
                     <hr>
                 </header>
+                <a href="#about" class="more scrolly">Przejdź dalej!</a>
         </section>
-        <section class="wrapper style6 special">
+        <section class="wrapper style6 empty" style="margin-bottom: 400px">
+            <div class="inner">
+                <header class="major">
+                </header>
+            </div>
+        </section>
+        <section class="wrapper style6 special" id="about">
             <div class="inner">
                 <header class="major">
                     <h2>Coś o mnie :D</h2>
@@ -650,6 +661,12 @@
                         --In progress--
                     </p>
                     <hr>
+                </header>
+            </div>
+        </section>
+        <section class="wrapper style6 special empty">
+            <div class="inner">
+                <header class="major">
                 </header>
             </div>
         </section>
@@ -684,10 +701,6 @@
         </ul>
         <a href="index.html#menu2" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a>
     </div>
-    <script defer src="https://code.jquery.com/jquery-3.4.1.min.js"
-        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script defer src="Skrypty/jquery.scrollex.min.js"></script>
-    <script defer src="Skrypty/jquery.scrolly.min.js"></script>
     <script defer src="Skrypty/skel.min.js"></script>
     <script defer src="Skrypty/util.js"></script>
     <script defer src="Skrypty/main2.js"></script>

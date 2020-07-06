@@ -56,6 +56,7 @@
 		box-sizing: border-box;
 	}
 
+
 /* Grid */
 
 	.row {
@@ -3255,10 +3256,10 @@
 /* Page Wrapper + Menu */
 
 	#page-wrapper {
-		-moz-transition: opacity 0.5s ease;
-		-webkit-transition: opacity 0.5s ease;
-		-ms-transition: opacity 0.5s ease;
-		transition: opacity 0.5s ease;
+		-moz-transition: opacity 0.25s ease;
+		-webkit-transition: opacity 0.25s ease;
+		-ms-transition: opacity 0.25s ease;
+		transition: opacity 0.25s ease;
 		opacity: 1;
 		padding-top: 3em;
 	}
@@ -3281,10 +3282,10 @@
 		-webkit-transform: translateX(20em);
 		-ms-transform: translateX(20em);
 		transform: translateX(20em);
-		-moz-transition: -moz-transform 0.5s ease;
-		-webkit-transition: -webkit-transform 0.5s ease;
-		-ms-transition: -ms-transform 0.5s ease;
-		transition: transform 0.5s ease;
+		-moz-transition: -moz-transform 0.25s ease;
+		-webkit-transition: -webkit-transform 0.25s ease;
+		-ms-transition: -ms-transform 0.25s ease;
+		transition: transform 0.25s ease;
 		-webkit-overflow-scrolling: touch;
 		background: #21b2a6;
 		color: #ffffff;
@@ -3379,10 +3380,10 @@
 		-webkit-transform: translateX(20em);
 		-ms-transform: translateX(20em);
 		transform: translateX(20em);
-		-moz-transition: -moz-transform 0.5s ease;
-		-webkit-transition: -webkit-transform 0.5s ease;
-		-ms-transition: -ms-transform 0.5s ease;
-		transition: transform 0.5s ease;
+		-moz-transition: -moz-transform 0.25s ease;
+		-webkit-transition: -webkit-transform 0.25s ease;
+		-ms-transition: -ms-transform 0.25s ease;
+		transition: transform 0.25s ease;
 		-webkit-overflow-scrolling: touch;
 		background: linear-gradient(to 45deg, #200122, #6f0000);
 		color: #ffffff;
@@ -3625,10 +3626,10 @@
 			-webkit-transform: scale(1);
 			-ms-transform: scale(1);
 			transform: scale(1);
-			-moz-transition: -moz-transform 0.5s ease, opacity 0.5s ease;
-			-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
-			-ms-transition: -ms-transform 0.5s ease, opacity 0.5s ease;
-			transition: transform 0.5s ease, opacity 0.5s ease;
+			-moz-transition: -moz-transform 0.25s ease, opacity 0.25s ease;
+			-webkit-transition: -webkit-transform 0.25s ease, opacity 0.25s ease;
+			-ms-transition: -ms-transform 0.25s ease, opacity 0.25s ease;
+			transition: transform 0.25s ease, opacity 0.25s ease;
 			display: inline-block;
 			font-size: 1.75em;
 			opacity: 1;
@@ -3678,10 +3679,10 @@
 			-webkit-transition: -webkit-transform 0.75s ease, opacity 0.75s ease;
 			-ms-transition: -ms-transform 0.75s ease, opacity 0.75s ease;
 			transition: transform 0.75s ease, opacity 0.75s ease;
-			-moz-transition-delay: 3.5s;
-			-webkit-transition-delay: 3.5s;
-			-ms-transition-delay: 3.5s;
-			transition-delay: 3.5s;
+			-moz-transition-delay: 0.25s;
+			-webkit-transition-delay: 0.25s;
+			-ms-transition-delay: 0.25s;
+			transition-delay: 0.25s;
 			-moz-transform: translateY(0);
 			-webkit-transform: translateY(0);
 			-ms-transform: translateY(0);
@@ -3791,10 +3792,10 @@
 				-webkit-transform: scale(1);
 				-ms-transform: scale(1);
 				transform: scale(1);
-				-moz-transition: -moz-transform 0.5s ease, opacity 0.5s ease;
-				-webkit-transition: -webkit-transform 0.5s ease, opacity 0.5s ease;
-				-ms-transition: -ms-transform 0.5s ease, opacity 0.5s ease;
-				transition: transform 0.5s ease, opacity 0.5s ease;
+				-moz-transition: -moz-transform 0.25s ease, opacity 0.25s ease;
+				-webkit-transition: -webkit-transform 0.25s ease, opacity 0.25s ease;
+				-ms-transition: -ms-transform 0.25s ease, opacity 0.25s ease;
+				transition: transform 0.25s ease, opacity 0.25s ease;
 				display: inline-block;
 				font-size: 1.75em;
 				opacity: 1;
@@ -3844,10 +3845,10 @@
 				-webkit-transition: -webkit-transform 0.75s ease, opacity 0.75s ease;
 				-ms-transition: -ms-transform 0.75s ease, opacity 0.75s ease;
 				transition: transform 0.75s ease, opacity 0.75s ease;
-				-moz-transition-delay: 3.5s;
-				-webkit-transition-delay: 3.5s;
-				-ms-transition-delay: 3.5s;
-				transition-delay: 3.5s;
+				-moz-transition-delay: 0.25s;
+				-webkit-transition-delay: 0.25s;
+				-ms-transition-delay: 0.25s;
+				transition-delay: 0.25s;
 				-moz-transform: translateY(0);
 				-webkit-transform: translateY(0);
 				-ms-transform: translateY(0);
@@ -4304,3 +4305,36 @@
 #audioPlayer.invisible {
 	display: none;
 }
+
+* {
+	scrollbar-width: thin;
+  	scrollbar-color: #00AEBF #012652;
+}
+
+/* width */
+*::-webkit-scrollbar {
+	width: 10px;
+}
+
+/* Track */
+*::-webkit-scrollbar-track {
+	background: linear-gradient(#016987, #012652);
+}
+*::-webkit-scrollbar-track:hover {
+	filter: brightness(10%)
+}
+
+/* Handle */
+*::-webkit-scrollbar-thumb {
+	background: linear-gradient(transparent, #00AEBF, transparent);
+	border-radius: 20px;
+	height: 10px
+}
+
+/* Handle on hover */
+*::-webkit-scrollbar-thumb:hover {
+	background: linear-gradient(transparent, #00eaff, transparent);
+}
+
+/*#00AEBF*/
+/*#bf0050*/
