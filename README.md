@@ -8,3 +8,8 @@ I find that it looks very nice in terms of design, and functionality.
 Making my own webplayer wasn't actually difficult, but it's far from perfect.
 Youtube API integration will be necessary to have more songs without uploading them directly to some kind of hosting
 or to GitHub ;)
+
+## How audio player works?
+
+Well, I made two separate projects for audio player, excluding this one. Main purpose is of course decentralizing parts to restrict new bugs. 
+Both projects are private at the moment because i don't want to share their source code.
