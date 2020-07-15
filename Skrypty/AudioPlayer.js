@@ -16,7 +16,7 @@ class AudioPlayer {
     }
     parseSongs() {
         if (this.spreadsheetMode && this.streamingMode) {
-            fetch(this.sourceProvider + '/readplaylist')
+            fetch(this.sourceProvider + '/api/readplaylist')
                 .then(res => res.json())
                 .then(songJSON => {
                     this.songJSON = songJSON
@@ -204,7 +204,7 @@ class AudioPlayer {
     setSources(i) {
         this.audioIndex = i;
         if (this.streamingMode) {
-            this.source = `https://website-audioprovider.herokuapp.com/${this.ids[i]}`;
+            this.source = `https://website-audioprovider.herokuapp.com/api/${this.ids[i]}`;
             this.songName.innerHTML = `${this.songAuthors[i]} - ${this.songNames[i]}`;
         } else {
             this.source = `https://lukasz26671.github.io/audio/audio${i}.mp3`;
