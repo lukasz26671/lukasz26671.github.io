@@ -1,12 +1,23 @@
 <!DOCTYPE html>
 <html lang="pl">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="5xpbWs4Y1htni-S0YtHsvDSZt7SBw-uFsBANZM0oJd0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Lukasz26671</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
     <link rel="stylesheet" href="./CSS/style.css">
     <link rel="stylesheet" href="./CSS/UL.css">
     <link rel="stylesheet" href="./CSS/main.css">
@@ -14,9 +25,26 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <script defer src="Skrypty/swiped-events.js"></script>
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
-    integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+        integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
     <script src="Skrypty/jquery.scrollex.min.js"></script>
     <script src="Skrypty/jquery.scrolly.min.js"></script>
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-172748671-1"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'UA-172748671-1');
+
+        function hideInfo() {
+            document.getElementById('info').style.color = 'transparent';
+
+            setTimeout(() => {
+                document.getElementById('info').style.display = 'none';
+            }, 50);
+        }
+    </script>
     <style>
         body.landing #page-wrapper {
             background: #c31432;
@@ -34,7 +62,9 @@
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
+            background-size:cover;
             background-position: center;
+            zoom: 0.75;
         }
 
         body.is-mobile.landing #banner,
@@ -584,7 +614,7 @@
         audio::-webkit-media-controls-toggle-closed-captions-button {
         }
         AUDIO CONTROLS TODO (hopefully)
-        */ 
+        */
     </style>
     <style>
         #menu2>ul>li {
@@ -594,33 +624,38 @@
         #menu2>ul>li:last-child {
             cursor: default;
         }
-        .controlbuttons > i {
+
+        .controlbuttons>i {
             cursor: pointer;
         }
-        .controlbuttons > i::selection {
+
+        .controlbuttons>i::selection {
             background: transparent;
         }
 
-        @media not screen and (max-device-width : 640px), not screen and (max-device-width: 768px) {
+        @media not screen and (max-device-width : 640px),
+        not screen and (max-device-width: 768px) {
             #song {
-                height: 50px; 
-                padding: 2px 1px; 
-                margin-top: 7.5px; 
+                height: 50px;
+                padding: 2px 1px;
+                margin-top: 7.5px;
                 margin-bottom: 55px;
             }
         }
-        @media only screen and (max-device-width : 640px), only screen and (max-device-width: 768px) {
+
+        @media only screen and (max-device-width : 640px),
+        only screen and (max-device-width: 768px) {
             #song {
-                height: 50px; 
-                padding: 2px 1px; 
-                margin-top: 15px; 
+                height: 50px;
+                padding: 2px 1px;
+                margin-top: 15px;
                 margin-bottom: 10px;
             }
         }
-
     </style>
     <script src="https://kit.fontawesome.com/c453ad6d0a.js"></script>
 </head>
+
 <body class="landing">
     <audio id="audiosource">
         <source type="audio/mpeg">
@@ -653,13 +688,59 @@
                 </header>
             </div>
         </section>
-        <section class="wrapper style6 special" id="about">
-            <div class="inner">
+        <section class="wrapper style6 special" style="background-color: rgba(36, 36, 36, 0.98);" id="about">
+            <div class="inner" style="width: 80%;">
                 <header class="major">
                     <h2>Coś o mnie :D</h2>
-                    <p>
-                        --In progress--
-                    </p>
+                    <div style="text-align:left" class="about">
+                        <i style="font-weight: bold;">Od czego by tu zacząć...</i> <br>
+                        <p>
+                            Jestem uczniem (aktualnie) drugiej klasy technikum. W sumie od dość długiego czasu
+                            interesuję się technologią. <br>
+                            Swoje raczkowanie z programowaniem zacząłem pod koniec 2014 roku, kiedy z nudów rzuciłem się
+                            od razu na głęboką wodę - Javę.
+                            Nie był to co prawda świetny pomysł, ba! Te wszystkie typy zmiennych i metod (bool, int,
+                            float), object-oriented programming były przerażające. <br>
+                            Nie wiedziałem, co oznaczają te dziwne słowa i kompletnie się w tym wszystkim gubiłem -
+                            postanowiłem dać sobie spokój na jakiś czas. <br>
+                        </p>
+                        <p>
+                            <i style="font-weight: bold;">Powrót do programowania</i> <br>
+                            Jakiś czas później znowu wróciłem do programowania, teraz z większą motywacją, niż
+                            wcześniej. Od samego początku myślałem o web developmencie, więc też wybrałem
+                            tę drogę jako mój dalszy cel. Szybko nauczyłem się HTML'a w stopniu dość zaawansowanym, a
+                            także CSSa w stopniu podstawowym. Moim następnym przystankiem był JavaScript. <br>
+                            Jest to wspaniałe narzędzie, czego oczywiście nie mogę ukryć ;). Teraz używam go do wielu
+                            rzeczy - odtwarzacz audio na tej stronie i jego potrzebne komponenty,
+                            Odtwarzanie muzyki z youtube'a, aby nie uploadować każdej piosenki na hosting. W większości
+                            rzeczy można powiedzieć quality-of-life. <br>
+                            Integracja z node jest wyśmienita, pozwala na wiele rzeczy, które nie byłyby możliwe w
+                            plain-JS. <br>
+                            Na bazie właśnie Node'a działają dwie usługi dostarczające muzykę na tą stronę -
+                            odczytywanie playlisty z arkuszy Google, a także bezpośrednie linkowanie źródła z youtube'a.
+                        </p>
+                        <p>
+                            <i style="font-weight: bold;">More languages!</i><br>
+                            Po opanowaniu podstaw JavaScript postanowiłem wrócić do Javy. Różnica była jedna: zacząłem
+                            świeżo, od początku, aby moja wcześniejsza 'zabawa' nie przeszkadzała mi w dalszej nauce.
+                            Złe przyzwyczajenia potrafią bardzo przeszkadzać w przyszłości, a przekonałem się o tym
+                            niejeden raz.<br>
+                            <br>
+                            A o co chodzi z OOP? Jest to takie połączenie funkcjonalności z przechowywaniem danych.
+                            Obiekty inaczej
+                            możemy nazwac klasami. Dla przykładu w JavaScript możemy użyć deklaracji Class, Object,
+                            gdzie w Javie mamy klasy. <br>
+                            Jak to działa? Możemy przedstawić np. człowieka jako klasę/obiekt. Będzie on miał dane
+                            atrybuty np. kolor oczu, kolor skóry (nie bijcie), kolor włosów, wzrost itp. <br>
+                            Będzie on mógł także korzystać z zaimplementowanych metod np. idź(), wstań() itp.,
+                            określające zestaw czynności do wykonania przy każdym wywołaniu. <br>
+                            <br>
+                            Po ogarnięciu Javy przerzuciłem się do Game-Dev'a - Unity + C#. Powiem nawet, że dalej się
+                            tym zajmuję! Jakby ktoś chciał pomóc/potrzebował pomocy przy tworzeniu to contact me! XD <br>
+                            Dodatkowo między wierszami dorzucę, że bawiłem się też z pythonem, assembly, c++ i php.
+
+                        </p>
+                    </div>
                     <hr>
                 </header>
             </div>
@@ -670,6 +751,14 @@
                 </header>
             </div>
         </section>
+        <div id="info" class="alert alert-dismissible unselectable text-center cookie-info-container">
+            <div class="cookie-info" style="margin: 0; min-width: 80%;">
+                <span href="#close" style="cursor: pointer; border: none; text-decoration: none;"
+                    onclick="hideInfo()">Korzystając z tej strony zgadzasz się na używanie
+                    plików cookies, a także użycie usługi Google
+                    Analytics.</span>
+            </div>
+        </div>
     </div>
     <div id="menu2">
         <ul>
@@ -681,7 +770,7 @@
             <li><a href="bashprot.html">Bash prototype</a></li>
             <li><a href="songlist.html">Track list playera</a></li>
             <li><a onClick="alert('Hello World!');" href="#HelloWorld">Hello World</a></li>
-            <li id="audioPlayer" class="text-center invisible" style="border-color: white;cursor: default" >
+            <li id="audioPlayer" class="text-center invisible" style="border-color: white;cursor: default">
                 <p id="song" style=" vertical-align: middle;"></p>
                 <div class="content unselectable" id="content">
                     <div class="controls">
@@ -708,4 +797,5 @@
     <script defer src="Skrypty/AudioPlayer.js"></script>
     <script defer src="Skrypty/main.js"></script>
 </body>
+
 </html>

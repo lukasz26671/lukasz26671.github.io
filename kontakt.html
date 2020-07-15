@@ -1,28 +1,43 @@
-
-<!DOCTYPE  html>
+<!DOCTYPE html>
 <!--Copyright © 2018-2019 lukasz26671-->
 <html lang="pl">
+
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Kontakt</title>
 	<link href="CSS/buttons.css" rel="stylesheet" type="text/css" />
 	<link href="CSS/UL.css" rel="stylesheet" type="text/css" />
-	<link href="CSS/styles.css" rel="stylesheet" type="text/css"/>
+	<link href="CSS/styles.css" rel="stylesheet" type="text/css" />
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
 	<script src="Skrypty/Redirect.js"></script>
 	<script type="text/javascript" src="songs.json"></script>
+	<script async src="https://www.googletagmanager.com/gtag/js?id=UA-172748671-1"></script>
+	<script>
+		window.dataLayer = window.dataLayer || [];
+		function gtag() { dataLayer.push(arguments); }
+		gtag('js', new Date());
+
+		gtag('config', 'UA-172748671-1');
+	</script>
 	<style>
-	* {	color: white;}
-	body {
-		background-image: url('images/background5.jpg');
-		background-color: black;
-	}
-	li {cursor: default;}
+		* {
+			color: white;
+		}
+
+		body {
+			background-image: url('images/background5.jpg');
+			background-color: black;
+		}
+
+		li {
+			cursor: default;
+		}
 	</style>
 </head>
+
 <body>
 	<div class="back">
 		<button id="back" class="medium black round">Powróć do strony głównej</button>
@@ -31,37 +46,41 @@
 		<h1 class="title">Kontakt</h1>
 	</div>
 	<div class="list">
-	<ul>
-		<li class="li2">Email: Lukasz26671@wp.pl ; Lukasz266713@gmail.com</li>
-		<li class="li2">Discord: Lukasz266713#4413</li>
-		<li class="li2">Skype: Lukasz26671</li>
-		<li class="li2"><a href="steamcommunity.com/id/lukasz26671">Steam</a>,Uplay: Lukasz26671</li>
-	</ul>
+		<ul>
+			<li class="li2">Email: Lukasz26671@wp.pl ; Lukasz266713@gmail.com</li>
+			<li class="li2">Discord: Lukasz266713#4413</li>
+			<li class="li2">Skype: Lukasz26671</li>
+			<li class="li2"><a href="steamcommunity.com/id/lukasz26671">Steam</a>,Uplay: Lukasz26671</li>
+		</ul>
 	</div>
 	<div class="songTitle">
-		<br/>
+		<br />
 		<div class="content">
 			<p id="song"></p>
 			<div class="controls">
 				<div class="controlbuttons">
 					<i class="material-icons" id="prev">fast_rewind</i>
-					<i class="material-icons" id="playpause">play_arrow</i><!--playpause - changes-->
+					<i class="material-icons" id="playpause">play_arrow</i>
+					<!--playpause - changes-->
 					<i class="material-icons" id="next">fast_forward</i>
-				</div>		
+				</div>
 			</div>
-			</p><div id="progresscontainer">
+			</p>
+			<div id="progresscontainer">
 				<div id="progressbar"></div>
-			</div>	
+			</div>
 		</div>
 	</div>
 	<audio id="audiosource">
-		<source type="audio/mpeg"/>
+		<source type="audio/mpeg" />
 	</audio>
 
-	<script defer src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>    
+	<script defer src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 	<script defer src="Skrypty/AudioPlayer.js"></script>
-    <script defer src="Skrypty/Redirect.js"></script>
+	<script defer src="Skrypty/Redirect.js"></script>
 	<script defer src="Skrypty/main.js"></script>
-	<script>document.getElementById("back").addEventListener('click', ()=> r.redirect(r.destinations.main))</script>
+	<script>document.getElementById("back").addEventListener('click', () => r.redirect(r.destinations.main))</script>
 </body>
+
 </html>
