@@ -182,7 +182,7 @@ class AudioPlayer {
             this.audioIndex = this.rnd;
 
             if (this.streamingMode) {
-                this.source = `https://website-audioprovider.herokuapp.com/${
+                this.source = `https://website-audioprovider.herokuapp.com/api/${
                     this.ids[this.rnd]
                     }`;
                 this.songName.innerHTML = `${this.songAuthors[this.rnd]} - ${
