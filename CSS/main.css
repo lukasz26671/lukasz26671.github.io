@@ -4551,9 +4551,12 @@ body.is-mobile.landing #footer {
 	justify-content: center;
 }
 
-.cookie-info > a:hover {
-	
+.cookie-info-container.hidden {
+    transition-property: all;
+    transition-duration: 0.5s;
+    opacity: 0
 }
+
 
 @media all and (max-width: 736px) {
     .cookie-info {
@@ -4573,3 +4576,4 @@ body.is-mobile.landing #footer {
         width: 100%;
     }
 }
+

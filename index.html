@@ -38,11 +38,17 @@
         gtag('config', 'UA-172748671-1');
 
         function hideInfo() {
-            document.getElementById('info').style.color = 'transparent';
+            (function() {
+                const info = document.getElementById('info');
+                const text = info.children[0].children[0];
 
-            setTimeout(() => {
-                document.getElementById('info').style.display = 'none';
-            }, 50);
+                if(!info.classList.contains('hidden')) info.classList.add('hidden');
+
+                setTimeout(() => {
+                    text.onclick = ()=>{};
+                    text.style.cursor = 'default';
+                }, 200);
+            })();
         }
     </script>
     <script data-ad-client="ca-pub-2291394327851441" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
