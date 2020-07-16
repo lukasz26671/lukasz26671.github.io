@@ -38,20 +38,21 @@
         gtag('config', 'UA-172748671-1');
 
         function hideInfo() {
-            (function() {
+            (function () {
                 const info = document.getElementById('info');
                 const text = info.children[0].children[0];
 
-                if(!info.classList.contains('hidden')) info.classList.add('hidden');
+                if (!info.classList.contains('hidden')) info.classList.add('hidden');
 
                 setTimeout(() => {
-                    text.onclick = ()=>{};
+                    text.onclick = () => { };
                     text.style.cursor = 'default';
                 }, 200);
             })();
         }
     </script>
-    <script data-ad-client="ca-pub-2291394327851441" async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
+    <script data-ad-client="ca-pub-2291394327851441" async
+        src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js"></script>
     <style>
         body.landing #page-wrapper {
             background: #c31432;
@@ -69,7 +70,7 @@
             -webkit-background-size: cover;
             -moz-background-size: cover;
             -o-background-size: cover;
-            background-size:cover;
+            background-size: cover;
             background-position: center;
             zoom: 0.75;
         }
@@ -691,15 +692,16 @@
         </section>
         <section class="wrapper style6 empty" style="margin-bottom: 400px">
             <div class="inner">
-                <header class="major">
+                <header class="major" id="about">
+                    <br><br><br><br><br><br><br>
                 </header>
             </div>
         </section>
-        <section class="wrapper style6 special" style="background-color: rgba(36, 36, 36, 0.98);" id="about">
+        <section class="wrapper style6 special" style="background-color: rgba(36, 36, 36, 0.95);">
             <div class="inner" style="width: 80%;">
                 <header class="major">
                     <h2>Coś o mnie :D</h2>
-                    <div style="text-align:left" class="about">
+                    <div id="about" style="text-align:left" class="about">
                         <i style="font-weight: bold;">Od czego by tu zacząć...</i> <br>
                         <p>
                             Jestem uczniem (aktualnie) drugiej klasy technikum. W sumie od dość długiego czasu
@@ -707,12 +709,12 @@
                             Swoje raczkowanie z programowaniem zacząłem pod koniec 2014 roku, kiedy z nudów rzuciłem się
                             od razu na głęboką wodę - Javę.
                             Nie był to co prawda świetny pomysł, ba! Te wszystkie typy zmiennych i metod (bool, int,
-                            float), object-oriented programming były przerażające. <br>
+                            float), object-oriented programming były przerażające.
                             Nie wiedziałem, co oznaczają te dziwne słowa i kompletnie się w tym wszystkim gubiłem -
                             postanowiłem dać sobie spokój na jakiś czas. <br>
                         </p>
+                        <i style="font-weight: bold;">Powrót do programowania</i> <br>
                         <p>
-                            <i style="font-weight: bold;">Powrót do programowania</i> <br>
                             Jakiś czas później znowu wróciłem do programowania, teraz z większą motywacją, niż
                             wcześniej. Od samego początku myślałem o web developmencie, więc też wybrałem
                             tę drogę jako mój dalszy cel. Szybko nauczyłem się HTML'a w stopniu dość zaawansowanym, a
@@ -726,14 +728,20 @@
                             Na bazie właśnie Node'a działają dwie usługi dostarczające muzykę na tą stronę -
                             odczytywanie playlisty z arkuszy Google, a także bezpośrednie linkowanie źródła z youtube'a.
                         </p>
+                        <i style="font-weight: bold;">More languages!</i><br>
                         <p>
-                            <i style="font-weight: bold;">More languages!</i><br>
                             Po opanowaniu podstaw JavaScript postanowiłem wrócić do Javy. Różnica była jedna: zacząłem
                             świeżo, od początku, aby moja wcześniejsza 'zabawa' nie przeszkadzała mi w dalszej nauce.
                             Złe przyzwyczajenia potrafią bardzo przeszkadzać w przyszłości, a przekonałem się o tym
                             niejeden raz.<br>
+                            Po ogarnięciu Javy przerzuciłem się do Game-Dev'a - Unity + C#. Powiem nawet, że dalej się
+                            tym zajmuję! Jakby ktoś chciał pomóc/potrzebował pomocy przy tworzeniu to contact me! XD
                             <br>
-                            A o co chodzi z OOP? Jest to takie połączenie funkcjonalności z przechowywaniem danych.
+                            Dodatkowo między wierszami dorzucę, że bawiłem się też z pythonem, assembly, c++ i php. <br>
+                        </p>
+                        <i style="font-weight: bold;">A o co chodzi z OOP?</i><br>
+                        <p>
+                            Jest to takie połączenie funkcjonalności z przechowywaniem danych.
                             Obiekty inaczej
                             możemy nazwac klasami. Dla przykładu w JavaScript możemy użyć deklaracji Class, Object,
                             gdzie w Javie mamy klasy. <br>
@@ -741,11 +749,15 @@
                             atrybuty np. kolor oczu, kolor skóry (nie bijcie), kolor włosów, wzrost itp. <br>
                             Będzie on mógł także korzystać z zaimplementowanych metod np. idź(), wstań() itp.,
                             określające zestaw czynności do wykonania przy każdym wywołaniu. <br>
-                            <br>
-                            Po ogarnięciu Javy przerzuciłem się do Game-Dev'a - Unity + C#. Powiem nawet, że dalej się
-                            tym zajmuję! Jakby ktoś chciał pomóc/potrzebował pomocy przy tworzeniu to contact me! XD <br>
-                            Dodatkowo między wierszami dorzucę, że bawiłem się też z pythonem, assembly, c++ i php.
-
+                        </p>
+                        <i style="font-weight: bold;">Co robię teraz?</i><br>
+                        <p>
+                            Aktualnie zajmuję się głównie web developmentem (udoskonalaniem mojej strony, co można też
+                            zauważyć, jeśli śledzicie development :D) <br>
+                            Chciałbym zająć się czymś innym np. game developmentem, ale brakuje mi lekko umiejętności
+                            artystycznych (if you know what i mean XD), więc staram się to jakoś powoli nadrobić. <br>
+                            <b>You know, możesz napisać do mnie na discorda, czy tam maila i coś ogarniemy hehe.</b>
+                            Do tych "umiejętności artystycznych" nie wliczam modelingu, bo coś już tam potrafię XD
                         </p>
                     </div>
                     <hr>
@@ -791,7 +803,7 @@
                     </div>
                     <div id="progresscontainer">
                         <div id="progressbar"></div>
-                        
+
                     </div>
                 </div>
             </li>

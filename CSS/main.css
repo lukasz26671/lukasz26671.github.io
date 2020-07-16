@@ -4537,6 +4537,17 @@ body.is-mobile.landing #footer {
     line-height: calc(initial + 3px);
 }
 
+.about > p {
+    background-color: rgba(34,34,34,1);
+    border-radius: 30px;
+    padding: 30px 20px;
+    text-align: justify;
+}
+
+.about > i {
+    font-size: 20px;
+}
+
 .cookie-info-container {
     width: 100%;
     filter: opacity(0.4);
@@ -4554,7 +4565,7 @@ body.is-mobile.landing #footer {
 .cookie-info-container.hidden {
     transition-property: all;
     transition-duration: 0.5s;
-    opacity: 0
+    opacity: 0;
 }
 
 
