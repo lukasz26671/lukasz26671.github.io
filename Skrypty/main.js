@@ -1,7 +1,7 @@
 
 const audioInit = new Promise((resolve, reject) => {
     try {
-        resolve(new AudioPlayer(0.15, false, false));
+        resolve(new AudioPlayer(0.15));
     } catch (e) {
         reject(e);
     }
