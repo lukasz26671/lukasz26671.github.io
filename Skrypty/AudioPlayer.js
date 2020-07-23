@@ -182,7 +182,7 @@ class AudioPlayer {
             this.audioIndex = this.rnd;
 
             if (this.streamingMode) {
-                this.source = `https://website-audioprovider.herokuapp.com/?ID=${this.ids[this.rnd]}&TYPE=mp3`
+                this.source = `https://website-audioprovider.herokuapp.com/download?ID=${this.ids[this.rnd]}&TYPE=mp3`
                 // this.source = `http://localhost:3000/download?ID=${this.ids[this.rnd]}`
                 this.songName.innerHTML = `${this.songAuthors[this.rnd]} - ${
                     this.songNames[this.rnd]
