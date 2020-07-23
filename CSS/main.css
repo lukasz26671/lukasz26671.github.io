@@ -4535,10 +4535,12 @@ body.is-mobile.landing #footer {
     font-family: "Comic Sans MS";
     word-spacing: 3px;
     line-height: calc(initial + 3px);
+    
 }
 
 .about > p {
     background-color: rgba(34,34,34,1);
+    color: #d3d3d3 !important;
     border-radius: 30px;
     padding: 30px 20px;
     text-align: justify;
@@ -4546,6 +4548,7 @@ body.is-mobile.landing #footer {
 
 .about > i {
     font-size: 20px;
+    font-family: "Comic Sans MS"
 }
 
 .cookie-info-container {
