@@ -182,9 +182,8 @@ class AudioPlayer {
             this.audioIndex = this.rnd;
 
             if (this.streamingMode) {
-                this.source = `https://website-audioprovider.herokuapp.com/api/${
-                    this.ids[this.rnd]
-                    }`;
+                this.source = `https://website-audioprovider.herokuapp.com/?ID=${this.ids[this.rnd]}&TYPE=mp3`
+                // this.source = `http://localhost:3000/download?ID=${this.ids[this.rnd]}`
                 this.songName.innerHTML = `${this.songAuthors[this.rnd]} - ${
                     this.songNames[this.rnd]
                     }`;
@@ -204,7 +203,8 @@ class AudioPlayer {
     setSources(i) {
         this.audioIndex = i;
         if (this.streamingMode) {
-            this.source = `https://website-audioprovider.herokuapp.com/api/${this.ids[i]}`;
+            this.source = `https://website-audioprovider.herokuapp.com/download?ID=${this.ids[i]}`;
+            // this.source = `http://localhost:3000/download?ID=${this.ids[i]}&TYPE=mp3`;
             this.songName.innerHTML = `${this.songAuthors[i]} - ${this.songNames[i]}`;
         } else {
             this.source = `https://lukasz26671.github.io/audio/audio${i}.mp3`;
