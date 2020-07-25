@@ -24,12 +24,12 @@ class RedirectHandler {
 			location.href='./LukasBot';
 		},
 		books: () => {
-			location.href='./Books/index.html'
-		}
+			location.href='./Books';
+		},
 	}
 
 	redirect(destination) {
-		if(typeof destination != 'function') {
+		if(typeof destination !== 'function') {
 			console.error(`Redirect destination must be a function and implement a redirect method.`);
 			return;
 		}

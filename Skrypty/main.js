@@ -60,7 +60,6 @@ try {
         mods.addEventListener('click', () => r.redirect(r.destinations.mods))
         sources.addEventListener('click', () => r.redirect(r.destinations.sources))
         contact.addEventListener('click', () => r.redirect(r.destinations.contact))
-        books.addEventListener('click', ()=> r.redirect(r.destinations.books))
     })
 } catch (error) {
     console.log(error);
