@@ -21,7 +21,10 @@ class RedirectHandler {
 			window.open('https://www.youtube.com/channel/UCWTjTkGZCSf5-XEZKUMQxoQ?view_as=subscriber', '_blank');
 		},
 		discordBot: () => {
-			location.href='/LukasBot';
+			location.href='./LukasBot';
+		},
+		books: () => {
+			location.href='./Books/index.html'
 		}
 	}
 

@@ -4532,15 +4532,14 @@ body.is-mobile.landing #footer {
 .about {
     border: none;
     font-style: oblique;
-    font-family: "Comic Sans MS";
     word-spacing: 3px;
     line-height: calc(initial + 3px);
-    
 }
 
 .about > p {
     background-color: rgba(34,34,34,1);
     color: #d3d3d3 !important;
+    font-family: Verdana, sans-serif;
     border-radius: 30px;
     padding: 30px 20px;
     text-align: justify;
@@ -4548,7 +4547,7 @@ body.is-mobile.landing #footer {
 
 .about > i {
     font-size: 20px;
-    font-family: "Comic Sans MS"
+    font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif
 }
 
 .cookie-info-container {
@@ -4648,11 +4647,11 @@ body.landing.is-mobile > .imageOverlay {
     padding: 10px 5px;
     width: 100%;
     text-transform: none;
-    font-family: sans-serif !important;
+    font-family: sans-serif;
     border-bottom: 1px solid grey;
 }
 .episodeDescription {
-    font-family: Verdana !important;
+    font-family: Verdana;
     text-align: left;
 }
 
@@ -4692,15 +4691,47 @@ body.landing.is-mobile .episodeDescription {
     font-size: 10px;
 };
 
+body.landing.is-mobile .about {
+    width: 100%;
+}
+body.landing.is-mobile .about > p {
+    padding: 0;
+}
+
+
 .chapter > h1 {
-    font-size: 100px !important;
+    font-size: 2em;
 }
 
 .chapter {
     text-align: center;
+    margin-top: 5em;
+    margin-bottom: 5em;
 }
 
 .unselectable {
     -moz-user-select: none;
     -webkit-user-select: none;
+}
+
+.iframe-container {
+    position: relative;
+    overflow: hidden;
+    width: 100%;
+    padding-top: 56.25%;
+}
+
+.responsive-iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.episode.invisible {
+    opacity: 0;
+    cursor: default;
 }
