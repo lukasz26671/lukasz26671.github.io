@@ -4591,3 +4591,116 @@ body.is-mobile.landing #footer {
     }
 }
 
+.episode {
+    display: grid;
+    grid-template-columns: 16vw 1fr 1fr 2%;
+    grid-template-rows: 20% 60% 20%;
+    width: 100%;
+    padding: 20px 0px;
+    border: 1px solid #2e3842;
+    margin-bottom: 20px;
+    background-color: #32383f;
+    text-align: justify;
+    cursor: pointer;
+    transition: 0.3s ease-in-out;
+}
+
+.episode:hover {
+    opacity: 0.8;
+}
+
+.episodeImage {
+    display: block;
+    grid-row: 1/3;
+    grid-column: 1/2;
+}
+
+.episodeImage > img {
+    position: relative;
+    max-width: 13vw;
+    transform: translateX(10%);
+}
+
+@media all and (max-width: 900px) {
+    .episode > img {
+        grid-row: 2/3;
+    }
+}
+body.landing.is-mobile > .imageOverlay {
+    background-image: url('https://d.wattpad.com/story_parts/827278797/images/15e986f54864d5ae372143829759.jpg');
+    width: 20vw;
+    height: 20vh;
+    opacity: 0.8;
+    z-index: 1;
+    grid-column: 1;
+    grid-row: 1;
+    background-size: cover;
+}
+
+.episodeInfo {
+    width: 100%;
+    grid-column: 2/4;
+    z-index: 5;
+}
+
+.episodeTitle {
+    font-size: 1.3em;
+    padding: 10px 5px;
+    width: 100%;
+    text-transform: none;
+    font-family: sans-serif !important;
+    border-bottom: 1px solid grey;
+}
+.episodeDescription {
+    font-family: Verdana !important;
+    text-align: left;
+}
+
+
+body.noload #opener:after {
+    background: linear-gradient(to top, transparent, transparent);
+}
+
+body.landing.is-mobile .episode {
+    grid-template-rows: 20% 60% 20%;
+    padding: 20px 30px;
+}
+
+body.landing.is-mobile .episodeImage {
+    display: none;
+}
+
+@media all and (max-width: 900px) {
+    .episode {
+        grid-template-rows: 20% 30% 30% 20%;
+    }
+    .episode > img {
+        grid-row: 2/3 !important;
+        grid-column: 1/2 !important;
+        text-align: center;
+        vertical-align: center;
+    }
+}
+body.landing.is-mobile .episodeInfo {
+    grid-column: 1/4;
+    grid-row: 1/3;
+}
+body.landing.is-mobile .episodeTitle {
+    font-size: 12px;
+}
+body.landing.is-mobile .episodeDescription {
+    font-size: 10px;
+};
+
+.chapter > h1 {
+    font-size: 100px !important;
+}
+
+.chapter {
+    text-align: center;
+}
+
+.unselectable {
+    -moz-user-select: none;
+    -webkit-user-select: none;
+}
