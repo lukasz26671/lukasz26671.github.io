@@ -4735,3 +4735,16 @@ body.landing.is-mobile .about > p {
     opacity: 0;
     cursor: default;
 }
+.dialogue {
+    background-color: rgba(42,42,42,1);
+    border-radius: 20px;
+}
+.dialogue > p {
+    background-color: rgba(38, 38, 38,  1);
+    border-radius: 20px;
+    padding: 5px 10px;
+}
+
+.dialogue.translatable {
+    cursor: pointer;
+}
