@@ -4817,3 +4817,16 @@ body.landing.is-mobile .about > p {
 .dialogue.translatable {
     cursor: pointer;
 }
+
+#song a:visited {
+    color: inherit;
+}
+
+#song a {
+    color: inherit;
+    border-bottom: none;
+}
+
+#song a:hover {
+    color: inherit;
+}

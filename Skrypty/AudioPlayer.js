@@ -184,9 +184,9 @@ class AudioPlayer {
             if (this.streamingMode) {
                 this.source = `https://website-audioprovider.herokuapp.com/download?ID=${this.ids[this.rnd]}&TYPE=mp3`
                 // this.source = `http://localhost:3000/download?ID=${this.ids[this.rnd]}`
-                this.songName.innerHTML = `${this.songAuthors[this.rnd]} - ${
+                this.songName.innerHTML = `<a href="https://youtube.com/watch?v=${this.ids[this.rnd]}">${this.songAuthors[this.rnd]} - ${
                     this.songNames[this.rnd]
-                    }`;
+                    }</a>`;
             } else {
                 this.source = `https://lukasz26671.github.io/audio/audio${this.rnd}.mp3`;
                 this.songName.innerHTML = `${
@@ -205,7 +205,7 @@ class AudioPlayer {
         if (this.streamingMode) {
             this.source = `https://website-audioprovider.herokuapp.com/download?ID=${this.ids[i]}&TYPE=mp3`;
             // this.source = `http://localhost:3000/download?ID=${this.ids[i]}&TYPE=mp3`;
-            this.songName.innerHTML = `${this.songAuthors[i]} - ${this.songNames[i]}`;
+            this.songName.innerHTML = `<a href="https://youtube.com/watch?v=${this.ids[i]}">${this.songAuthors[i]} - ${this.songNames[i]}</a>`;
         } else {
             this.source = `https://lukasz26671.github.io/audio/audio${i}.mp3`;
             this.songName.innerHTML = `${this.songAuthors[i - 1]} - ${
