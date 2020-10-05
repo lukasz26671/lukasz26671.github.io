@@ -80,6 +80,7 @@ class AudioPlayer {
             this.sourceInfoParent = document.getElementsByClassName(
                 "controlbuttons"
             )[0];
+            this.volumeSlider = document.getElementById('volSlider');
             this.isPlaying = false;
             this.loop = false;
             this.didInteract = false;
@@ -98,6 +99,12 @@ class AudioPlayer {
                 : "via Local";
             this.sourceInfo.style.fontSize = "10px";
             g.playbackSource = this.streamingMode ? "via Youtube" : "via Local";
+
+
+            this.volumeSlider.addEventListener('change', (e) => {
+                this.controls.changeVolume(e.target.value / 100);
+            })
+
 
             this.setSourcesInit();
         } catch (err) {
@@ -224,7 +231,7 @@ class AudioPlayer {
         g.audioVolume = this.volume;
         this.initEnd = new Date();
         this.initTime = this.initEnd - this.initStart;
-
+        this.volumeSlider.value = this.volume * 100;
         console.log(`Initialization complete after ${this.initTime} ms`);
     }
     reinitialize(type) {
@@ -260,11 +267,11 @@ class AudioPlayer {
         }
     }
     advance(duration, element) {
-        this.progress = document.getElementById("progressbar");
-        this.increment = 10 / duration;
-        this.percent = Math.min(this.increment * element.currentTime * 10, 100);
-        this.progress.style.width = this.percent + "%";
-        this.startTimer(duration, element);
+        // this.progress = document.getElementById("progressbar");
+        // this.increment = 10 / duration;
+        // this.percent = Math.min(this.increment * element.currentTime * 10, 100);
+        // this.progress.style.width = this.percent + "%";
+        // this.startTimer(duration, element);
     }
 
     removeListeners() {
@@ -327,6 +334,11 @@ class AudioPlayer {
             clearInterval(this.rewindtimer);
             this.play();
         },
+        changeVolume: (vol) => {
+            this.volume = vol;
+            g.audioVolume = this.volume;
+            this.audiosource.volume = this.volume;
+        }
     };
     play() {
         const playPromise = this.audiosource.play(); 

@@ -4830,3 +4830,46 @@ body.landing.is-mobile .about > p {
 #song a:hover {
     color: inherit;
 }
+
+.volumeContainer{
+    width: 80%;
+    margin: 10px 0px 10px;
+}
+
+.slider {
+    position: relative;
+    left: 25%; 
+    -webkit-appearance: none;  
+    appearance: none;
+    width: 50%; 
+    height: .25em;
+    border-radius: 5px;
+    background: #d3d3d3aa; 
+    outline: none; 
+    opacity: 0.7;
+    -webkit-transition: .2s; 
+    transition: opacity .2s;
+    margin-bottom: 1em;
+}
+
+.slider:hover {
+    opacity: 1; 
+}
+
+.slider::-webkit-slider-thumb {
+    -webkit-appearance: none; 
+    appearance: none;
+    width: .75em; 
+    height: .75em;
+    border-radius: 50%;
+    background: #00eeff; 
+    cursor: pointer; 
+}
+
+.slider::-moz-range-thumb {
+    width: .75em;  
+    height: .75em;
+    border-radius: 50%;
+    background: #00eeff; 
+    cursor: pointer; 
+}
