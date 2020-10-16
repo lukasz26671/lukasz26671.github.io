@@ -364,20 +364,10 @@ class AudioPlayer {
             this.playPauseBtn.innerHTML = "play_arrow";
     }
 }
-//It's safe to destroy audioPlayer by simply setting it's reference to null, since listeners will be reinitialized.
 var removeAudioPlayer = function (audioPlayer) {
     audioPlayer.removeListeners();
     audioPlayer = null;
 };
-/*  
-    rnd = Math.floor(Math.random() * songnames.length+1);
-    num = rnd
-    audioindex = rnd
-    source = `https://lukasz26671.github.io/audio/audio${rnd}.mp3`
-    songname.innerHTML = songauthors[num-1] + "-" + songnames[num-1];
-    SetSource(audiosource, rnd)
-    audiosource.volume = 0.15;
-*/
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
