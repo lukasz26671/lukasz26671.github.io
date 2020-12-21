@@ -3,19 +3,19 @@ class RedirectHandler {
 
 	destinations = {
 		main: () => {
-			setTimeout("location.href='index.html';", 50);
+			setTimeout("location.href='../index.html';", 50);
 		},
 		calc: () => {
 			setTimeout("location.href='/Kalkulator';", 50);
 		},
 		sources: () => {
-			location.href='zrodla.html';
+			location.href='/sources/';
 		},
 		mods: () => {
-			location.href='mcmod.html';
+			location.href='/minecraft_mods/';
 		},
 		contact: () => {
-			location.href='kontakt.html';		
+			location.href='/contact/';		
 		},
 		channel: () => {
 			window.open('https://www.youtube.com/channel/UCWTjTkGZCSf5-XEZKUMQxoQ?view_as=subscriber', '_blank');

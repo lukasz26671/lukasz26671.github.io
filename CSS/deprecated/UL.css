@@ -1,0 +1,78 @@
+
+
+/* Remove margins and padding from the list */
+.ul1 {
+  margin: 0;
+  padding: 0;
+  text-align: center;
+}
+
+
+.li2 {
+  cursor: pointer;
+  color:white;
+  position: relative;
+  padding: 12px 8px 12px 8px;
+  list-style-type: none;
+  font-size: 18px;
+  opacity: 0.55;
+  transition: 0.3s;
+  border-radius: 12px;
+  margin-bottom:3px;
+  /* make the list items unselectable */
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.li2:hover {
+	opacity:1;
+}
+
+.unselectable {
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+.unselectable-black {
+	color:white;
+	
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+   
+}
+#u-green {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+}
+#u-red {
+  background-color: #f44336;
+  border: none;
+  color: white;	
+}
+#u-black {
+  background-color: #555555;
+  border: none;
+  color: white;
+}
+#u-blue {
+  background-color: #008CBA;
+  border: none;
+  color: white;	
+}
+#u-gray {
+  background-color: #e7e7e7;
+  border: 1px solid grey;
+  color: black;
+}
+
+#u-white {
+  background-color: white;
+  border: 1px solid black;
+  color: black
+}

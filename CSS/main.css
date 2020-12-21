@@ -1550,7 +1550,7 @@ body {
 }
 
 body {
-    background: #2e3842;
+    background: transparent;
 }
 
 body.is-loading *,
@@ -4555,7 +4555,8 @@ body.is-mobile.landing #footer {
     margin: 0;
     display: flex;
 	justify-items: center;
-	justify-content: center;
+    justify-content: center;
+    z-index: 30;
 }
 
 .cookie-info-container.hidden {
@@ -4829,6 +4830,9 @@ body.landing.is-mobile .about > p {
     width: 80%;
     margin: 10px 0px 10px;
 }
+#volumebar #volSlider {
+    margin-right: 50%;
+}
 
 .slider {
     position: relative;
@@ -4866,4 +4870,260 @@ body.landing.is-mobile .about > p {
     border-radius: 50%;
     background: #00eeff; 
     cursor: pointer; 
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+body {
+    height: 100%;
+}
+#footer {
+    display: flex; 
+    align-content: center; 
+    justify-content: center; 
+    padding: 1em; 
+    margin-top: 1em;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+    width: 100%;
+}
+
+body.is-mobile #footer {
+    display: none;
+}
+body.is-mobile #footer * {
+    display: none;
+}
+section.wider-desktop {
+    width: 100%;
+}
+section.wider-desktop .inner {
+    width: 80em;
+}
+
+body.is-mobile setion.wider-desktop .inner {
+    width: 60em;
+}
+
+.project-section .inner {
+    width: 100%;
+    padding: 0 5em;
+}
+.project-section .inner .major {
+    width: 100%;
+}
+.project-container {
+    width: 100%;
+    display: grid;
+    gap: 1.5em;
+    grid-template-columns: repeat(3, 1fr);
+}
+body.is-mobile .project-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: repeat(3, 1fr);
+}
+body.is-mobile .project-section .inner {
+    width: 100%;
+    padding: 0;
+    
+}
+
+.project-card {
+    background-color: #444; 
+    border-radius: 40px; 
+    box-shadow: #222 10px 10px 10px 0px;
+    transition: 0.3s ease-out;
+    z-index: 1;
+
+}
+
+.project-inner {
+    border-bottom: 2px solid #444; 
+    font-size: 1.5em;
+}
+
+.project-card:hover {
+    transform: scale(1.05);
+    z-index: 40;
+    transition: 0.3s ease-in;
+}
+
+
+.project-card a {
+    position: relative;
+    bottom: 0px;
+}
+.project-card a:hover {
+    text-decoration: none;
+    color: white;
+}
+
+.project-container :nth-child(4n){
+    grid-column: span 3/4;
+}
+body.is-mobile .project-container :nth-child(4n){
+    grid-column: 1/1;
+}
+
+.project-title {
+    color: green;
+    font-size: 1.5em;
+    border-bottom: 3px solid #555;
+    transition: none;
+}
+.project-card:hover .project-title {
+    color: red;
+}
+.project-link {
+    position: relative;
+    bottom: 0px;
+}
+.text-left {
+    text-align: left;
+}
+.text-right {
+    text-align: right;
+}
+.text-center {
+    text-align: center;
+}
+
+
+/* MARGINS */
+.my-05 {
+    margin: 0.5em inherit;
+}
+.my-1 {
+    margin: 1em inherit;
+}
+.my-2 {
+    margin: 2em inherit;
+}
+
+.my-3 {
+    margin: 3em inherit;
+}
+
+.my-4 {
+    margin: 4em inherit;
+}
+
+.my-5 {
+    margin: 5em inherit;
+}
+
+.mx-05 {
+    margin: inherit 0.5em;
+}
+.mx-1 {
+    margin: inherit 1em;
+}
+.mx-2 {
+    margin: inherit 2em;
+}
+
+.mx-3 {
+    margin: inherit 3em;
+}
+
+.mx-4 {
+    margin: inherit 4em;
+}
+
+.mx-5 {
+    margin: inherit 5em;
+}
+
+.m-05 {
+    margin: 0.5em;
+}
+.m-1 {
+    margin: 1em;
+}
+.m-2 {
+    margin: 2em;
+}
+
+.m-3 {
+    margin: 3em;
+}
+
+.m-4 {
+    margin: 4em;
+}
+
+.m-5 {
+    margin: 5em;
+}
+
+/* PADDINGS */
+.py-05 {
+    padding: 0.5em inherit;
+}
+.py-1 {
+    padding: 1em inherit;
+}
+.py-2 {
+    padding: 2em inherit;
+}
+
+.py-3 {
+    padding: 3em inherit;
+}
+
+.py-4 {
+    padding: 4em inherit;
+}
+
+.py-5 {
+    padding: 5em inherit;
+}
+.px-05 {
+    padding: inherit 0.5em;
+}
+.px-1 {
+    padding: inherit 1em;
+}
+.px-2 {
+    padding: inherit 2em;
+}
+
+.px-3 {
+    padding: inherit 3em;
+}
+
+.px-4 {
+    padding: inherit 4em;
+}
+
+.px-5 {
+    padding: inherit 5em;
+}
+
+.p-02 {
+    padding: 0.001em;
+}
+.p-05 {
+    padding: 0.5em;
+}
+.p-1 {
+    padding: 1em;
+}
+.p-2 {
+    padding: 2em;
+}
+
+.p-3 {
+    padding: 3em;
+}
+
+.p-4 {
+    padding: 4em;
+}
+
+.p-5 {
+    padding: 5em;
 }
