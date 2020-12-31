@@ -4982,6 +4982,7 @@ body.is-mobile .project-container :nth-child(4n){
 .project-card:hover .project-title {
     color: red;
     text-shadow: 0 0 8px red;
+    /**/
 }
 .project-link {
     position: relative;
