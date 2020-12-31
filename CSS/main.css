@@ -4603,6 +4603,10 @@ body.is-mobile.landing #footer {
     opacity: 0.8;
 }
 
+.episode:hover .episodeTitle {
+    text-shadow: 0 0 20px whitesmoke;
+}
+
 .episodeImage {
     display: block;
     grid-row: 1/3;
@@ -4969,13 +4973,15 @@ body.is-mobile .project-container :nth-child(4n){
 }
 
 .project-title {
-    color: green;
+    color: lime;
     font-size: 1.5em;
     border-bottom: 3px solid #555;
     transition: none;
+    text-shadow: 0 0 8px limegreen;
 }
 .project-card:hover .project-title {
     color: red;
+    text-shadow: 0 0 8px red;
 }
 .project-link {
     position: relative;

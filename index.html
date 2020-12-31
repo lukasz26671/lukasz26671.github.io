@@ -23,8 +23,8 @@
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
     <script src="https://code.jquery.com/jquery-3.4.1.min.js"
         integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="../Skrypty/jquery.scrollex.min.js"></script>
-    <script src="../Skrypty/jquery.scrolly.min.js"></script>
+    <script src="./Skrypty/jquery.scrollex.min.js"></script>
+    <script src="./Skrypty/jquery.scrolly.min.js"></script>
     <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-172748671-1"></script>
     <script>
@@ -33,19 +33,6 @@
 		gtag('js', new Date());
 
 		gtag('config', 'UA-172748671-1');
-        function hideInfo() {
-            (function () {
-                const info = document.getElementById('info');
-                const text = info.children[0].children[0];
-
-                if (!info.classList.contains('hidden')) info.classList.add('hidden');
-
-                setTimeout(() => {
-                    text.onclick = () => { };
-                    text.style.cursor = 'default';
-                }, 200);
-            })();
-        }
     </script>
     <script defer src="Skrypty/skel.min.js"></script>
     <script defer src="Skrypty/util.js"></script>
@@ -90,7 +77,84 @@
             <div id="more" class="inner">
                 <header class="major">
                     <div style="font-size: 3em;">
-                        COMING SOON!
+                    </div>
+                </header>
+            </div>
+        </section>
+        <section class="wrapper style6 special project-section">
+            <div class="inner">
+                <header class="major">
+                    <h1 style="font-size: 2em; text-shadow: 2px 2px grey;">Projekty!</h1>
+                    <p>Nie są to oczywiście moje wszystkie projekty, natomiast są to jedne z ważniejszych, które zrobiłem :D</p>
+                    <div class="project-container">
+                        <div class="p-4 project-card">
+                            <div class="project-title text-capitalize my-2">
+                                Youtube audio provider
+                            </div>
+                            <div class="text-left">
+                                <p>
+                                    Dzięki niemu możesz teraz słuchać muzyki na tej stronie, sam(a) sprawdź :D
+                                    <br>
+                                    Kliknij w "menu" w prawym górnym rogu i wypróbuj sam(a)!
+                                </p>
+                                <div class="project-link">Link do projektu: <br> <a href="#">NIEDOSTĘPNY PUBLICZNIE</a></div>
+                            </div>
+                        </div>
+                        <div class="p-4 project-card">
+                            <div class="project-title text-capitalize my-2">
+                                Google Sheets Playlist reader
+                            </div>
+                            <div class="text-left">
+                                <p>
+                                    Dzięki niemu możesz teraz słuchać muzyki na tej stronie, sam(a) sprawdź :D
+                                    <br>
+                                    Kliknij w "menu" w prawym górnym rogu, a potem kliknij w "Track List Playera"!
+                                </p>
+                                <div class="project-link">Link do projektu <br> <a href="#">NIEDOSTĘPNY PUBLICZNIE</a></div>
+                            </div>
+                        </div>
+                        <div class="p-4 project-card">
+                            <div class="project-title text-capitalize my-2">
+                                Audio Player
+                            </div>
+                            <div class="text-left">
+                                <p>
+                                    Oparty na swych dwóch poprzednikach, jego początki sięgają 2015 roku, pozwala Ci słuchać muzyki, którą sam dla Ciebie przygotowałem!
+                                    <br>
+                                    Znajduje się w menu ;)
+                                </p>
+                                <div class="project-link">Link do projektu <br> <a href="https://github.com/lukasz26671/lukasz26671.github.io">Github</a></div>
+                            </div>
+                        </div>
+                        <div class="p-4 project-card">
+                            <div class="project-title text-capitalize my-2">
+                                HackerTyper 2
+                            </div>
+                            <div class="text-left">
+                                <p>
+                                    Symulator hackera / programisty :D 
+                                    Wystarczy że powciskasz randomowe klawisze, a kod będzie pisał się sam!
+                                    <br><br>
+                                    UWAGA: NIEDOSTĘPNY NA URZĄDZENIACH MOBILNYCH TJ. SMARTFONACH,TABLETACH
+                                </p>
+                                <div class="project-link">
+                                    Linki do projektu: 
+                                    <p>
+                                        <a href="https://github.com/lukasz26671/HackerTyper2">Github</a>
+                                        <a href="/HackerTyper2/">Live</a>
+                                    </p>
+                                    
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </header>
+            </div>
+        </section>
+        <section class="wrapper style6 special wider-desktop text-left">
+            <div class="inner">
+                <header class="major">
+                    <div style="word-wrap: break-word !important;">
                     </div>
                 </header>
             </div>

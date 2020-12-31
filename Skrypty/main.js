@@ -1,4 +1,5 @@
 
+
 const audioInit = new Promise((resolve, reject) => {
     try {
         resolve(new AudioPlayer(0.15, true, true));
@@ -63,5 +64,19 @@ try {
     })
 } catch (error) {
     console.log(error);
+}
+
+function hideInfo() {
+    (function () {
+        const info = document.getElementById('info');
+        const text = info.children[0].children[0];
+
+        if (!info.classList.contains('hidden')) info.classList.add('hidden');
+
+        setTimeout(() => {
+            text.onclick = () => { };
+            text.style.cursor = 'default';
+        }, 200);
+    })();
 }
 

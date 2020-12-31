@@ -226,11 +226,19 @@ class AudioPlayer {
         if(this.audioPlayerInterface.classList.contains("invisible")) {
             this.audioPlayerInterface.classList.remove("invisible")
         }
+        
+        let lAudioVolume = localStorage.getItem("lastAudioVolume")
+
+        if(lAudioVolume) {
+            this.volume = parseFloat(lAudioVolume);
+        }
 
         this.audiosource.volume = this.volume;
         g.audioVolume = this.volume;
+
         this.initEnd = new Date();
         this.initTime = this.initEnd - this.initStart;
+    
         this.volumeSlider.value = this.volume * 100;
         console.log(`Initialization complete after ${this.initTime} ms`);
     }
@@ -338,6 +346,7 @@ class AudioPlayer {
             this.volume = vol;
             g.audioVolume = this.volume;
             this.audiosource.volume = this.volume;
+            localStorage.setItem("lastAudioVolume", this.volume.toString())
         }
     };
     play() {
