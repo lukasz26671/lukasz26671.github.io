@@ -5,9 +5,9 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Kontakt</title>
-	<link href="../CSS/deprecated/buttons.css" rel="stylesheet" type="text/css" />
-	<link href="../CSS/deprecated/UL.css" rel="stylesheet" type="text/css" />
-	<link href="../CSS/styles.css" rel="stylesheet" type="text/css" />
+	<link href="../dist/css/deprecated/buttons.css" rel="stylesheet" type="text/css" />
+	<link href="../dist/css/deprecated/UL.css" rel="stylesheet" type="text/css" />
+	<link href="../dist/css/styles.min.css" rel="stylesheet" type="text/css" />
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -20,20 +20,7 @@
 
 		gtag('config', 'UA-172748671-1');
 	</script>
-	<style>
-		* {
-			color: white;
-		}
-
-		body {
-			background-image: url('../images/background5.jpg');
-			background-color: black;
-		}
-
-		li {
-			cursor: default;
-		}
-	</style>
+	<style>* {color: white;}body {background-image: url('../images/background5.jpg');background-color: black;}li {cursor: default;}</style>
 </head>
 
 <body>
@@ -76,11 +63,10 @@
 		<source type="audio/mpeg" />
 	</audio>
 
-	<script defer src="https://code.jquery.com/jquery-3.4.1.min.js"
-		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-	<script defer src="../Skrypty/AudioPlayer.js"></script>
-	<script defer src="../Skrypty/Redirect.js"></script>
-	<script defer src="../Skrypty/main.js"></script>
+	<script defer src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script defer src="../dist/js/AudioPlayer.min.js"></script>
+	<script defer src="../dist/js/Redirect.min.js"></script>
+	<script defer src="../dist/js/main.min.js"></script>
 	<script>document.getElementById("back").addEventListener('click', () => r.redirect(r.destinations.main))</script>
 </body>
 

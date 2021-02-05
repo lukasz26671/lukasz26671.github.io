@@ -5,27 +5,14 @@
 <head>
 	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 	<title>Źródła</title>
-	<link href="../CSS/deprecated/buttons.css" rel="stylesheet" type="text/css" />
+	<link href="../dist/css/deprecated/buttons.css" rel="stylesheet" type="text/css" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" />
 	<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
-	<script src="Skrypty/Redirect.js"></script>
+	<script src="./dist/js/Redirect.js"></script>
 	<script type="text/javascript" src="songs.json"></script>
-	<style>
-		* {
-			color: white;
-		}
-
-		li {
-			cursor: default;
-		}
-
-		body {
-			background-color: black;
-		}
-	</style>
-
+	<style>* {color: white;}li {cursor: default;}body {background-color: black;}</style>
 </head>
 
 <body style="background-color: #303232; background-image:url('../images/background4.gif')">
@@ -69,11 +56,10 @@
 		<source type="audio/mpeg" />
 	</audio>
 
-	<script defer src="https://code.jquery.com/jquery-3.4.1.min.js"
-		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-	<script defer src="../Skrypty/AudioPlayer.js"></script>
-	<script defer src="../Skrypty/Redirect.js"></script>
-	<script defer src="../Skrypty/main.js"></script>
+	<script defer src="https://code.jquery.com/jquery-3.4.1.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script defer src="../dist/js/AudioPlayer.min.js"></script>
+	<script defer src="../dist/js/Redirect.min.js"></script>
+	<script defer src="../dist/js/main.min.js"></script>
 	<script>document.getElementById("back").addEventListener('click', () => r.redirect(r.destinations.main))</script>
 
 </body>
