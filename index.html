@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html lang="pl">
 <head>
+    <script>let pl = false;document.addEventListener("click", ()=> {if(!pl)document.getElementById("bg-video").play().then(()=>{pl = true;})});document.addEventListener("keypress", ()=> {if(!pl)document.getElementById("bg-video").play().then(()=>{pl = true;})});document.onscroll=()=> {if(!pl)document.getElementById("bg-video").play().then(()=>{pl = true;})}</script>
+
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="google-site-verification" content="5xpbWs4Y1htni-S0YtHsvDSZt7SBw-uFsBANZM0oJd0" />
@@ -47,6 +49,7 @@
     </audio>
     <div id="page-wrapper">
         <header id="header" class="alt">
+             
             <h1><a href="index.html">Lukasz26671</a></h1>
             <nav id="nav">
                 <ul>
@@ -57,12 +60,18 @@
             </nav>
         </header>
         <!--  Banner  -->
-        <section id="opener" class="wrapper style6 special" style="background-image: url('./images/background3.gif'); background-size:cover; background-repeat:no-repeat;"> 
-            <div class="inner">
-                <header class="major">
-                    <h2>Lukasz26671</h2>
-                    <p>Witaj na mojej stronie :D</p>
-                    <hr>
+        <section id="opener" class="wrapper style6 special" style="z-index: 1; background: linear-gradient(to bottom, #238ba5, #082553); background-size:cover; background-repeat:no-repeat;"> 
+            <video autoplay loop poster="./images/background3-fp.png/" id="bg-video">
+                <source src="./images/background3.webm" type="video/webm">
+                <source src="./images/background3.mp4" type="video/mpeg">
+            </video>
+            <script>document.getElementById("bg-video").onplay=()=>{document.getElementById("clicktoplay").style.display="none"};</script>
+            <div class="inner" style="z-index: 1;">
+                <header class="major" style="z-index: 1;">
+                    <h2 style="z-index: 1;">Lukasz26671</h2>
+                    <p style="z-index: 1;">Witaj na mojej stronie :D</p>
+                    <pre id="clicktoplay" style="color: white; font-size: 72.5%">Hint: kliknij w dowolne miejsce aby włączyć ruszające się tło :)</pre>
+                    <hr style="z-index: 1;">
                 </header>
                 <a href="#more" class="more scrolly">Przejdź dalej!</a>
         </section>
