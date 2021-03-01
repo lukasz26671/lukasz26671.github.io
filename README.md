@@ -1,7 +1,7 @@
 # lukasz26671.github.io
 ## INFO
 
-This project was created by me, in 2017. It is still updated, maybe not regularly, but still. 
+This project was created by me, in 2016. It is still updated, maybe not regularly, but still. 
 I wanted to actually do something instead of learning new languages.
 I know, I know. Final effect isn't very amazing but I like it! :D
 I find that it looks very nice in terms of design, and functionality.
