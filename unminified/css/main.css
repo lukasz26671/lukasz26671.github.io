@@ -2556,6 +2556,10 @@ button:disabled,
     width: 50%;
 }
 
+.features > li {
+    --title-color: white;
+}
+
 .features li:nth-child(1) {
     background-color: rgba(0, 0, 0, 0.035);
 }
@@ -2597,8 +2601,9 @@ button:disabled,
 }
 
 .features li:before {
+    --icon-color: #00ffcc;
     display: block;
-    color: #00ffcc;
+    color: var(--icon-color);
     position: absolute;
     left: 1.75em;
     top: 2.75em;
@@ -4972,21 +4977,67 @@ body.is-mobile .project-container :nth-child(4n){
 }
 
 .project-title {
-    color: lime;
+    --title-color: white;
+    color: var(--title-color);
     font-size: 1.5em;
-    border-bottom: 3px solid #555;
+    border-bottom: 3px solid var(--title-color);
     transition: none;
-    text-shadow: 0 0 8px limegreen;
+    text-shadow: 0 0 8px var(--title-color);
 }
+
+.project-title.greenyellow {
+    --title-color: greenyellow;
+}
+.project-title.green {
+    --title-color: lime;
+}
+.project-title.white {
+    --title-color: white;
+}
+.project-title.red {
+    --title-color: red;
+}
+.project-title.cyan {
+    --title-color: cyan;
+}
+.project-title.yellow {
+    --title-color: yellow;
+}
+
+
 .project-card:hover .project-title {
     color: red;
     text-shadow: 0 0 8px red;
     /**/
 }
 .project-link {
+    --link-color: rgb(0, 0, 255);
     position: relative;
     bottom: 0px;
 }
+.project-link a:hover {
+    color: var(--link-color);
+}
+
+.project-link.greenyellow {
+    --link-color: greenyellow;
+}
+.project-link.green {
+    --link-color: lime;
+}
+.project-link.white {
+    --link-color: white;
+}
+.project-link.red {
+    --link-color: red;
+}
+.project-link.cyan {
+    --link-color: cyan;
+}
+.project-link.yellow {
+    --link-color: yellow;
+}
+
 .text-left {
     text-align: left;
 }
@@ -5019,6 +5070,16 @@ video#bg-video {
     transform: translateX(-50%);
     box-shadow: 0 0 20px #005c89;
 }
+
+.anchor {
+    display: block;
+    position: relative;
+    top: -250px;
+    visibility: hidden;
+    content: "";
+}
+
+
 
 /* MARGINS */
 .my-05 {
