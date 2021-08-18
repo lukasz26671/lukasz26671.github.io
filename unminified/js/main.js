@@ -1,8 +1,14 @@
 
 
 const audioInit = new Promise((resolve, reject) => {
-    try {
-        resolve(new AudioPlayer(0.15, true, true));
+    try {        
+        const searchParams = new URLSearchParams(window.location.search);
+        let featuredMode = searchParams.get("featured") != null;
+        
+        if(featuredMode) {
+            document.getElementById("playlistSelect").selectedIndex = 1;
+        }
+        resolve(new AudioPlayer(0.15, true, true, featuredMode));
     } catch (e) {
         reject(e);
     }

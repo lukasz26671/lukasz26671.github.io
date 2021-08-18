@@ -1,22 +1,24 @@
 class AudioPlayer {
-    songs = null;
     streamingMode = true;
     streamingProvider = "https://website-audioprovider.herokuapp.com";
     sourceProvider = "https://website-sourceprovider.herokuapp.com"
     randomMode = false;
     double = false; //double confirm to go back on random mode
+    changedToFeatured = false;
 
-    constructor(volume, streamingMode = false, spreadsheetMode = false) {
+    constructor(volume, streamingMode = false, spreadsheetMode = false, featuredMode = false) {
         this.volume = volume;
         this.initStart = new Date();
         this.init = true;
         this.streamingMode = streamingMode;
         this.spreadsheetMode = spreadsheetMode;
+        this.featuredMode = featuredMode
+        
         this.parseSongs();
     }
-    parseSongs() {
+    parseSongs({reinit=false}={}) {
         if (this.spreadsheetMode && this.streamingMode) {
-            fetch(this.sourceProvider + '/api/readplaylist', {method: 'POST'})
+            fetch(`${this.sourceProvider}/api/readplaylist/${(this.featuredMode ? 'featured' : '')}`, {method: 'POST'})
                 .then(res => res.json())
                 .then(songJSON => {
                     this.songJSON = songJSON
@@ -25,9 +27,13 @@ class AudioPlayer {
                     this.songNames = this.songJSON.titles;
                     this.ids = this.songJSON.IDs;
 
-                    this.maxLen = this.songNames.length;
+                    this.maxLen = Math.min(songJSON.authors.length, songJSON.titles.length, songJSON.IDs.length);
 
-                    this.resolveReferences()
+                    if(reinit === false)
+                        this.resolveReferences()
+                    else
+                        this.setSourcesInit({play: true});
+
 
                 }).catch((err) => {
                     throw err;
@@ -58,7 +64,7 @@ class AudioPlayer {
                         this.songNames = this.songJSON.songs.names;
                         this.songAuthors = this.songJSON.songs.authors;
                     }
-                    this.maxLen = this.songNames.length;
+                    //this.maxLen = this.songNames.length;
                     this.resolveReferences();
                 })
                 .catch((err) => {
@@ -79,6 +85,7 @@ class AudioPlayer {
             this.audioPlayerInterface = document.getElementById("audioPlayer");
             this.vidRef = document.getElementById("vid");
             this.shareRef = document.getElementById("share");
+            this.playlistSelection = document.getElementById("playlistSelect");
             this.sourceInfoParent = document.getElementsByClassName(
                 "controlbuttons"
             )[0];
@@ -101,12 +108,6 @@ class AudioPlayer {
                 : "via Local";
             this.sourceInfo.style.fontSize = "10px";
             g.playbackSource = this.streamingMode ? "via Youtube" : "via Local";
-
-
-            this.volumeSlider.addEventListener('change', (e) => {
-                this.controls.changeVolume(e.target.value / 100);
-            })
-
 
             this.setSourcesInit();
         } catch (err) {
@@ -138,11 +139,19 @@ class AudioPlayer {
             });
 
             this.shareRef.addEventListener("click", async ()=> {
-                await navigator.clipboard.writeText(`https://lukasz26671.github.io/?song=${this.audioIndex}`);
+                await navigator.clipboard.writeText(`https://lukasz26671.github.io/?song=${this.audioIndex}${(this.featuredMode ? '&featured' : '')}`);
                 this.shareRef.style.opacity = 0.5;
                 setTimeout(()=> {
                     this.shareRef.style.opacity = 1;
                 }, 200)
+            })
+
+            this.playlistSelection.addEventListener('change', (e) => {
+                const value = e.target.value;
+                
+                this.featuredMode = value?.toLowerCase() === "featured";
+
+                this.changeMode();
             })
 
             this.vidRef.addEventListener("click", async ()=> {
@@ -157,6 +166,9 @@ class AudioPlayer {
                 this.didInteract = true;
             }
         });
+        this.volumeSlider.addEventListener('change', (e) => {
+            this.controls.changeVolume(e.target.value / 100);
+        })
 
         this.playPauseBtn.addEventListener("click", () => {
             this.togglePlay();
@@ -186,7 +198,18 @@ class AudioPlayer {
         this.nextbtn.addEventListener("click", this.controls.nextSong);
 
     }
-    setSourcesInit() {
+    changeMode() {
+        this.initStart = new Date();
+        this.init = true;
+        this.reinit = true;
+        console.log(this.featuredMode)
+        this.parseSongs({reinit: true});
+
+        console.log(`Reinitialized with ${this.changedToFeatured ? 'default' : 'featured'} playlist`)
+        this.changedToFeatured = !this.changedToFeatured;
+    }
+
+    setSourcesInit({play = false} = {}) {
         if (this.streamingMode) {
             fetch(this.streamingProvider, { method: "GET" }).then((res) => {
                 if (!res.ok) {
@@ -233,6 +256,8 @@ class AudioPlayer {
 
             this.init = false;
             if (!this.reinit) this.setListeners();
+            this.reinit = false;
+            if(play) this.play()
             this.finalizeInitialization();
         }
     }
@@ -315,6 +340,7 @@ class AudioPlayer {
         
     }
     reinitialize(type) {
+        this.initStart = new Date();
         if(!this.audioPlayerInterface.classList.contains("invisible")) {
             this.audioPlayerInterface.classList.add("invisible")
         }
@@ -362,10 +388,6 @@ class AudioPlayer {
         // this.percent = Math.min(this.increment * element.currentTime * 10, 100);
         // this.progress.style.width = this.percent + "%";
         // this.startTimer(duration, element);
-    }
-
-    removeListeners() {
-
     }
 
     rewindtimer = null;

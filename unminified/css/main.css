@@ -4959,6 +4959,33 @@ body.is-mobile .project-section .inner {
     transition: 0.3s ease-in;
 }
 
+#playlistSelect {
+    background: transparent;
+    border: 3px solid white;
+    border-radius: 10px;
+    text-align: center;
+}
+#playlistSelect::after {
+    content: "^";
+    position: relative;
+    background-color: red;
+    display: block;
+    top: 1px;
+    width: 100px;
+    height: 100px;
+}
+#playlistSelect::before {
+    content: "v";
+    position: relative;
+    background-color: blueviolet;
+    display: block;
+    top: -10px;
+    width: 100px;
+    height: 100px;
+}
+#playlistSelect:focus {
+    outline: 0;
+}
 
 .project-card a {
     position: relative;
