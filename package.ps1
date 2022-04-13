@@ -1,6 +1,8 @@
 $packaging_source = ".\unminified"
 $packaging_destination = ".\dist"
 
+# for use with minify
+# https://www.npmjs.com/package/minify
 
 function m-file($file, $out, $jscss) {
     minify "$packaging_source\$jscss\$file.$jscss" > "$packaging_destination\$jscss\$out.$jscss"

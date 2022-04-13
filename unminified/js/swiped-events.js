@@ -15,7 +15,11 @@
 
         window.CustomEvent = function (event, params) {
 
-            params = params || { bubbles: false, cancelable: false, detail: undefined };
+            params = params || {
+                bubbles: false,
+                cancelable: false,
+                detail: undefined
+            };
 
             var evt = document.createEvent('CustomEvent');
             evt.initCustomEvent(event, params.bubbles, params.cancelable, params.detail);
@@ -41,8 +45,8 @@
         // if the user released on a different target, cancel!
         if (startEl !== e.target) return;
 
-        var swipeThreshold = parseInt(startEl.getAttribute('data-swipe-threshold') || '20', 10);    // default 10px
-        var swipeTimeout = parseInt(startEl.getAttribute('data-swipe-timeout') || '500', 10);      // default 1000ms
+        var swipeThreshold = parseInt(startEl.getAttribute('data-swipe-threshold') || '20', 10); // default 10px
+        var swipeTimeout = parseInt(startEl.getAttribute('data-swipe-timeout') || '500', 10); // default 1000ms
         var timeDiff = Date.now() - timeDown;
         var eventType = '';
 
@@ -50,18 +54,15 @@
             if (Math.abs(xDiff) > swipeThreshold && timeDiff < swipeTimeout) {
                 if (xDiff > 0) {
                     eventType = 'swiped-left';
-                }
-                else {
+                } else {
                     eventType = 'swiped-right';
                 }
             }
-        }
-        else {
+        } else {
             if (Math.abs(yDiff) > swipeThreshold && timeDiff < swipeTimeout) {
                 if (yDiff > 0) {
                     eventType = 'swiped-up';
-                }
-                else {
+                } else {
                     eventType = 'swiped-down';
                 }
             }
@@ -70,7 +71,10 @@
         if (eventType !== '') {
 
             // fire event on the element that started the swipe
-            startEl.dispatchEvent(new CustomEvent(eventType, { bubbles: true, cancelable: true }));
+            startEl.dispatchEvent(new CustomEvent(eventType, {
+                bubbles: true,
+                cancelable: true
+            }));
 
             // if (console && console.log) console.log(eventType + ' fired on ' + startEl.tagName);
         }

@@ -1,11 +1,9 @@
-
-
 const audioInit = new Promise((resolve, reject) => {
-    try {        
+    try {
         const searchParams = new URLSearchParams(window.location.search);
         let featuredMode = searchParams.get("featured") != null;
-        
-        if(featuredMode) {
+
+        if (featuredMode) {
             document.getElementById("playlistSelect").selectedIndex = 1;
         }
         resolve(new AudioPlayer(0.15, true, true, featuredMode));
@@ -51,18 +49,18 @@ var g = new Global();
 var audioPlayer;
 var r;
 
-document.addEventListener('swiped-left', ()=> {
+document.addEventListener('swiped-left', () => {
     document.body.classList.add("is-menu-visible");
 })
 
 try {
-    (()=> {
+    (() => {
         const calc = document.getElementById("Kalkulator");
         const mods = document.getElementById("MinecraftMody");
         const sources = document.getElementById("Zrodla");
         const contact = document.getElementById("Kontakt");
         const books = document.getElementById("Books");
-        
+
         calc.addEventListener('click', () => r.redirect(r.destinations.calc))
         mods.addEventListener('click', () => r.redirect(r.destinations.mods))
         sources.addEventListener('click', () => r.redirect(r.destinations.sources))
@@ -80,9 +78,8 @@ function hideInfo() {
         if (!info.classList.contains('hidden')) info.classList.add('hidden');
 
         setTimeout(() => {
-            text.onclick = () => { };
+            text.onclick = () => {};
             text.style.cursor = 'default';
         }, 200);
     })();
 }
-

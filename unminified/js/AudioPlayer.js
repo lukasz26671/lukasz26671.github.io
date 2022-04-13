@@ -13,12 +13,16 @@ class AudioPlayer {
         this.streamingMode = streamingMode;
         this.spreadsheetMode = spreadsheetMode;
         this.featuredMode = featuredMode
-        
+
         this.parseSongs();
     }
-    parseSongs({reinit=false}={}) {
+    parseSongs({
+        reinit = false
+    } = {}) {
         if (this.spreadsheetMode && this.streamingMode) {
-            fetch(`${this.sourceProvider}/api/readplaylist/${(this.featuredMode ? 'featured' : '')}`, {method: 'POST'})
+            fetch(`${this.sourceProvider}/api/readplaylist/${(this.featuredMode ? 'featured' : '')}`, {
+                    method: 'POST'
+                })
                 .then(res => res.json())
                 .then(songJSON => {
                     this.songJSON = songJSON
@@ -29,10 +33,12 @@ class AudioPlayer {
 
                     this.maxLen = Math.min(songJSON.authors.length, songJSON.titles.length, songJSON.IDs.length);
 
-                    if(reinit === false)
+                    if (reinit === false)
                         this.resolveReferences()
                     else
-                        this.setSourcesInit({play: true});
+                        this.setSourcesInit({
+                            play: true
+                        });
 
 
                 }).catch((err) => {
@@ -41,16 +47,16 @@ class AudioPlayer {
         } else {
             if (this.spreadsheetMode) console.warn("Google Sheet source enabled but streaming mode is disabled!")
             fetch(
-                "https://raw.githubusercontent.com/lukasz26671/lukasz26671.github.io/master/songs.json"
-            ).then((res) => {
-                if (!res.ok) {
-                    console.log(res);
-                    this.init = true;
-                    this.reinitialize('source');
-                    return;
-                }
-                return res;
-            })
+                    "https://raw.githubusercontent.com/lukasz26671/lukasz26671.github.io/master/songs.json"
+                ).then((res) => {
+                    if (!res.ok) {
+                        console.log(res);
+                        this.init = true;
+                        this.reinitialize('source');
+                        return;
+                    }
+                    return res;
+                })
                 .then((res) => res.json())
                 .then((out) => {
                     this.songJSON = out;
@@ -103,9 +109,9 @@ class AudioPlayer {
                 a.id = "audioSrcInfo";
                 this.sourceInfo = this.sourceInfoParent.appendChild(a);
             }
-            this.sourceInfo.innerHTML = this.streamingMode
-                ? "via Youtube"
-                : "via Local";
+            this.sourceInfo.innerHTML = this.streamingMode ?
+                "via Youtube" :
+                "via Local";
             this.sourceInfo.style.fontSize = "10px";
             g.playbackSource = this.streamingMode ? "via Youtube" : "via Local";
 
@@ -138,23 +144,23 @@ class AudioPlayer {
                 this.updateToggles("randomize");
             });
 
-            this.shareRef.addEventListener("click", async ()=> {
+            this.shareRef.addEventListener("click", async () => {
                 await navigator.clipboard.writeText(`https://lukasz26671.github.io/?song=${this.audioIndex}${(this.featuredMode ? '&featured' : '')}`);
                 this.shareRef.style.opacity = 0.5;
-                setTimeout(()=> {
+                setTimeout(() => {
                     this.shareRef.style.opacity = 1;
                 }, 200)
             })
 
             this.playlistSelection.addEventListener('change', (e) => {
                 const value = e.target.value;
-                
+
                 this.featuredMode = value?.toLowerCase() === "featured";
 
                 this.changeMode();
             })
 
-            this.vidRef.addEventListener("click", async ()=> {
+            this.vidRef.addEventListener("click", async () => {
                 window.open(this.ytSource, '_blank');
             })
 
@@ -203,15 +209,21 @@ class AudioPlayer {
         this.init = true;
         this.reinit = true;
         console.log(this.featuredMode)
-        this.parseSongs({reinit: true});
+        this.parseSongs({
+            reinit: true
+        });
 
         console.log(`Reinitialized with ${this.changedToFeatured ? 'default' : 'featured'} playlist`)
         this.changedToFeatured = !this.changedToFeatured;
     }
 
-    setSourcesInit({play = false} = {}) {
+    setSourcesInit({
+        play = false
+    } = {}) {
         if (this.streamingMode) {
-            fetch(this.streamingProvider, { method: "GET" }).then((res) => {
+            fetch(this.streamingProvider, {
+                method: "GET"
+            }).then((res) => {
                 if (!res.ok) {
                     console.log(res);
                     this.init = true;
@@ -234,16 +246,16 @@ class AudioPlayer {
                     this.songNames[this.rnd]
                     }</a>`;
             } else {
-                if(g.localAudioDeprecated) { 
+                if (g.localAudioDeprecated) {
                     this.songName.innerText = `Streaming service is unavailable, try again later.`
                     try {
                         [this.loopBox, this.nextbtn, this.prevbtn, this.playPauseBtn, this.randomize, this.volumeSlider].forEach(e => {
-                            if(!e.classList.contains("invisible"))
+                            if (!e.classList.contains("invisible"))
                                 e.classList.add("invisible")
                             this.audioPlayerInterface.classList.remove("invisible")
                         });
-                    } catch(error) {}
-    
+                    } catch (error) {}
+
                     console.warn("Streaming service is unavailable, try again later.")
                     return;
                 }
@@ -257,11 +269,13 @@ class AudioPlayer {
             this.init = false;
             if (!this.reinit) this.setListeners();
             this.reinit = false;
-            if(play) this.play()
+            if (play) this.play()
             this.finalizeInitialization();
         }
     }
-    getSource() { return this.ytSource; }
+    getSource() {
+        return this.ytSource;
+    }
     setSources(i) {
         this.audioIndex = i;
         if (this.streamingMode) {
@@ -271,23 +285,23 @@ class AudioPlayer {
             this.ytSource = `https://youtube.com/watch?v=${this.ids[i]}`
             this.songName.innerHTML = `${this.audioIndex+1}. <a target="_blank" href="https://youtube.com/watch?v=${this.ids[i]}">${this.songAuthors[i]} - ${this.songNames[i]}</a>`;
         } else {
-            if(g.localAudioDeprecated) { 
+            if (g.localAudioDeprecated) {
                 this.songName.innerText = `Streaming service is unavailable, try again later.\nKliknij aby przetlumaczyc.`
-                this.songName.style.cursor="pointer"
-                this.songName.onclick = ()=> {
-                    if(this.songName.innerText == `Streaming service is unavailable, try again later.\nKliknij aby przetlumaczyc.`) {
+                this.songName.style.cursor = "pointer"
+                this.songName.onclick = () => {
+                    if (this.songName.innerText == `Streaming service is unavailable, try again later.\nKliknij aby przetlumaczyc.`) {
                         this.songName.innerText = `Tryb streamowania audio nie jest dostepny, sprobuj ponownie pozniej.\nClick to translate`
-                    } else if(this.songName.innerText == `Tryb streamowania audio nie jest dostepny, sprobuj ponownie pozniej.\nClick to translate`) {
+                    } else if (this.songName.innerText == `Tryb streamowania audio nie jest dostepny, sprobuj ponownie pozniej.\nClick to translate`) {
                         this.songName.innerText = `Streaming service is unavailable, try again later.\nKliknij aby przetlumaczyc.`;
                     }
                 }
                 try {
                     [this.loopBox, this.nextbtn, this.prevbtn, this.playPauseBtn, this.randomize, this.volumeSlider, this.sourceInfoParent].forEach(e => {
-                        if(!e.classList.contains("invisible"))
+                        if (!e.classList.contains("invisible"))
                             e.classList.add("invisible")
                         this.audioPlayerInterface.classList.remove("invisible")
                     });
-                } catch(error) {}
+                } catch (error) {}
 
                 console.warn("Streaming service is unavailable, try again later.")
                 return;
@@ -302,13 +316,13 @@ class AudioPlayer {
     finalizeInitialization() {
         var searchParams = new URLSearchParams(window.location.search);
 
-        if(this.audioPlayerInterface.classList.contains("invisible")) {
+        if (this.audioPlayerInterface.classList.contains("invisible")) {
             this.audioPlayerInterface.classList.remove("invisible")
         }
-        
+
         let lAudioVolume = localStorage.getItem("lastAudioVolume")
 
-        if(lAudioVolume) {
+        if (lAudioVolume) {
             this.volume = parseFloat(lAudioVolume);
         }
 
@@ -317,40 +331,40 @@ class AudioPlayer {
 
         this.initEnd = new Date();
         this.initTime = this.initEnd - this.initStart;
-    
+
         this.volumeSlider.value = this.volume * 100;
         console.log(`Initialization complete after ${this.initTime} ms`);
 
         let songIndexQuery = searchParams.get("song");
-        if(songIndexQuery != null) {
-            if(songIndexQuery.toLowerCase() == "last") {
-                this.setSources(this.maxLen-1);
+        if (songIndexQuery != null) {
+            if (songIndexQuery.toLowerCase() == "last") {
+                this.setSources(this.maxLen - 1);
                 return;
             }
-            if(songIndexQuery.toLowerCase() == "first") {
+            if (songIndexQuery.toLowerCase() == "first") {
                 this.setSources(0);
                 return;
             } else {
                 songIndexQuery = parseInt(songIndexQuery);
-                if(!isNaN(songIndexQuery)) {
-                    this.setSources(Math.abs(Math.min(songIndexQuery, this.maxLen-1)))
+                if (!isNaN(songIndexQuery)) {
+                    this.setSources(Math.abs(Math.min(songIndexQuery, this.maxLen - 1)))
                 }
             }
         }
-        
+
     }
     reinitialize(type) {
         this.initStart = new Date();
-        if(!this.audioPlayerInterface.classList.contains("invisible")) {
+        if (!this.audioPlayerInterface.classList.contains("invisible")) {
             this.audioPlayerInterface.classList.add("invisible")
         }
         console.warn("Streaming mode unavailable, reverting to local audio");
 
-        if(type === 'audio' && g.localAudioDeprecated) {
+        if (type === 'audio' && g.localAudioDeprecated) {
             console.warn("Local mode is deprecated, disabling service")
             this.init = true;
             this.reinit = true;
-            this.streamingMode = false;     
+            this.streamingMode = false;
             this.setSources(1);
             return null;
         }
@@ -398,9 +412,9 @@ class AudioPlayer {
                 if (this.double == true) {
                     this.double = false;
                     this.audioIndex =
-                        this.audioIndex <= 0
-                            ? this.maxLen - 1
-                            : this.audioIndex - 1;
+                        this.audioIndex <= 0 ?
+                        this.maxLen - 1 :
+                        this.audioIndex - 1;
 
                     this.setSources(this.audioIndex);
 
@@ -429,7 +443,7 @@ class AudioPlayer {
         },
         nextSong: () => {
             if (this.randomMode) {
-                this.audioIndex = getRandomInt(0, this.maxLen-1);
+                this.audioIndex = getRandomInt(0, this.maxLen - 1);
                 this.setSources(this.audioIndex);
             } else {
                 if (this.audioIndex < this.maxLen) {
@@ -454,9 +468,9 @@ class AudioPlayer {
         }
     };
     play() {
-        const playPromise = this.audiosource.play(); 
+        const playPromise = this.audiosource.play();
 
-        if (playPromise !== undefined) { 
+        if (playPromise !== undefined) {
             playPromise.then(_ => {
                 if (this.playPauseBtn.innerHTML === "play_arrow") {
                     this.playPauseBtn.innerHTML = "pause";
@@ -481,6 +495,7 @@ var removeAudioPlayer = function (audioPlayer) {
     audioPlayer.removeListeners();
     audioPlayer = null;
 };
+
 function getRandomInt(min, max) {
     min = Math.ceil(min);
     max = Math.floor(max);
