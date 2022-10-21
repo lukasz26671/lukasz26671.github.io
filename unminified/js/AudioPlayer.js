@@ -1,10 +1,12 @@
 class AudioPlayer {
     streamingMode = true;
-    streamingProvider = "https://website-audioprovider.herokuapp.com";
+    streamingProvider = "https://web-srcprovider.up.railway.app";
+    streamingProvidertwo = "https://website-audioprovider.herokuapp.com";
     sourceProvider = "https://website-sourceprovider.herokuapp.com"
     randomMode = false;
     double = false; //double confirm to go back on random mode
     changedToFeatured = false;
+    retries = 0;
 
     constructor(volume, streamingMode = false, spreadsheetMode = false, featuredMode = false) {
         this.volume = volume;
@@ -17,10 +19,12 @@ class AudioPlayer {
         this.parseSongs();
     }
     parseSongs({
-        reinit = false
+        reinit = false,
+        secondProvider = false
     } = {}) {
         if (this.spreadsheetMode && this.streamingMode) {
-            fetch(`${this.sourceProvider}/api/readplaylist/${(this.featuredMode ? 'featured' : '')}`, {
+            let provider = secondProvider ? this.streamingProvidertwo : this.streamingProvider;
+            fetch(`${provider}/api/readplaylist/${(this.featuredMode ? 'featured' : '')}`, {
                     method: 'POST'
                 })
                 .then(res => res.json())
@@ -42,7 +46,21 @@ class AudioPlayer {
 
 
                 }).catch((err) => {
-                    throw err;
+                    if(retries < 3) {
+                        console.warn(err);
+                        console.warn(`${this.retries} retries. Retrying after in ${this.retries + 1} second(s)...`);
+                        setTimeout(()=> {this.parseSongs()}, 1000 * Math.max(this.retries, 1));
+                        this.retries++;
+                        return;
+                    } else if (this.retries < 6) {
+                        console.warn(err);
+                        console.warn(`${this.retries} retries. Retrying 2nd provider after in ${this.retries + 1} second(s)...`);
+                        setTimeout(()=> {this.parseSongs()}, 1000 * Math.max(this.retries, 1));
+                        this.retries++;
+                    } else {
+                        console.error(`Unable to initialize source provider. Service unavailable. \n Stack error:`);
+                        console.error(err);
+                    }
                 });
         } else {
             if (this.spreadsheetMode) console.warn("Google Sheet source enabled but streaming mode is disabled!")
@@ -80,21 +98,20 @@ class AudioPlayer {
     }
     resolveReferences() {
         try {
-            this.songName = document.getElementById("song");
-            this.audiosource = document.getElementById("audiosource");
-            this.playPauseBtn = document.getElementById("playpause");
-            this.prevbtn = document.getElementById("prev");
-            this.nextbtn = document.getElementById("next");
-            this.content = document.getElementById("content");
-            this.loopBox = document.getElementById("loop");
-            this.randomize = document.getElementById("random");
-            this.audioPlayerInterface = document.getElementById("audioPlayer");
-            this.vidRef = document.getElementById("vid");
-            this.shareRef = document.getElementById("share");
-            this.playlistSelection = document.getElementById("playlistSelect");
-            this.sourceInfoParent = document.getElementsByClassName(
-                "controlbuttons"
-            )[0];
+            this.songName              = document.getElementById("song");
+            this.audiosource           = document.getElementById("audiosource");
+            this.playPauseBtn          = document.getElementById("playpause");
+            this.prevbtn               = document.getElementById("prev");
+            this.nextbtn               = document.getElementById("next");
+            this.content               = document.getElementById("content");
+            this.loopBox               = document.getElementById("loop");
+            this.randomize             = document.getElementById("random");
+            this.audioPlayerInterface  = document.getElementById("audioPlayer");
+            this.vidRef                = document.getElementById("vid");
+            this.shareRef              = document.getElementById("share");
+            this.playlistSelection     = document.getElementById("playlistSelect");
+            this.sourceInfoParent      = document.getElementsByClassName("controlbuttons")[0];
+            
             this.volumeSlider = document.getElementById('volSlider');
             this.isPlaying = false;
             this.loop = false;
