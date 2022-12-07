@@ -46,7 +46,7 @@ class AudioPlayer {
 
 
                 }).catch((err) => {
-                    if(retries < 3) {
+                    if(this.retries < 3) {
                         console.warn(err);
                         console.warn(`${this.retries} retries. Retrying after in ${this.retries + 1} second(s)...`);
                         setTimeout(()=> {this.parseSongs()}, 1000 * Math.max(this.retries, 1));
@@ -266,7 +266,7 @@ class AudioPlayer {
                 if (g.localAudioDeprecated) {
                     this.songName.innerText = `Streaming service is unavailable, try again later.`
                     try {
-                        [this.loopBox, this.nextbtn, this.prevbtn, this.playPauseBtn, this.randomize, this.volumeSlider].forEach(e => {
+                        [this.loopBox, this.nextbtn, this.prevbtn, this.playPauseBtn, this.randomize, this.volumeSlider, this.shareRef, this.vidRef].forEach(e => {
                             if (!e.classList.contains("invisible"))
                                 e.classList.add("invisible")
                             this.audioPlayerInterface.classList.remove("invisible")
