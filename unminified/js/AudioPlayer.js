@@ -1,8 +1,8 @@
 class AudioPlayer {
     streamingMode = true;
-    streamingProvider = "https://web-srcprovider.up.railway.app";
+    streamingProvider = "http://lukasz266713.ddns.net:3000";
     streamingProvidertwo = "https://website-audioprovider.herokuapp.com";
-    sourceProvider = "https://website-sourceprovider.herokuapp.com"
+    sourceProvider = "http://lukasz266713.ddns.net:3300"
     randomMode = false;
     double = false; //double confirm to go back on random mode
     changedToFeatured = false;
@@ -23,7 +23,7 @@ class AudioPlayer {
         secondProvider = false
     } = {}) {
         if (this.spreadsheetMode && this.streamingMode) {
-            let provider = secondProvider ? this.streamingProvidertwo : this.streamingProvider;
+            let provider = this.sourceProvider;
             fetch(`${provider}/api/readplaylist/${(this.featuredMode ? 'featured' : '')}`, {
                     method: 'POST'
                 })
@@ -255,7 +255,7 @@ class AudioPlayer {
             this.audioIndex = this.rnd;
 
             if (this.streamingMode) {
-                this.source = `https://website-audioprovider.herokuapp.com/stream/${this.ids[this.rnd]}?TYPE=mp3`
+                this.source = `${this.streamingProvider}/download_id/${this.ids[this.rnd]}?TYPE=mp3`
                 // this.source = `http://localhost:3000/download?ID=${this.ids[this.rnd]}`
 
                 this.ytSource = `https://youtube.com/watch?v=${this.ids[this.rnd]}`
@@ -296,7 +296,7 @@ class AudioPlayer {
     setSources(i) {
         this.audioIndex = i;
         if (this.streamingMode) {
-            this.source = `https://website-audioprovider.herokuapp.com/stream/${this.ids[i]}?TYPE=mp3`;
+            this.source = `${this.streamingProvider}/download_id/${this.ids[i]}?TYPE=mp3`;
             // this.source = `http://localhost:3000/download?ID=${this.ids[i]}&TYPE=mp3`;
 
             this.ytSource = `https://youtube.com/watch?v=${this.ids[i]}`
