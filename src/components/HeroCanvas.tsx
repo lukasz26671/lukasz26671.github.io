@@ -6,6 +6,55 @@ type Props = {
   className?: string
 }
 
+const BG = 0x040b14
+const GRID_SEG_X = 64
+const GRID_SEG_Z = 40
+const GRID_COLS = GRID_SEG_X + 1
+const GRID_ROWS = GRID_SEG_Z + 1
+
+type Packet = {
+  startIdx: number
+  targetIdx: number
+  progress: number
+  speed: number
+}
+
+function waveHeight(x: number, z: number, time: number) {
+  return (
+    Math.sin(x * 0.05 + time * 0.5) * 3 +
+    Math.cos(z * 0.05 + time * 0.3) * 3 +
+    Math.sin(x * 0.1 - z * 0.1 + time) * 1.5
+  )
+}
+
+const WAVE_GLSL = `
+  float waveHeight(vec3 p, float time) {
+    return sin(p.x * 0.05 + time * 0.5) * 3.0
+         + cos(p.z * 0.05 + time * 0.3) * 3.0
+         + sin(p.x * 0.1 - p.z * 0.1 + time) * 1.5;
+  }
+`
+
+function getNeighborIndex(index: number, vertexCount: number) {
+  const x = index % GRID_COLS
+  const y = Math.floor(index / GRID_COLS)
+  const neighbors: number[] = []
+  if (x > 0) neighbors.push(index - 1)
+  if (x < GRID_COLS - 1) neighbors.push(index + 1)
+  if (y > 0) neighbors.push(index - GRID_COLS)
+  if (y < GRID_ROWS - 1) neighbors.push(index + GRID_COLS)
+  const filtered = neighbors.filter((i) => i >= 0 && i < vertexCount)
+  return filtered[Math.floor(Math.random() * filtered.length)] ?? index
+}
+
+function randomCentralIndex() {
+  const marginX = 10
+  const marginZ = 6
+  const x = marginX + Math.floor(Math.random() * (GRID_COLS - marginX * 2))
+  const y = marginZ + Math.floor(Math.random() * (GRID_ROWS - marginZ * 2))
+  return y * GRID_COLS + x
+}
+
 export function HeroCanvas({ className }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
 
@@ -24,7 +73,7 @@ export function HeroCanvas({ className }: Props) {
     }
 
     const scene = new THREE.Scene()
-    scene.fog = new THREE.FogExp2(0x040b14, 0.015)
+    scene.fog = new THREE.FogExp2(BG, 0.02)
 
     const camera = new THREE.PerspectiveCamera(
       75,
@@ -36,40 +85,120 @@ export function HeroCanvas({ className }: Props) {
 
     renderer.setSize(container.clientWidth, container.clientHeight)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
-    renderer.setClearColor(0x040b14, 1)
+    renderer.setClearColor(BG, 0)
     container.appendChild(renderer.domElement)
 
-    const geometry = new THREE.PlaneGeometry(150, 150, 45, 45)
+    const geometry = new THREE.PlaneGeometry(320, 150, GRID_SEG_X, GRID_SEG_Z)
     geometry.rotateX(-Math.PI / 2)
 
     const posAttribute = geometry.attributes.position
     const vertexCount = posAttribute.count
+    const baseX = new Float32Array(vertexCount)
+    const baseZ = new Float32Array(vertexCount)
     for (let i = 0; i < vertexCount; i++) {
-      posAttribute.setX(i, posAttribute.getX(i) + (Math.random() - 0.5) * 2)
-      posAttribute.setZ(i, posAttribute.getZ(i) + (Math.random() - 0.5) * 2)
+      const x = posAttribute.getX(i) + (Math.random() - 0.5) * 2.5
+      const z = posAttribute.getZ(i) + (Math.random() - 0.5) * 2
+      posAttribute.setXYZ(i, x, 0, z)
+      baseX[i] = x
+      baseZ[i] = z
     }
+    posAttribute.needsUpdate = true
 
-    const points = new THREE.Points(
-      geometry,
-      new THREE.PointsMaterial({
-        color: 0x00d2ff,
-        size: 0.4,
-        transparent: true,
-        opacity: 0.9,
-      }),
-    )
+    const timeUniform = { value: 0 }
+
+    const pointsMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: timeUniform,
+        uColor: { value: new THREE.Color(0x00d2ff) },
+        uSize: { value: 3.2 * Math.min(window.devicePixelRatio, 2) },
+      },
+      vertexShader: `
+        uniform float uTime;
+        uniform float uSize;
+        ${WAVE_GLSL}
+        void main() {
+          vec3 p = position;
+          p.y = waveHeight(p, uTime);
+          vec4 mv = modelViewMatrix * vec4(p, 1.0);
+          gl_Position = projectionMatrix * mv;
+          gl_PointSize = uSize;
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 uColor;
+        void main() {
+          float d = length(gl_PointCoord - vec2(0.5));
+          float alpha = smoothstep(0.5, 0.18, d) * 0.9;
+          if (alpha < 0.02) discard;
+          gl_FragColor = vec4(uColor, alpha);
+        }
+      `,
+      transparent: true,
+      depthWrite: false,
+    })
+    const points = new THREE.Points(geometry, pointsMat)
     scene.add(points)
 
-    const mesh = new THREE.Mesh(
-      geometry,
-      new THREE.MeshBasicMaterial({
-        color: 0x0055aa,
-        wireframe: true,
-        transparent: true,
-        opacity: 0.15,
-      }),
-    )
+    const wireframe = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: timeUniform,
+        colorLow: { value: new THREE.Color(0x0a1520) },
+        colorHigh: { value: new THREE.Color(0x00d2ff) },
+      },
+      vertexShader: `
+        uniform float uTime;
+        varying float vY;
+        ${WAVE_GLSL}
+        void main() {
+          vec3 p = position;
+          p.y = waveHeight(p, uTime);
+          vY = p.y;
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 colorLow;
+        uniform vec3 colorHigh;
+        varying float vY;
+        void main() {
+          float t = smoothstep(-2.5, 2.5, vY);
+          vec3 c = mix(colorLow, colorHigh, t * 0.55);
+          gl_FragColor = vec4(c, 0.18);
+        }
+      `,
+      wireframe: true,
+      transparent: true,
+      depthWrite: false,
+    })
+    const mesh = new THREE.Mesh(geometry, wireframe)
     scene.add(mesh)
+
+    const occlusionMat = new THREE.ShaderMaterial({
+      uniforms: {
+        uTime: timeUniform,
+        uColor: { value: new THREE.Color(BG) },
+      },
+      vertexShader: `
+        uniform float uTime;
+        ${WAVE_GLSL}
+        void main() {
+          vec3 p = position;
+          p.y = waveHeight(p, uTime);
+          gl_Position = projectionMatrix * modelViewMatrix * vec4(p, 1.0);
+        }
+      `,
+      fragmentShader: `
+        uniform vec3 uColor;
+        void main() {
+          gl_FragColor = vec4(uColor, 1.0);
+        }
+      `,
+      polygonOffset: true,
+      polygonOffsetFactor: 1,
+      polygonOffsetUnits: 1,
+    })
+    const occlusion = new THREE.Mesh(geometry, occlusionMat)
+    scene.add(occlusion)
 
     const dustGeom = new THREE.BufferGeometry()
     const dustCount = 300
@@ -91,22 +220,47 @@ export function HeroCanvas({ className }: Props) {
     )
     scene.add(dust)
 
-    let mouseX = 0
-    let mouseY = 0
+    const packetCount = 45
+    const packetGeom = new THREE.BufferGeometry()
+    const packetPosArr = new Float32Array(packetCount * 3)
+    packetGeom.setAttribute('position', new THREE.BufferAttribute(packetPosArr, 3))
+    const packetPoints = new THREE.Points(
+      packetGeom,
+      new THREE.PointsMaterial({
+        color: 0xb4eaff,
+        size: 1.1,
+        transparent: true,
+        opacity: 0.85,
+        blending: THREE.AdditiveBlending,
+        depthWrite: false,
+      }),
+    )
+    scene.add(packetPoints)
+
+    const packetData: Packet[] = []
+    for (let i = 0; i < packetCount; i++) {
+      const startIdx = randomCentralIndex()
+      packetData.push({
+        startIdx,
+        targetIdx: getNeighborIndex(startIdx, vertexCount),
+        progress: Math.random(),
+        speed: 0.0015 + Math.random() * 0.0025,
+      })
+    }
+
     let targetX = 0
     let targetY = 15
     let raf = 0
     const clock = new THREE.Clock()
 
     const onMove = (event: MouseEvent) => {
-      mouseX = (event.clientX / window.innerWidth) * 2 - 1
-      mouseY = -(event.clientY / window.innerHeight) * 2 + 1
+      const mouseX = (event.clientX / window.innerWidth) * 2 - 1
+      const mouseY = -(event.clientY / window.innerHeight) * 2 + 1
       targetX = mouseX * 8
       targetY = 15 + mouseY * 4
     }
 
     const onResize = () => {
-      if (!container) return
       camera.aspect = container.clientWidth / container.clientHeight
       camera.updateProjectionMatrix()
       renderer.setSize(container.clientWidth, container.clientHeight)
@@ -115,17 +269,30 @@ export function HeroCanvas({ className }: Props) {
     const animate = () => {
       raf = requestAnimationFrame(animate)
       const time = clock.getElapsedTime()
-      const positions = geometry.attributes.position
-      for (let i = 0; i < vertexCount; i++) {
-        const x = positions.getX(i)
-        const z = positions.getZ(i)
-        const y =
-          Math.sin(x * 0.05 + time * 0.5) * 3 +
-          Math.cos(z * 0.05 + time * 0.3) * 3 +
-          Math.sin(x * 0.1 - z * 0.1 + time) * 1.5
-        positions.setY(i, y)
+      timeUniform.value = time
+
+      const packetPositions = packetPoints.geometry.attributes.position.array as Float32Array
+      for (let i = 0; i < packetData.length; i++) {
+        const p = packetData[i]
+        p.progress += p.speed
+        if (p.progress >= 1) {
+          p.startIdx = p.targetIdx
+          p.targetIdx = getNeighborIndex(p.startIdx, vertexCount)
+          p.progress = 0
+        }
+        const t = p.progress
+        const easeT = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
+        const sx = baseX[p.startIdx]
+        const sz = baseZ[p.startIdx]
+        const tx = baseX[p.targetIdx]
+        const tz = baseZ[p.targetIdx]
+        const x = sx + (tx - sx) * easeT
+        const z = sz + (tz - sz) * easeT
+        packetPositions[i * 3] = x
+        packetPositions[i * 3 + 1] = waveHeight(x, z, time)
+        packetPositions[i * 3 + 2] = z
       }
-      positions.needsUpdate = true
+      packetPoints.geometry.attributes.position.needsUpdate = true
 
       dust.position.y = Math.sin(time * 0.2) * 2
       dust.rotation.y = time * 0.02
@@ -147,6 +314,12 @@ export function HeroCanvas({ className }: Props) {
       window.removeEventListener('resize', onResize)
       geometry.dispose()
       dustGeom.dispose()
+      packetGeom.dispose()
+      pointsMat.dispose()
+      wireframe.dispose()
+      occlusionMat.dispose()
+      ;(dust.material as THREE.Material).dispose()
+      ;(packetPoints.material as THREE.Material).dispose()
       renderer.dispose()
       if (renderer.domElement.parentElement === container) {
         container.removeChild(renderer.domElement)

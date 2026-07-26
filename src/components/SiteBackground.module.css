@@ -15,8 +15,7 @@
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgba(4, 11, 20, 0.35), rgba(4, 11, 20, 0.85)),
-    url('/images/background3-fp.png') center / cover no-repeat,
+    radial-gradient(circle at 50% 30%, #0a1a2e 0%, #040b14 80%),
     var(--sn-bg-base);
 }
 

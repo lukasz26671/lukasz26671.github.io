@@ -3,8 +3,7 @@
   inset: 0;
   z-index: 0;
   background:
-    linear-gradient(180deg, rgba(4, 11, 20, 0.2), rgba(4, 11, 20, 0.75)),
-    url('/images/background3-fp.png') center / cover no-repeat,
+    radial-gradient(circle at 50% 28%, #0a1828 0%, #040b14 78%),
     var(--sn-bg-base);
 }
 
@@ -17,7 +16,7 @@
 @media (prefers-reduced-motion: reduce) {
   .canvas {
     background:
-      linear-gradient(180deg, rgba(4, 11, 20, 0.35), rgba(4, 11, 20, 0.85)),
+      radial-gradient(circle at 50% 28%, #0a1828 0%, #040b14 78%),
       url('/images/background3.gif') center / cover no-repeat,
       var(--sn-bg-base);
   }
