@@ -1,4 +1,5 @@
 export const STREAMING_PROVIDERS = [
+  'https://lukasz26671.duckdns.org:9975',
   'https://website-audioprovider.herokuapp.com',
   'http://lukasz266713.ddns.net:1234',
 ] as const
