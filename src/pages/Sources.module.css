@@ -1,0 +1,24 @@
+.list {
+  list-style: none;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.item {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.75rem;
+  padding: 1.1rem 1.25rem;
+}
+
+.item a {
+  font-weight: 600;
+  font-size: 1.05rem;
+}
+
+.item span {
+  color: var(--sn-text-secondary);
+  font-size: 0.9rem;
+}

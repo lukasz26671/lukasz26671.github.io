@@ -1,0 +1,31 @@
+.term {
+  padding: 1.25rem;
+  min-height: 280px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.out {
+  flex: 1;
+  color: var(--sn-text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.7;
+}
+
+.form {
+  display: flex;
+  align-items: center;
+  gap: 0.65rem;
+  border-top: 1px solid var(--sn-border);
+  padding-top: 0.85rem;
+  color: var(--sn-accent-main);
+}
+
+.form input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  color: var(--sn-text-primary);
+  outline: none;
+}

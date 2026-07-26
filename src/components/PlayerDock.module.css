@@ -1,0 +1,120 @@
+.dock {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: var(--player-h);
+  z-index: 35;
+  display: grid;
+  grid-template-columns: 1fr auto 1fr;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0 1rem;
+  background: rgba(8, 14, 24, 0.92);
+  border-top: 1px solid var(--sn-border);
+  backdrop-filter: blur(18px);
+}
+
+.meta {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  min-width: 0;
+}
+
+.track {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  color: inherit;
+}
+
+.author {
+  font-size: 0.7rem;
+  color: var(--sn-text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.title {
+  font-weight: 600;
+  font-size: 0.9rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.select {
+  background: var(--sn-bg-elevated);
+  border: 1px solid var(--sn-border);
+  color: var(--sn-text-secondary);
+  border-radius: 8px;
+  padding: 0.35rem 0.5rem;
+  font-size: 0.75rem;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.controls button,
+.right button {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  color: var(--sn-text-secondary);
+  font-size: 0.85rem;
+}
+
+.controls button:hover,
+.right button:hover {
+  color: var(--sn-accent-main);
+  background: rgba(0, 210, 255, 0.08);
+}
+
+.play {
+  width: 44px !important;
+  height: 44px !important;
+  border-radius: 12px !important;
+  background: rgba(0, 210, 255, 0.15) !important;
+  color: var(--sn-accent-main) !important;
+  border: 1px solid var(--sn-border-focus);
+}
+
+.on {
+  color: var(--sn-accent-main) !important;
+}
+
+.right {
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 0.35rem;
+}
+
+.vol input {
+  width: 90px;
+  accent-color: var(--sn-accent-main);
+}
+
+@media (max-width: 720px) {
+  .dock {
+    grid-template-columns: 1fr;
+    height: auto;
+    padding: 0.65rem 0.85rem 0.85rem;
+    gap: 0.5rem;
+  }
+
+  .right {
+    justify-content: space-between;
+  }
+
+  .controls {
+    justify-content: center;
+  }
+}

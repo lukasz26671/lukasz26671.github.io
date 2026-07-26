@@ -1,0 +1,40 @@
+.bar {
+  position: fixed;
+  left: 50%;
+  bottom: calc(var(--player-h) + 1rem);
+  transform: translateX(-50%);
+  z-index: 45;
+  width: min(560px, calc(100% - 1.5rem));
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 0.9rem 1rem;
+  background: var(--sn-surface-solid);
+  border: 1px solid var(--sn-border);
+  border-radius: 14px;
+  backdrop-filter: blur(16px);
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.35);
+}
+
+.bar p {
+  font-size: 0.85rem;
+  color: var(--sn-text-secondary);
+  flex: 1;
+}
+
+.bar .btn {
+  padding: 0.55rem 1rem;
+  flex-shrink: 0;
+}
+
+@media (max-width: 520px) {
+  .bar {
+    flex-direction: column;
+    align-items: stretch;
+    bottom: 1rem;
+  }
+}
+
+:global(.app-shell:not(.with-player)) .bar {
+  bottom: 1rem;
+}

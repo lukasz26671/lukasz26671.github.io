@@ -1,0 +1,123 @@
+.stack {
+  padding: 1.75rem 1.85rem 2rem;
+  display: grid;
+  gap: 2.25rem;
+}
+
+.sectionTitle {
+  font-size: 1.15rem;
+  margin-bottom: 0.75rem;
+  text-wrap: balance;
+}
+
+.body,
+.bodySpaced,
+.projectsIntro {
+  color: var(--sn-text-secondary);
+  line-height: 1.65;
+  text-wrap: pretty;
+}
+
+.keep {
+  white-space: nowrap;
+}
+
+@media (max-width: 480px) {
+  .keep {
+    white-space: normal;
+  }
+}
+
+.bodySpaced {
+  margin-top: 0.85rem;
+}
+
+.projectsIntro {
+  margin-bottom: 1.5rem;
+}
+
+.projectsSection {
+  margin: 0.15rem -0.35rem;
+  padding: 1.4rem 1.35rem 1.5rem;
+  border-radius: 14px;
+  background: rgba(0, 210, 255, 0.04);
+  border: 1px solid rgba(0, 210, 255, 0.14);
+}
+
+.projectsSection .sectionTitle {
+  color: var(--sn-text-primary);
+  font-size: 1.2rem;
+  text-wrap: balance;
+  max-width: 90%;
+}
+
+.projectsSection .projectsIntro {
+  text-wrap: balance;
+  max-width: 88%;
+}
+
+.projectList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+
+.projectItem p {
+  margin: 0;
+  color: var(--sn-text-secondary);
+  line-height: 1.65;
+  text-wrap: balance;
+  max-width: 88%;
+}
+
+@media (max-width: 720px) {
+  .projectsSection .sectionTitle,
+  .projectsSection .projectsIntro,
+  .projectItem p {
+    max-width: 100%;
+  }
+}
+
+.projectItem {
+  padding: 1.1rem 0.15rem 1.15rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.projectItem:first-child {
+  border-top: none;
+  padding-top: 0.15rem;
+}
+
+.projectItem:last-child {
+  padding-bottom: 0.15rem;
+}
+
+.projectHead {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.45rem 0.75rem;
+  margin-bottom: 0.55rem;
+}
+
+.projectName {
+  font-family: var(--sn-font-mono);
+  font-size: 1.05rem;
+  font-weight: 600;
+  color: var(--sn-accent-main);
+  letter-spacing: -0.01em;
+}
+
+.projectTag {
+  color: var(--sn-text-muted);
+  font-size: 0.75rem;
+  font-family: var(--sn-font-mono);
+  letter-spacing: 0.02em;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(0, 0, 0, 0.22);
+}

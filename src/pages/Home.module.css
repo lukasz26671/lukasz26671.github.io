@@ -1,0 +1,58 @@
+.hero {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+}
+
+.content {
+  position: relative;
+  width: min(720px, calc(100% - 2.5rem));
+  margin: 0 auto;
+  padding: calc(var(--header-h) + 1rem) 0 4rem;
+  animation: rise 0.9s ease both;
+}
+
+.eyebrow {
+  color: var(--sn-accent-main);
+  font-size: 0.8rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 1rem;
+}
+
+.brand {
+  font-size: clamp(3rem, 9vw, 5.5rem);
+  font-weight: 700;
+  letter-spacing: -0.045em;
+  line-height: 1.05;
+  margin-bottom: 1rem;
+  text-shadow: 0 0 40px rgba(0, 210, 255, 0.25);
+  text-wrap: balance;
+}
+
+.lead {
+  color: var(--sn-text-secondary);
+  font-size: clamp(1.05rem, 2.2vw, 1.25rem);
+  max-width: 34rem;
+  margin-bottom: 1.75rem;
+  text-wrap: pretty;
+}
+
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(18px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .content {
+    animation: none;
+  }
+}

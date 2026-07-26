@@ -1,0 +1,48 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(100vh - var(--header-h) - 4rem);
+}
+
+.card {
+  width: min(480px, 100%);
+  padding: 2.5rem 2rem;
+  text-align: center;
+}
+
+.kicker {
+  color: var(--sn-accent-main);
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.card h1 {
+  font-size: clamp(1.75rem, 4vw, 2.4rem);
+  letter-spacing: -0.03em;
+  margin-bottom: 0.35rem;
+}
+
+.author {
+  color: var(--sn-text-secondary);
+  margin-bottom: 1.75rem;
+}
+
+.controls {
+  display: flex;
+  justify-content: center;
+  gap: 0.65rem;
+  margin-bottom: 1.25rem;
+}
+
+.links {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  font-size: 0.9rem;
+  font-weight: 600;
+}
+
+.links button {
+  color: var(--sn-accent-main);
+}

@@ -1,198 +1,24 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="pl">
-<head>
-    <script> let pl = false;document.addEventListener("click", ()=> {if(!pl)document.getElementById("bg-video").play().then(()=>{pl = true;})});document.addEventListener("keypress", ()=> {if(!pl)document.getElementById("bg-video").play().then(()=>{pl = true;})});document.onscroll=()=> {if(!pl)document.getElementById("bg-video").play().then(()=>{pl = true;})}</script>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" href="/favicon.ico" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="google-site-verification" content="5xpbWs4Y1htni-S0YtHsvDSZt7SBw-uFsBANZM0oJd0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta
+      name="description"
+      content="Lukasz26671 — full-stack .NET / Blazor / React. Portfolio, projekty i muzyka."
+    />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Space+Grotesk:wght@400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
     <title>Lukasz26671</title>
-
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" crossorigin="anonymous"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" crossorigin="anonymous"></script>
-    
-    <link rel="stylesheet" href="./dist/css/main.min.css">
-    <link rel="stylesheet" href="./dist/css/font-awesome.min.css">
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
-    <script src="./dist/js/jquery.scrollex.min.js"></script>
-    <script src="./dist/js/jquery.scrolly.min.js"></script>
-    <!-- Global site tag (gtag.js) - Google Analytics -->
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-172748671-1"></script>
-    <script>
-        window.dataLayer = window.dataLayer || [];
-		function gtag() { dataLayer.push(arguments); }
-		gtag('js', new Date());
-
-		gtag('config', 'UA-172748671-1');
-    </script>
-    <script defer src="./dist/js/skel.min.js"></script>
-    <script defer src="./dist/js/util.min.js"></script>
-    <script defer src="./dist/js/main2.min.js"></script>
-    <script defer src="./dist/js/Redirect.min.js"></script>
-    <script defer src="./dist/js/AudioPlayer.min.js"></script>
-    <script defer src="./dist/js/main.min.js"></script>
-    <link rel="stylesheet" href="./dist/css/incl.min.css">
-    <script src="https://kit.fontawesome.com/c453ad6d0a.js"></script>
-    <script>
-        (adsbygoogle = window.adsbygoogle || []).push({});
-    </script>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons"
-    rel="stylesheet">
-</head>
-
-<body class="landing">
-    <audio id="audiosource">
-        <source type="audio/mpeg">
-        </source>
-    </audio>
-    <div id="page-wrapper">
-        <header id="header" class="alt">
-             
-            <h1><a href="index.html">Lukasz26671</a></h1>
-            <nav id="nav">
-                <ul>
-                    <li class="special">
-                        <a href="#menu2" class="menuToggle"><span>Menu</span></a>
-                    </li>
-                </ul>
-            </nav>
-        </header>
-        <!--  Banner  -->
-        <section id="opener" class="wrapper style6 special" style="z-index: 1; background: linear-gradient(to bottom, #238ba5, #082553); background-size:cover; background-repeat:no-repeat;"> 
-            <video autoplay loop poster="./images/background3-fp.png/" id="bg-video">
-                <source src="./images/background3.webm" type="video/webm">
-                <source src="./images/background3.mp4" type="video/mpeg">
-            </video>
-            <script>document.getElementById("bg-video").onplay=()=>{document.getElementById("clicktoplay").style.display="none"};</script>
-            <div class="inner" style="z-index: 1;">
-                <header class="major" style="z-index: 1;">
-                    <h2 style="z-index: 1;">Lukasz26671</h2>
-                    <p style="z-index: 1;">Witaj na mojej stronie :D</p>
-                    <pre id="clicktoplay" style="color: white; font-size: 72.5%">Hint: kliknij w dowolne miejsce aby włączyć ruszające się tło :)</pre>
-                    <hr style="z-index: 1;">
-                </header>
-                <a href="#more" class="more scrolly">Przejdź dalej!</a>
-        </section>
-        <section class="wrapper style2 special"></section>
-        <section class="wrapper style2 special project-section">
-            <div class="inner" >
-                <div class="anchor" id="more"></div>
-                <header class="major" >
-                    <h2 style="font-size: 2em; text-shadow: 2px 2px grey;">Projekty!</h2>
-                    <p>Nie są to oczywiście moje wszystkie projekty, natomiast są to jedne z ważniejszych, które zrobiłem :D</p>
-                </header>
-                <ul class="features">
-                    <li class="fas fa-server" aria-hidden="true">
-                        <h3 class="project-title red">Youtube audio provider</h3>
-                        <p>
-                            Dzięki niemu możesz teraz słuchać muzyki na tej stronie, sam(a) sprawdź :D
-                            <br>
-                            Kliknij w "menu" w prawym górnym rogu i wypróbuj sam(a)!
-                        </p>
-                        <div class="project-link red" style="font-family: sans-serif;">
-                            Link do projektu: <br>
-                            <a href="#" style="margin-top: 1em; display: inline-block">NIEDOSTĘPNY PUBLICZNIE</a>
-                        </div>
-                    </li>
-                    <li class="fas fa-list" aria-hidden="true">
-                        <h3 class="project-title yellow">Google Sheets Playlist reader</h3>
-                        <p>
-                            Dzięki niemu możesz teraz słuchać muzyki na tej stronie, sam(a) sprawdź :D
-                            <br>
-                            <!-- Kliknij w "menu" w prawym górnym rogu, a potem kliknij w "Track List Playera"! -->
-                        </p>
-                        <div class="project-link yellow" style="font-family: sans-serif;">
-                            Link do projektu: <br>
-                            <a href="#" style="margin-top: 1em; display: inline-block">NIEDOSTĘPNY PUBLICZNIE</a>
-                        </div>
-                    </li>
-                    <li class="fas fa-headphones" aria-hidden="true">
-                        <h3 class="project-title cyan">Audio Player</h3>
-                        <p>
-                            Oparty na swych dwóch poprzednikach, jego początki sięgają 2015 roku, pozwala Ci słuchać muzyki, którą sam dla Ciebie przygotowałem!
-                            <br>
-                            Znajduje się w menu ;)
-                        </p>
-                        <div class="project-link cyan" style="font-family: sans-serif;">
-                            Link do projektu: <br>
-                            <a style="margin-top: 1em; display: inline-block" href="https://github.com/lukasz26671/lukasz26671.github.io">Github</a>
-                        </div>
-                    </li>
-                    <li class="fas fa-bolt" aria-hidden="true">
-                        <h2 class="project-title green">HackerTyper 2</h2>
-                        <p>
-                            Symulator hackera / programisty :D 
-                            Wystarczy że powciskasz randomowe klawisze, a kod będzie pisał się sam!
-                            <br><br>
-                            <span style="font-family: sans-serif;">UWAGA: NIEDOSTĘPNY NA URZĄDZENIACH MOBILNYCH TJ. SMARTFONACH,TABLETACH</span>
-                        </p>
-                        <div class="project-link green" style="font-family: sans-serif;">
-                            Linki do projektu: <br>
-                            <a style="margin-top: 1em; display: inline-block" href="https://github.com/lukasz26671/HackerTyper2">Github</a>
-                            <a style="margin-top: 1em; display: inline-block" href="/HackerTyper2/">Live</a>
-                        </div>
-                    </li>
-                </ul>
-        </section>
-        <section class="wrapper style2 special"></section>
-        <div id="info" class="alert alert-dismissible unselectable text-center cookie-info-container">
-            <div class="cookie-info" style="margin: 0; min-width: 80%;">
-                <span href="#close" style="cursor: pointer; border: none; text-decoration: none;"
-                    onclick="hideInfo()">Korzystając z tej strony zgadzasz się na używanie
-                    plików cookies, a także użycie usługi Google
-                    Analytics.</span>
-            </div>
-        </div>
-    </div>
-    <div id="menu2">
-        <ul>
-            <li><a href="./about/" id="About">Coś o mnie</a></li>
-            <li><a id="MinecraftMody" href="./minecraft_mods/">Mody</a></li>
-            <li><a id="Kalkulator" href="./Kalkulator/">Kalkulator</a></li>
-            <li><a id="Kontakt" href="./contact/">Kontakt</a></li>
-            <li><a href='/HackerTyper2/'>Hacker Typer 2</a></li>
-            <li><a href="./bash_prototype/">Bash prototype</a></li>
-            <!-- <li><a href="http://website-sourceprovider.herokuapp.com/api/visualized/readplaylist">Track list playera</a></li> -->
-            <!-- <li><a id="Books" href="/Books">Książki</a></li> -->
-            <li><a onClick="alert('Hello World!');" href="#HelloWorld">Hello World</a></li>
-            <li id="audioPlayer" class="text-center invisible" style="border-color: white;cursor: default">
-                <select name="playlistSelect" id="playlistSelect">
-                    <option style="color: black" value="default" selected="selected">Default</option>
-                    <option style="color: black" value="featured">Featured</option>
-                </select>
-                <p id="song" style="vertical-align: middle;"></p>
-                <div class="content unselectable" id="content">
-                    <div class="controls">
-                        <div id="volumeContainer">
-                            <div id="volumebar" style="align-content: center;">
-                                <input type="range" min="0" max="100" class="slider" id="volSlider">
-                            </div>
-                        </div>
-                        <div class="controlbuttons">
-                            <i class="material-icons" id="vid">featured_video</i>
-                            <i class="material-icons" id="random" style="opacity: 0.3" aria-hidden="true">shuffle</i>
-                            <i class="material-icons" id="prev">fast_rewind</i>
-                            <i class="material-icons" id="playpause">play_arrow</i>
-                            <i class="material-icons" id="next">fast_forward</i>
-                            <i class="material-icons" id="loop" style="opacity: 0.3;">loop</i>
-                            <i class="material-icons" id="share">share</i>
-                        </div>
-                    </div>
-                </div>
-            </li>
-        </ul>
-        <!---->
-        <a href="#menu2" class="close" style="-webkit-tap-highlight-color: rgba(0, 0, 0, 0);"></a>
-    </div>
-    <footer id="footer"> 
-        <div >
-            &copy Lukasz26671
-            <div></div>
-        </div>
-    </footer>
-</body>
-
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
 </html>
