@@ -1,13 +1,19 @@
+import { Link } from 'react-router-dom'
 import type { Project } from '../data/projects'
 import styles from './ProjectCard.module.css'
 
 type Props = {
   project: Project
+  className?: string
 }
 
-export function ProjectCard({ project }: Props) {
+export function ProjectCard({ project, className }: Props) {
+  const isInternalMore = project.moreUrl?.startsWith('/')
+
   return (
-    <article className={`glass ${styles.card}`}>
+    <article
+      className={`glass ${styles.card} ${project.commercial ? styles.commercial : ''} ${className ?? ''}`}
+    >
       <div className={styles.top}>
         <span className={`mono ${styles.lang}`}>{project.language}</span>
         {project.tags?.slice(0, 2).map((t) => (
@@ -19,9 +25,11 @@ export function ProjectCard({ project }: Props) {
       <h3 className={styles.name}>{project.name}</h3>
       <p className={styles.desc}>{project.description}</p>
       <div className={styles.links}>
-        <a href={project.repoUrl} target="_blank" rel="noreferrer">
-          GitHub
-        </a>
+        {project.repoUrl && (
+          <a href={project.repoUrl} target="_blank" rel="noreferrer">
+            GitHub
+          </a>
+        )}
         {project.liveUrl && (
           <a
             href={project.liveUrl}
@@ -31,6 +39,14 @@ export function ProjectCard({ project }: Props) {
             Live
           </a>
         )}
+        {project.moreUrl &&
+          (isInternalMore ? (
+            <Link to={project.moreUrl}>Więcej</Link>
+          ) : (
+            <a href={project.moreUrl} target="_blank" rel="noreferrer">
+              Więcej
+            </a>
+          ))}
       </div>
     </article>
   )

@@ -10,6 +10,10 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color:
+    rgba(0, 210, 255, calc(0.28 + var(--scroll-depth, 0) * 0.5))
+    rgba(2, 18, 28, calc(0.75 + var(--scroll-depth, 0) * 0.2));
 }
 
 body {
@@ -19,6 +23,47 @@ body {
   font-family: var(--sn-font-sans);
   -webkit-font-smoothing: antialiased;
   line-height: 1.5;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: color-mix(
+    in srgb,
+    #040b14 85%,
+    #00d2ff calc(var(--scroll-depth, 0) * 18%)
+  );
+  border-left: 1px solid rgba(0, 210, 255, calc(0.04 + var(--scroll-depth, 0) * 0.14));
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 210, 255, calc(0.28 + var(--scroll-depth, 0) * 0.55)),
+    rgba(0, 120, 160, calc(0.2 + var(--scroll-depth, 0) * 0.45))
+  );
+  border: 2px solid rgba(4, 11, 20, 0.92);
+  border-radius: 999px;
+  background-clip: padding-box;
+  box-shadow: 0 0 calc(4px + var(--scroll-depth, 0) * 12px)
+    rgba(0, 210, 255, calc(var(--scroll-depth, 0) * 0.5));
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: linear-gradient(
+    180deg,
+    rgba(0, 230, 255, calc(0.5 + var(--scroll-depth, 0) * 0.4)),
+    rgba(0, 168, 255, calc(0.35 + var(--scroll-depth, 0) * 0.4))
+  );
+  border: 2px solid rgba(4, 11, 20, 0.92);
+  background-clip: padding-box;
+}
+
+::-webkit-scrollbar-corner {
+  background: rgba(4, 11, 20, 0.95);
 }
 
 #root {
@@ -135,9 +180,12 @@ button {
   justify-content: center;
   gap: 0.5rem;
   padding: 0.85rem 1.35rem;
+  border: none;
   border-radius: 12px;
+  font: inherit;
   font-weight: 600;
   font-size: 0.95rem;
+  cursor: pointer;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 

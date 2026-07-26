@@ -1,4 +1,4 @@
-import { NavLink } from 'react-router-dom'
+import { NavLink, useLocation } from 'react-router-dom'
 import { useAudio } from '../app/AudioProvider'
 import styles from './NavDrawer.module.css'
 
@@ -8,17 +8,18 @@ type Props = {
 }
 
 const links = [
-  { to: '/', label: 'Start', end: true },
-  { to: '/about', label: 'O mnie' },
-  { to: '/projects', label: 'Projekty' },
-  { to: '/timeline', label: 'Timeline' },
-  { to: '/labs', label: 'Labs' },
-  { to: '/minecraft', label: 'Minecraft' },
-  { to: '/sources', label: 'Źródła' },
+  { to: '/', label: 'Start', end: true, match: 'home' as const },
+  { to: '/about', label: 'O mnie', match: 'path' as const },
+  { to: '/#projects', label: 'Projekty', match: 'projects' as const },
+  { to: '/timeline', label: 'Timeline', match: 'path' as const },
+  { to: '/labs', label: 'Labs', match: 'path' as const },
+  { to: '/minecraft', label: 'Minecraft', match: 'path' as const },
+  { to: '/sources', label: 'Źródła', match: 'path' as const },
 ]
 
 export function NavDrawer({ open, onClose }: Props) {
   const { status } = useAudio()
+  const { pathname, hash } = useLocation()
 
   return (
     <>
@@ -44,9 +45,14 @@ export function NavDrawer({ open, onClose }: Props) {
               key={l.to}
               to={l.to}
               end={l.end}
-              className={({ isActive }) =>
-                `${styles.link} ${isActive ? styles.active : ''}`
-              }
+              className={() => {
+                let active = false
+                if (l.match === 'home') active = pathname === '/' && hash !== '#projects'
+                else if (l.match === 'projects')
+                  active = pathname === '/' && hash === '#projects'
+                else active = pathname === l.to
+                return `${styles.link} ${active ? styles.active : ''}`
+              }}
               onClick={onClose}
             >
               {l.label}

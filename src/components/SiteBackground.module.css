@@ -32,12 +32,21 @@
 
 .home .veil {
   background:
-    radial-gradient(ellipse at 50% 20%, rgba(0, 210, 255, 0.12), transparent 55%),
+    radial-gradient(
+      ellipse at 50% calc(18% + var(--dive, 0) * 28%),
+      rgba(0, 210, 255, calc(0.12 + var(--dive, 0) * 0.1)),
+      transparent 55%
+    ),
+    radial-gradient(
+      ellipse at 50% 100%,
+      rgba(0, 180, 210, calc(var(--dive, 0) * 0.14)),
+      transparent 55%
+    ),
     linear-gradient(
       180deg,
-      rgba(4, 11, 20, 0.25) 0%,
-      rgba(4, 11, 20, 0.55) 55%,
-      rgba(4, 11, 20, 0.92) 100%
+      rgba(4, 11, 20, calc(0.25 + var(--dive, 0) * 0.42)) 0%,
+      rgba(2, 18, 28, calc(0.55 + var(--dive, 0) * 0.28)) 50%,
+      rgba(1, 22, 30, calc(0.9 + var(--dive, 0) * 0.08)) 100%
     );
 }
 

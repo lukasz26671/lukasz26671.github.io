@@ -1,5 +1,7 @@
 import { Outlet } from 'react-router-dom'
 import { useAudio } from './AudioProvider'
+import { ScrollManager } from './ScrollManager'
+import { ScrollDepthStyle } from './ScrollDepthStyle'
 import { SiteHeader } from '../components/SiteHeader'
 import { SiteBackground } from '../components/SiteBackground'
 import { PlayerDock } from '../components/PlayerDock'
@@ -11,6 +13,8 @@ export function Layout() {
 
   return (
     <div className={`app-shell ${withPlayer ? 'with-player' : ''}`}>
+      <ScrollManager />
+      <ScrollDepthStyle />
       <SiteBackground />
       <SiteHeader />
       <main className="app-main">

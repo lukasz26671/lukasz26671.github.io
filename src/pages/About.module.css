@@ -38,6 +38,7 @@
 
 .projectsSection {
   margin: 0.15rem -0.35rem;
+  scroll-margin-top: calc(var(--header-h) + 1.25rem);
   padding: 1.4rem 1.35rem 1.5rem;
   border-radius: 14px;
   background: rgba(0, 210, 255, 0.04);
@@ -54,6 +55,19 @@
 .projectsSection .projectsIntro {
   text-wrap: balance;
   max-width: 88%;
+}
+
+.linkedCluster {
+  margin: 0 0 0.75rem;
+  padding: 0.35rem 1rem 0.15rem;
+  border-radius: 12px;
+  border: 1px solid rgba(0, 210, 255, 0.22);
+  background: rgba(0, 210, 255, 0.04);
+}
+
+.linkedCluster .projectItem:first-child {
+  border-top: none;
+  padding-top: 0.85rem;
 }
 
 .projectList {

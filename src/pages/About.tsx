@@ -1,7 +1,13 @@
+import {
+  getCommercialLinkedPair,
+  getCommercialStandalone,
+} from '../data/projects'
 import styles from './About.module.css'
 
 export function AboutPage() {
   const age = getAge(new Date(2004, 2, 9))
+  const [signOnGlass, sentinel] = getCommercialLinkedPair()
+  const commercialSolo = getCommercialStandalone()
 
   return (
     <div className="page">
@@ -38,61 +44,44 @@ export function AboutPage() {
           </p>
         </section>
 
-        <section className={styles.projectsSection}>
+        <section id="commercial" className={styles.projectsSection}>
           <h2 className={styles.sectionTitle}>
             Projekty komercyjne — software w realnym świecie
           </h2>
 
           <p className={styles.projectsIntro}>
-            Kilka przykładów systemów, przy których pracowałem - od podstaw. Nazwy poniżej są zastępcze.
+            Kilka przykładów systemów, przy których pracowałem — od podstaw. Nazwy poniżej są
+            zastępcze.
           </p>
 
+          <div className={styles.linkedCluster}>
+            <ul className={styles.projectList}>
+              {[signOnGlass, sentinel].map((p) => (
+                <li key={p.id} className={styles.projectItem}>
+                  <div className={styles.projectHead}>
+                    <span className={styles.projectName}>{p.name}</span>
+                    {p.tags && (
+                      <span className={styles.projectTag}>{p.tags.join(' · ')}</span>
+                    )}
+                  </div>
+                  <p>{p.longDescription ?? p.description}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+
           <ul className={styles.projectList}>
-            <li className={styles.projectItem}>
-              <div className={styles.projectHead}>
-                <span className={styles.projectName}>SignOnGlass</span>
-                <span className={styles.projectTag}>
-                  transport · dostawy · PoD
-                </span>
-              </div>
-
-              <p>
-                System obsługi transportu i dostaw obejmujący zamówienia, przewozy, kierowców,
-                paletowanie oraz proces załadunku. Aplikacja mobilna wspierająca kierowców podczas
-                załadunku, rozładunku i elektronicznego potwierdzania dostaw (proof of delivery).
-              </p>
-            </li>
-
-            <li className={styles.projectItem}>
-              <div className={styles.projectHead}>
-                <span className={styles.projectName}>Flow</span>
-                <span className={styles.projectTag}>
-                  procesy celne · TSS · SaaS
-                </span>
-              </div>
-
-              <p>
-                System wspierający obsługę deklaracji celnych dla przepływu towarów między
-                Irlandią Północną a Wielką Brytanią, zintegrowany z TSS (Trader
-                Support Service). Automatyzacja procesów wymagających wcześniej ręcznej
-                obsługi i kontroli.
-              </p>
-            </li>
-
-            <li className={styles.projectItem}>
-              <div className={styles.projectHead}>
-                <span className={styles.projectName}>Sentinel</span>
-                <span className={styles.projectTag}>
-                  SAP · magazyn · integracje
-                </span>
-              </div>
-
-              <p>
-                Integracja z SAP oraz SignOnGlass przy kompletowaniu przesyłek. Komunikacja z
-                Kepware Server, aplikacje tabletowe realtime na stanowiskach pakujących, skanery,
-                wagi przemysłowe i połączenie świata aplikacji webowych z fizyczną infrastrukturą.
-              </p>
-            </li>
+            {commercialSolo.map((p) => (
+              <li key={p.id} className={styles.projectItem}>
+                <div className={styles.projectHead}>
+                  <span className={styles.projectName}>{p.name}</span>
+                  {p.tags && (
+                    <span className={styles.projectTag}>{p.tags.join(' · ')}</span>
+                  )}
+                </div>
+                <p>{p.longDescription ?? p.description}</p>
+              </li>
+            ))}
           </ul>
         </section>
 

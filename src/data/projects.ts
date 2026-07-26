@@ -2,10 +2,65 @@ export type Project = {
   id: string
   name: string
   description: string
+  /** Pełniejszy opis (About) */
+  longDescription?: string
   language: string
-  repoUrl: string
+  repoUrl?: string
   liveUrl?: string
   tags?: string[]
+  /** Alias komercyjny — bez publicznego repo */
+  commercial?: boolean
+  /** Link do dłuższej notki (np. About) */
+  moreUrl?: string
+}
+
+export const commercialProjects: Project[] = [
+  {
+    id: 'sign-on-glass',
+    name: 'SignOnGlass',
+    description: 'Transport, dostawy i potwierdzanie dostaw dla kierowców.',
+    longDescription:
+      'System obsługi transportu i dostaw obejmujący zamówienia, przewozy, kierowców, paletowanie oraz proces załadunku. Aplikacja mobilna wspierająca kierowców podczas załadunku, rozładunku i elektronicznego potwierdzania dostaw (proof of delivery).',
+    language: 'Komercyjne',
+    commercial: true,
+    moreUrl: '/about#commercial',
+    tags: ['logistyka', 'mobile'],
+  },
+  {
+    id: 'sentinel',
+    name: 'Sentinel',
+    description: 'Kompletacja na hali: SAP, SignOnGlass, tablety, skanery i wagi.',
+    longDescription:
+      'Integracja z SAP oraz SignOnGlass przy kompletowaniu przesyłek. Komunikacja z Kepware Server, aplikacje tabletowe realtime na stanowiskach pakujących, skanery, wagi przemysłowe i połączenie świata aplikacji webowych z fizyczną infrastrukturą.',
+    language: 'Komercyjne',
+    commercial: true,
+    moreUrl: '/about#commercial',
+    tags: ['SAP', 'real-time', 'industrial'],
+  },
+  {
+    id: 'flow',
+    name: 'Flow',
+    description: 'Deklaracje celne NI↔UK z integracją TSS.',
+    longDescription:
+      'System wspierający obsługę deklaracji celnych dla przepływu towarów między Irlandią Północną a Wielką Brytanią, zintegrowany z TSS (Trader Support Service). Automatyzacja procesów wymagających wcześniej ręcznej obsługi i kontroli.',
+    language: 'Komercyjne',
+    commercial: true,
+    moreUrl: '/about#commercial',
+    tags: ['integracje', 'SaaS'],
+  },
+]
+
+const LINKED_COMMERCIAL = new Set(['sign-on-glass', 'sentinel'])
+
+export function getCommercialLinkedPair(): [Project, Project] {
+  const a = commercialProjects.find((p) => p.id === 'sign-on-glass')
+  const b = commercialProjects.find((p) => p.id === 'sentinel')
+  if (!a || !b) throw new Error('Missing linked commercial projects')
+  return [a, b]
+}
+
+export function getCommercialStandalone(): Project[] {
+  return commercialProjects.filter((p) => !LINKED_COMMERCIAL.has(p.id))
 }
 
 export const projects: Project[] = [
