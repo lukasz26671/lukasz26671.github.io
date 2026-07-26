@@ -9,23 +9,6 @@ type Props = {
 const BG = 0x040b14
 const GRID_SEG_X = 64
 const GRID_SEG_Z = 40
-const GRID_COLS = GRID_SEG_X + 1
-const GRID_ROWS = GRID_SEG_Z + 1
-
-type Packet = {
-  startIdx: number
-  targetIdx: number
-  progress: number
-  speed: number
-}
-
-function waveHeight(x: number, z: number, time: number) {
-  return (
-    Math.sin(x * 0.05 + time * 0.5) * 3 +
-    Math.cos(z * 0.05 + time * 0.3) * 3 +
-    Math.sin(x * 0.1 - z * 0.1 + time) * 1.5
-  )
-}
 
 const WAVE_GLSL = `
   float waveHeight(vec3 p, float time) {
@@ -34,26 +17,6 @@ const WAVE_GLSL = `
          + sin(p.x * 0.1 - p.z * 0.1 + time) * 1.5;
   }
 `
-
-function getNeighborIndex(index: number, vertexCount: number) {
-  const x = index % GRID_COLS
-  const y = Math.floor(index / GRID_COLS)
-  const neighbors: number[] = []
-  if (x > 0) neighbors.push(index - 1)
-  if (x < GRID_COLS - 1) neighbors.push(index + 1)
-  if (y > 0) neighbors.push(index - GRID_COLS)
-  if (y < GRID_ROWS - 1) neighbors.push(index + GRID_COLS)
-  const filtered = neighbors.filter((i) => i >= 0 && i < vertexCount)
-  return filtered[Math.floor(Math.random() * filtered.length)] ?? index
-}
-
-function randomCentralIndex() {
-  const marginX = 10
-  const marginZ = 6
-  const x = marginX + Math.floor(Math.random() * (GRID_COLS - marginX * 2))
-  const y = marginZ + Math.floor(Math.random() * (GRID_ROWS - marginZ * 2))
-  return y * GRID_COLS + x
-}
 
 export function HeroCanvas({ className }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
@@ -93,14 +56,10 @@ export function HeroCanvas({ className }: Props) {
 
     const posAttribute = geometry.attributes.position
     const vertexCount = posAttribute.count
-    const baseX = new Float32Array(vertexCount)
-    const baseZ = new Float32Array(vertexCount)
     for (let i = 0; i < vertexCount; i++) {
       const x = posAttribute.getX(i) + (Math.random() - 0.5) * 2.5
       const z = posAttribute.getZ(i) + (Math.random() - 0.5) * 2
       posAttribute.setXYZ(i, x, 0, z)
-      baseX[i] = x
-      baseZ[i] = z
     }
     posAttribute.needsUpdate = true
 
@@ -220,34 +179,6 @@ export function HeroCanvas({ className }: Props) {
     )
     scene.add(dust)
 
-    const packetCount = 45
-    const packetGeom = new THREE.BufferGeometry()
-    const packetPosArr = new Float32Array(packetCount * 3)
-    packetGeom.setAttribute('position', new THREE.BufferAttribute(packetPosArr, 3))
-    const packetPoints = new THREE.Points(
-      packetGeom,
-      new THREE.PointsMaterial({
-        color: 0xb4eaff,
-        size: 1.1,
-        transparent: true,
-        opacity: 0.85,
-        blending: THREE.AdditiveBlending,
-        depthWrite: false,
-      }),
-    )
-    scene.add(packetPoints)
-
-    const packetData: Packet[] = []
-    for (let i = 0; i < packetCount; i++) {
-      const startIdx = randomCentralIndex()
-      packetData.push({
-        startIdx,
-        targetIdx: getNeighborIndex(startIdx, vertexCount),
-        progress: Math.random(),
-        speed: 0.0015 + Math.random() * 0.0025,
-      })
-    }
-
     let targetX = 0
     let targetY = 15
     let raf = 0
@@ -271,29 +202,6 @@ export function HeroCanvas({ className }: Props) {
       const time = clock.getElapsedTime()
       timeUniform.value = time
 
-      const packetPositions = packetPoints.geometry.attributes.position.array as Float32Array
-      for (let i = 0; i < packetData.length; i++) {
-        const p = packetData[i]
-        p.progress += p.speed
-        if (p.progress >= 1) {
-          p.startIdx = p.targetIdx
-          p.targetIdx = getNeighborIndex(p.startIdx, vertexCount)
-          p.progress = 0
-        }
-        const t = p.progress
-        const easeT = t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
-        const sx = baseX[p.startIdx]
-        const sz = baseZ[p.startIdx]
-        const tx = baseX[p.targetIdx]
-        const tz = baseZ[p.targetIdx]
-        const x = sx + (tx - sx) * easeT
-        const z = sz + (tz - sz) * easeT
-        packetPositions[i * 3] = x
-        packetPositions[i * 3 + 1] = waveHeight(x, z, time)
-        packetPositions[i * 3 + 2] = z
-      }
-      packetPoints.geometry.attributes.position.needsUpdate = true
-
       dust.position.y = Math.sin(time * 0.2) * 2
       dust.rotation.y = time * 0.02
 
@@ -314,12 +222,10 @@ export function HeroCanvas({ className }: Props) {
       window.removeEventListener('resize', onResize)
       geometry.dispose()
       dustGeom.dispose()
-      packetGeom.dispose()
       pointsMat.dispose()
       wireframe.dispose()
       occlusionMat.dispose()
       ;(dust.material as THREE.Material).dispose()
-      ;(packetPoints.material as THREE.Material).dispose()
       renderer.dispose()
       if (renderer.domElement.parentElement === container) {
         container.removeChild(renderer.domElement)
