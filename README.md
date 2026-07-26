@@ -9,16 +9,24 @@ npm install
 npm run dev
 ```
 
-## Build
+## Build / deploy
+
+### GitHub Actions (zalecane)
+
+Push na `master` uruchamia [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml).
+
+W repo: **Settings → Pages → Source: GitHub Actions**.
+
+To ważne — jeśli Source jest ustawione na `master`, serwowany jest Vite `index.html` z `/src/main.tsx` i przeglądarka rzuca błędem MIME.
+
+### Ręcznie (gh-pages)
 
 ```bash
 npm run build
-npm run preview
+npm run deploy
 ```
 
-Deploy: workflow [`.github/workflows/deploy.yml`](.github/workflows/deploy.yml) publikuje `dist` przez GitHub Pages (Actions).
-
-W ustawieniach repozytorium: **Settings → Pages → Source: GitHub Actions**.
+Wzór jak w [react-gh-pages](https://github.com/gitname/react-gh-pages), pod Vite (`dist`).
 
 ## Muzyka
 
