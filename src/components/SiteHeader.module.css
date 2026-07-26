@@ -17,7 +17,8 @@
 .actions,
 .menuBtn,
 .badge,
-.badgeLive {
+.badgeLive,
+.badgeSpin {
   pointer-events: auto;
 }
 
@@ -75,4 +76,13 @@
 
 .badgeLive:hover {
   color: #8ce1ff;
+}
+
+.badgeSpin {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.3rem 0.65rem;
+  border-radius: 999px;
+  border: 1px solid rgba(0, 210, 255, 0.25);
+  background: rgba(0, 210, 255, 0.06);
 }

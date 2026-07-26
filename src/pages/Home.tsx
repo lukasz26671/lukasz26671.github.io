@@ -1,13 +1,11 @@
 import { Link } from 'react-router-dom'
 import { useEffect, useRef } from 'react'
-import { useAudio } from '../app/AudioProvider'
 import { useDive } from '../app/DiveContext'
 import { projects, getCommercialLinkedPair, getCommercialStandalone } from '../data/projects'
 import { ProjectCard } from '../components/ProjectCard'
 import styles from './Home.module.css'
 
 export function HomePage() {
-  const { status } = useAudio()
   const { progress, setProgress } = useDive()
   const trackRef = useRef<HTMLDivElement>(null)
   const deepRef = useRef<HTMLElement>(null)
@@ -92,11 +90,6 @@ export function HomePage() {
             <Link to="/about" className="btn btn-ghost">
               O mnie
             </Link>
-            {status === 'ready' && (
-              <Link to="/music" className="btn btn-ghost">
-                Włącz muzykę
-              </Link>
-            )}
           </div>
 
           <p className={`mono ${styles.scrollHint}`}>scroll ↓</p>

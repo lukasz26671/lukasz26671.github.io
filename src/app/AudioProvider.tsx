@@ -9,8 +9,11 @@ import {
   type ReactNode,
 } from 'react'
 import {
+  FALLBACK_PLAYLIST_NAMES,
   loadPlaylistFromJson,
   loadPlaylistFromSourceProvider,
+  loadPlaylistNames,
+  resolveInitialPlaylistName,
   resolveStreamingServer,
   streamUrl,
   youtubeUrl,
@@ -18,6 +21,8 @@ import {
 } from '../lib/audio/providers'
 
 export type AudioStatus = 'checking' | 'ready' | 'unavailable'
+
+export type PlaybackIssue = 'none' | 'retrying' | 'unavailable'
 
 type AudioContextValue = {
   status: AudioStatus
@@ -29,6 +34,10 @@ type AudioContextValue = {
   shuffle: boolean
   loop: boolean
   volume: number
+  playlistName: string
+  playlistNames: string[]
+  playbackIssue: PlaybackIssue
+  /** @deprecated prefer playlistName — true gdy sheet ≈ Featured */
   featured: boolean
   play: () => void
   pause: () => void
@@ -39,7 +48,9 @@ type AudioContextValue = {
   setShuffle: (v: boolean) => void
   setLoop: (v: boolean) => void
   setVolume: (v: number) => void
+  setPlaylistName: (name: string) => void
   setFeatured: (v: boolean) => void
+  retryCurrent: () => void
   openYoutube: () => void
   shareCurrent: () => Promise<void>
 }
@@ -47,6 +58,8 @@ type AudioContextValue = {
 const AudioCtx = createContext<AudioContextValue | null>(null)
 
 const VOL_KEY = 'sn-audio-volume'
+const MAX_STREAM_RETRIES = 3
+const RETRY_BASE_MS = 700
 
 function readInitialVolume(): number {
   const raw = localStorage.getItem(VOL_KEY)
@@ -72,15 +85,24 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   const [shuffle, setShuffle] = useState(false)
   const [loop, setLoop] = useState(false)
   const [volume, setVolumeState] = useState(readInitialVolume)
-  const [featured, setFeaturedState] = useState(
-    () => new URLSearchParams(window.location.search).get('featured') === '1',
-  )
+  const [playlistNames, setPlaylistNames] = useState<string[]>([...FALLBACK_PLAYLIST_NAMES])
+  const [playlistName, setPlaylistNameState] = useState(() => {
+    const params = new URLSearchParams(window.location.search)
+    return (
+      params.get('playlist') ?? (params.get('featured') === '1' ? 'Featured' : 'Default')
+    )
+  })
+  const [playbackIssue, setPlaybackIssue] = useState<PlaybackIssue>('none')
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const songsRef = useRef<Song[]>([])
   const indexRef = useRef(0)
   const shuffleRef = useRef(false)
   const loopRef = useRef(false)
   const providerRef = useRef<string | null>(null)
+  const wantPlayRef = useRef(false)
+  const retryCountRef = useRef(0)
+  const retryTimerRef = useRef(0)
+  const loadGenRef = useRef(0)
 
   useEffect(() => {
     songsRef.current = songs
@@ -103,6 +125,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     audio.preload = 'metadata'
     audioRef.current = audio
     return () => {
+      window.clearTimeout(retryTimerRef.current)
       audio.pause()
       audio.src = ''
       audioRef.current = null
@@ -116,25 +139,78 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     localStorage.setItem(VOL_KEY, String(volume))
   }, [volume])
 
-  const applyTrack = useCallback((i: number, playAfter: boolean) => {
-    const audio = audioRef.current
-    const list = songsRef.current
-    const prov = providerRef.current
-    if (!audio || !prov || list.length === 0) return
-    const clamped = ((i % list.length) + list.length) % list.length
-    const song = list[clamped]
-    setIndexState(clamped)
-    indexRef.current = clamped
-    audio.src = streamUrl(prov, song.youtubeId)
-    if (playAfter) {
-      void audio.play().then(
-        () => setIsPlaying(true),
-        () => setIsPlaying(false),
-      )
-    } else {
-      setIsPlaying(false)
-    }
+  const clearRetryTimer = useCallback(() => {
+    window.clearTimeout(retryTimerRef.current)
+    retryTimerRef.current = 0
   }, [])
+
+  const applyTrack = useCallback(
+    (i: number, playAfter: boolean, opts?: { isRetry?: boolean }) => {
+      const audio = audioRef.current
+      const list = songsRef.current
+      const prov = providerRef.current
+      if (!audio || !prov || list.length === 0) return
+
+      const clamped = ((i % list.length) + list.length) % list.length
+      const song = list[clamped]
+      const isRetry = opts?.isRetry === true
+
+      if (!isRetry) {
+        clearRetryTimer()
+        retryCountRef.current = 0
+        setPlaybackIssue('none')
+        loadGenRef.current += 1
+      }
+
+      wantPlayRef.current = playAfter
+      setIndexState(clamped)
+      indexRef.current = clamped
+
+      const src = streamUrl(prov, song.youtubeId)
+      const bust = isRetry ? `&_retry=${retryCountRef.current}&_t=${Date.now()}` : ''
+      audio.src = `${src}${bust}`
+      audio.load()
+
+      if (playAfter) {
+        void audio.play().then(
+          () => setIsPlaying(true),
+          () => setIsPlaying(false),
+        )
+      } else {
+        setIsPlaying(false)
+      }
+    },
+    [clearRetryTimer],
+  )
+
+  const scheduleRetry = useCallback(() => {
+    const attempt = retryCountRef.current
+    if (attempt >= MAX_STREAM_RETRIES) {
+      setPlaybackIssue('unavailable')
+      setIsPlaying(false)
+      wantPlayRef.current = false
+      return
+    }
+
+    retryCountRef.current = attempt + 1
+    setPlaybackIssue('retrying')
+    clearRetryTimer()
+    const gen = loadGenRef.current
+    const delay = RETRY_BASE_MS * retryCountRef.current
+
+    retryTimerRef.current = window.setTimeout(() => {
+      if (gen !== loadGenRef.current) return
+      applyTrack(indexRef.current, wantPlayRef.current || true, { isRetry: true })
+    }, delay)
+  }, [applyTrack, clearRetryTimer])
+
+  const retryCurrent = useCallback(() => {
+    clearRetryTimer()
+    retryCountRef.current = 0
+    setPlaybackIssue('retrying')
+    loadGenRef.current += 1
+    applyTrack(indexRef.current, true, { isRetry: true })
+  }, [applyTrack, clearRetryTimer])
 
   const next = useCallback(() => {
     const list = songsRef.current
@@ -165,6 +241,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     const audio = audioRef.current
     if (!audio) return
+
     const onEnded = () => {
       if (loopRef.current) {
         audio.currentTime = 0
@@ -173,17 +250,34 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       }
       next()
     }
-    const onPlay = () => setIsPlaying(true)
+    const onPlay = () => {
+      setIsPlaying(true)
+      setPlaybackIssue('none')
+      retryCountRef.current = 0
+    }
     const onPause = () => setIsPlaying(false)
+    const onPlaying = () => {
+      setPlaybackIssue('none')
+      retryCountRef.current = 0
+    }
+    const onError = () => {
+      if (audio.error?.code === 1) return
+      scheduleRetry()
+    }
+
     audio.addEventListener('ended', onEnded)
     audio.addEventListener('play', onPlay)
     audio.addEventListener('pause', onPause)
+    audio.addEventListener('playing', onPlaying)
+    audio.addEventListener('error', onError)
     return () => {
       audio.removeEventListener('ended', onEnded)
       audio.removeEventListener('play', onPlay)
       audio.removeEventListener('pause', onPause)
+      audio.removeEventListener('playing', onPlaying)
+      audio.removeEventListener('error', onError)
     }
-  }, [next])
+  }, [next, scheduleRetry])
 
   useEffect(() => {
     let cancelled = false
@@ -199,9 +293,32 @@ export function AudioProvider({ children }: { children: ReactNode }) {
         return
       }
 
-      let playlist =
-        (await loadPlaylistFromSourceProvider(featured)) ??
-        (await loadPlaylistFromJson().catch(() => [] as Song[]))
+      const names = await loadPlaylistNames(resolved)
+      if (cancelled) return
+      setPlaylistNames(names)
+
+      const sheet = names.includes(playlistName)
+        ? playlistName
+        : resolveInitialPlaylistName(names)
+      if (sheet !== playlistName) {
+        setPlaylistNameState(sheet)
+        return
+      }
+
+      const alternates = names.filter((n) => n !== sheet)
+      let playlist: Song[] | null = await loadPlaylistFromSourceProvider(sheet)
+      if (!playlist?.length) {
+        for (const alt of alternates) {
+          playlist = await loadPlaylistFromSourceProvider(alt)
+          if (playlist?.length) {
+            if (!cancelled) setPlaylistNameState(alt)
+            break
+          }
+        }
+      }
+      if (!playlist?.length) {
+        playlist = await loadPlaylistFromJson().catch(() => [] as Song[])
+      }
 
       if (cancelled) return
       if (!playlist.length) {
@@ -228,18 +345,27 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     return () => {
       cancelled = true
     }
-  }, [featured, applyTrack])
+  }, [playlistName, applyTrack])
 
   const play = useCallback(() => {
     const audio = audioRef.current
     if (!audio) return
+    if (playbackIssue === 'unavailable') {
+      retryCurrent()
+      return
+    }
+    wantPlayRef.current = true
     void audio.play().then(
       () => setIsPlaying(true),
-      () => setIsPlaying(false),
+      () => {
+        setIsPlaying(false)
+        scheduleRetry()
+      },
     )
-  }, [])
+  }, [playbackIssue, retryCurrent, scheduleRetry])
 
   const pause = useCallback(() => {
+    wantPlayRef.current = false
     audioRef.current?.pause()
     setIsPlaying(false)
   }, [])
@@ -258,9 +384,22 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     setVolumeState(Math.min(1, Math.max(0, v)))
   }, [])
 
-  const setFeatured = useCallback((v: boolean) => {
-    setFeaturedState(v)
+  const setPlaylistName = useCallback((name: string) => {
+    setPlaylistNameState(name)
   }, [])
+
+  const featured = playlistName.toLowerCase() === 'featured'
+
+  const setFeatured = useCallback(
+    (v: boolean) => {
+      const featuredName =
+        playlistNames.find((n) => n.toLowerCase() === 'featured') ?? 'Featured'
+      const defaultName =
+        playlistNames.find((n) => n === 'Default') ?? playlistNames[0] ?? 'Default'
+      setPlaylistNameState(v ? featuredName : defaultName)
+    },
+    [playlistNames],
+  )
 
   const current = songs[index] ?? null
 
@@ -274,13 +413,14 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     const url = new URL(window.location.origin)
     url.pathname = '/now-playing'
     url.searchParams.set('song', String(index))
+    url.searchParams.set('playlist', playlistName)
     if (featured) url.searchParams.set('featured', '1')
     try {
       await navigator.clipboard.writeText(url.toString())
     } catch {
       window.prompt('Skopiuj link:', url.toString())
     }
-  }, [current, index, featured])
+  }, [current, index, playlistName, featured])
 
   const value = useMemo<AudioContextValue>(
     () => ({
@@ -293,6 +433,9 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       shuffle,
       loop,
       volume,
+      playlistName,
+      playlistNames,
+      playbackIssue,
       featured,
       play,
       pause,
@@ -303,7 +446,9 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       setShuffle,
       setLoop,
       setVolume,
+      setPlaylistName,
       setFeatured,
+      retryCurrent,
       openYoutube,
       shareCurrent,
     }),
@@ -317,6 +462,9 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       shuffle,
       loop,
       volume,
+      playlistName,
+      playlistNames,
+      playbackIssue,
       featured,
       play,
       pause,
@@ -325,7 +473,9 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       prev,
       setIndex,
       setVolume,
+      setPlaylistName,
       setFeatured,
+      retryCurrent,
       openYoutube,
       shareCurrent,
     ],

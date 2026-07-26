@@ -1,0 +1,6 @@
+.wrap {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: calc(50vh - var(--header-h));
+}

@@ -1,0 +1,129 @@
+.section {
+  display: grid;
+  gap: 0.85rem;
+  width: 100%;
+}
+
+.head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.head h2 {
+  font-size: 1.05rem;
+  letter-spacing: -0.02em;
+}
+
+.count {
+  color: var(--sn-text-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.list {
+  list-style: none;
+  display: grid;
+  gap: 0.35rem;
+  padding: 0.35rem;
+  border-radius: var(--sn-radius);
+  border: 1px solid var(--sn-border);
+  background: rgba(8, 14, 24, 0.45);
+}
+
+.row {
+  width: 100%;
+  display: grid;
+  grid-template-columns: 2.4rem 1fr auto;
+  align-items: center;
+  gap: 0.85rem;
+  text-align: left;
+  padding: 0.8rem 0.95rem;
+  border-radius: 12px;
+  border: 1px solid transparent;
+  color: inherit;
+  transition: background 0.18s ease, border-color 0.18s ease;
+}
+
+.row:hover {
+  background: rgba(0, 210, 255, 0.06);
+}
+
+.active {
+  border-color: rgba(0, 210, 255, 0.35);
+  background: rgba(0, 210, 255, 0.1);
+}
+
+.num {
+  width: 2.4rem;
+  color: var(--sn-text-muted);
+  font-size: 0.75rem;
+  display: grid;
+  place-items: center;
+}
+
+.pulse {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--sn-accent-main);
+  box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.55);
+  animation: ping 1.4s ease-out infinite;
+}
+
+@keyframes ping {
+  0% {
+    box-shadow: 0 0 0 0 rgba(0, 210, 255, 0.5);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(0, 210, 255, 0);
+  }
+  100% {
+    box-shadow: 0 0 0 0 rgba(0, 210, 255, 0);
+  }
+}
+
+.meta {
+  display: flex;
+  flex-direction: column;
+  gap: 0.12rem;
+  min-width: 0;
+}
+
+.meta strong {
+  font-weight: 600;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.meta em {
+  font-style: normal;
+  color: var(--sn-text-secondary);
+  font-size: 0.85rem;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.badge {
+  color: var(--sn-accent-main);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  opacity: 0.9;
+}
+
+@media (max-width: 640px) {
+  .badge {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pulse {
+    animation: none;
+  }
+}

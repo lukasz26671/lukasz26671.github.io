@@ -1,47 +1,83 @@
 import { useAudio } from '../app/AudioProvider'
+import { AudioSpinner } from '../components/AudioSpinner'
+import { TrackList } from '../components/TrackList'
+import { useSiteBack } from '../lib/useSiteBack'
 import styles from './Music.module.css'
 
 export function MusicPage() {
-  const { songs, index, setIndex, current, isPlaying, toggle } = useAudio()
+  const {
+    songs,
+    index,
+    setIndex,
+    current,
+    isPlaying,
+    toggle,
+    playbackIssue,
+    retryCurrent,
+    playlistName,
+  } = useAudio()
+  const goBack = useSiteBack('/')
 
   return (
-    <div className="page">
-      <header className="page-header">
+    <div className={`page ${styles.page}`}>
+      <header className={styles.header}>
+        <button type="button" className={styles.back} onClick={goBack}>
+          ← Wróć
+        </button>
+        <p className={`mono ${styles.eyebrow}`}>Stream · {playlistName}</p>
         <h1>Muzyka</h1>
-        <p>Playlista streamowana z serwera audio. Sterowanie też w docku na dole.</p>
+        <p className={styles.lead}>
+          Playlista z serwera audio
+        </p>
       </header>
 
       {current && (
-        <div className={`glass ${styles.now}`}>
-          <div>
-            <p className={styles.label}>Teraz</p>
-            <h2>
-              {current.author} — {current.title}
-            </h2>
+        <section className={styles.now} aria-label="Teraz odtwarzane">
+          <div className={styles.nowVisual} aria-hidden="true">
+            <div className={`${styles.eq} ${isPlaying ? styles.eqLive : ''}`}>
+              <span />
+              <span />
+              <span />
+              <span />
+              <span />
+            </div>
           </div>
-          <button type="button" className="btn btn-primary" onClick={toggle}>
-            {isPlaying ? 'Pauza' : 'Play'}
+
+          <div className={styles.nowBody}>
+            <p className={`mono ${styles.nowLabel}`}>Now playing</p>
+            <h2 className={styles.nowTitle}>{current.title}</h2>
+            <p className={styles.nowAuthor}>{current.author}</p>
+
+            {playbackIssue === 'retrying' && (
+              <AudioSpinner className={styles.issue} label="Ładowanie…" size="md" />
+            )}
+            {playbackIssue === 'unavailable' && (
+              <p className={`mono ${styles.issueWarn}`}>
+                Tymczasowo niedostępne —{' '}
+                <button type="button" className={styles.retry} onClick={retryCurrent}>
+                  spróbuj ponownie
+                </button>
+              </p>
+            )}
+          </div>
+
+          <button
+            type="button"
+            className={`${styles.nowPlay} ${isPlaying ? styles.nowPlayOn : ''}`}
+            onClick={toggle}
+            aria-label={isPlaying ? 'Pauza' : 'Odtwórz'}
+          >
+            {isPlaying ? '❚❚' : '▶'}
           </button>
-        </div>
+        </section>
       )}
 
-      <ul className={styles.list}>
-        {songs.map((song, i) => (
-          <li key={song.id}>
-            <button
-              type="button"
-              className={`${styles.row} ${i === index ? styles.active : ''}`}
-              onClick={() => setIndex(i)}
-            >
-              <span className={`mono ${styles.num}`}>{i + 1}</span>
-              <span className={styles.meta}>
-                <strong>{song.title}</strong>
-                <em>{song.author}</em>
-              </span>
-            </button>
-          </li>
-        ))}
-      </ul>
+      <TrackList
+        songs={songs}
+        index={index}
+        isPlaying={isPlaying}
+        onSelect={setIndex}
+      />
     </div>
   )
 }

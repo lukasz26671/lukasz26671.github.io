@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useState } from 'react'
 import { NavDrawer } from './NavDrawer'
 import { useAudio } from '../app/AudioProvider'
+import { AudioSpinner } from './AudioSpinner'
 import styles from './SiteHeader.module.css'
 
 export function SiteHeader() {
@@ -16,7 +17,9 @@ export function SiteHeader() {
         </Link>
         <div className={styles.actions}>
           {status === 'checking' && (
-            <span className={styles.badge}>audio…</span>
+            <span className={styles.badgeSpin}>
+              <AudioSpinner size="sm" label="audio" />
+            </span>
           )}
           {status === 'unavailable' && (
             <span className={`${styles.badge} ${styles.offline}`}>muzyka offline</span>

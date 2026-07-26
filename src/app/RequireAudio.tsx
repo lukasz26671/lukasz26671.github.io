@@ -1,6 +1,8 @@
 import { Navigate, useLocation } from 'react-router-dom'
 import type { ReactNode } from 'react'
 import { useAudio } from '../app/AudioProvider'
+import { AudioSpinner } from '../components/AudioSpinner'
+import styles from './RequireAudio.module.css'
 
 export function RequireAudio({ children }: { children: ReactNode }) {
   const { status } = useAudio()
@@ -8,8 +10,8 @@ export function RequireAudio({ children }: { children: ReactNode }) {
 
   if (status === 'checking') {
     return (
-      <div className="page">
-        <p style={{ color: 'var(--sn-text-secondary)' }}>Sprawdzam serwer audio…</p>
+      <div className={`page ${styles.wrap}`}>
+        <AudioSpinner label="Sprawdzam serwer audio…" size="lg" />
       </div>
     )
   }

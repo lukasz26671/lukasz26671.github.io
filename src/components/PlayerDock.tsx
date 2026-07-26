@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom'
 import { useAudio } from '../app/AudioProvider'
+import { AudioSpinner } from './AudioSpinner'
+import { PlaylistSelect } from './PlaylistSelect'
 import styles from './PlayerDock.module.css'
 
 export function PlayerDock() {
@@ -10,14 +12,17 @@ export function PlayerDock() {
     shuffle,
     loop,
     volume,
-    featured,
+    playlistName,
+    playlistNames,
+    playbackIssue,
     toggle,
     next,
     prev,
     setShuffle,
     setLoop,
     setVolume,
-    setFeatured,
+    setPlaylistName,
+    retryCurrent,
     openYoutube,
     shareCurrent,
   } = useAudio()
@@ -26,21 +31,39 @@ export function PlayerDock() {
 
   return (
     <div className={styles.dock} role="region" aria-label="Odtwarzacz audio">
-      <div className={styles.meta}>
+      <div className={styles.left}>
+        <div className={`${styles.eq} ${isPlaying ? styles.eqLive : ''}`} aria-hidden="true">
+          <span />
+          <span />
+          <span />
+          <span />
+        </div>
+
         <Link to="/now-playing" className={styles.track}>
           <span className={styles.author}>{current.author}</span>
           <span className={styles.title}>{current.title}</span>
+          {playbackIssue === 'retrying' && (
+            <AudioSpinner className={styles.notice} label="Ładowanie" size="sm" />
+          )}
+          {playbackIssue === 'unavailable' && (
+            <span className={`mono ${styles.noticeWarn}`}>
+              Niedostępne
+              <button
+                type="button"
+                className={styles.retryInline}
+                onClick={(e) => {
+                  e.preventDefault()
+                  e.stopPropagation()
+                  retryCurrent()
+                }}
+              >
+                Retry
+              </button>
+            </span>
+          )}
         </Link>
-        <select
-          className={styles.select}
-          value={featured ? 'featured' : 'default'}
-          onChange={(e) => setFeatured(e.target.value === 'featured')}
-          aria-label="Playlista"
-        >
-          <option value="default">Default</option>
-          <option value="featured">Featured</option>
-        </select>
       </div>
+
       <div className={styles.controls}>
         <button
           type="button"
@@ -54,7 +77,12 @@ export function PlayerDock() {
         <button type="button" onClick={prev} title="Poprzedni">
           ⏮
         </button>
-        <button type="button" className={styles.play} onClick={toggle} title={isPlaying ? 'Pauza' : 'Play'}>
+        <button
+          type="button"
+          className={`${styles.play} ${isPlaying ? styles.playOn : ''}`}
+          onClick={toggle}
+          title={isPlaying ? 'Pauza' : 'Play'}
+        >
           {isPlaying ? '❚❚' : '▶'}
         </button>
         <button type="button" onClick={next} title="Następny">
@@ -70,7 +98,13 @@ export function PlayerDock() {
           ↻
         </button>
       </div>
+
       <div className={styles.right}>
+        <PlaylistSelect
+          value={playlistName}
+          options={playlistNames}
+          onChange={setPlaylistName}
+        />
         <button type="button" onClick={openYoutube} title="YouTube">
           YT
         </button>
