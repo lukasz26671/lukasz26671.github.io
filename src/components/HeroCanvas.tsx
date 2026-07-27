@@ -5,11 +5,15 @@ import styles from './HeroCanvas.module.css'
 type Props = {
   className?: string
   diveProgress?: number
+  /** Freeze wave/caustic time — still frame; camera still follows dive. */
+  frozen?: boolean
 }
 
 const BG = 0x040b14
 const GRID_SEG_X = 64
 const GRID_SEG_Z = 40
+/** Nice-looking wave phase for the frozen still. */
+const FROZEN_TIME = 4.2
 
 const WAVE_GLSL = `
   float waveHeight(vec3 p, float time) {
@@ -30,20 +34,22 @@ const CAUSTIC_GLSL = `
   }
 `
 
-export function HeroCanvas({ className, diveProgress = 0 }: Props) {
+export function HeroCanvas({ className, diveProgress = 0, frozen = false }: Props) {
   const containerRef = useRef<HTMLDivElement>(null)
   const diveRef = useRef(diveProgress)
+  const frozenRef = useRef(frozen)
 
   useEffect(() => {
     diveRef.current = diveProgress
   }, [diveProgress])
 
   useEffect(() => {
+    frozenRef.current = frozen
+  }, [frozen])
+
+  useEffect(() => {
     const container = containerRef.current
     if (!container) return
-
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduced) return
 
     let renderer: THREE.WebGLRenderer
     try {
@@ -179,7 +185,6 @@ export function HeroCanvas({ className, diveProgress = 0 }: Props) {
     const occlusion = new THREE.Mesh(geometry, occlusionMat)
     scene.add(occlusion)
 
-    // Kaustyki na „dnie” — widoczne dopiero po zejściu pod powierzchnię
     const causticGeom = new THREE.PlaneGeometry(220, 160, 1, 1)
     causticGeom.rotateX(-Math.PI / 2)
     const causticMat = new THREE.ShaderMaterial({
@@ -219,7 +224,6 @@ export function HeroCanvas({ className, diveProgress = 0 }: Props) {
     caustics.position.y = -26
     scene.add(caustics)
 
-    // Miękkie smugi światła (god rays) patrzące w górę ku powierzchni
     const raysGeom = new THREE.PlaneGeometry(90, 70)
     const raysMat = new THREE.ShaderMaterial({
       uniforms: {
@@ -266,7 +270,6 @@ export function HeroCanvas({ className, diveProgress = 0 }: Props) {
     const dustPos = new Float32Array(dustCount * 3)
     for (let i = 0; i < dustCount * 3; i += 3) {
       dustPos[i] = (Math.random() - 0.5) * 110
-      // część nad, większość pod powierzchnią — volume pod wodą
       dustPos[i + 1] = Math.random() * 42 - 28
       dustPos[i + 2] = (Math.random() - 0.5) * 110
     }
@@ -286,10 +289,12 @@ export function HeroCanvas({ className, diveProgress = 0 }: Props) {
     let mouseTargetX = 0
     let mouseTargetY = 15
     let raf = 0
+    let simTime = frozenRef.current ? FROZEN_TIME : 0
     const clock = new THREE.Clock()
     const look = new THREE.Vector3(0, 5, 0)
 
     const onMove = (event: MouseEvent) => {
+      if (frozenRef.current) return
       const mouseX = (event.clientX / window.innerWidth) * 2 - 1
       const mouseY = -(event.clientY / window.innerHeight) * 2 + 1
       mouseTargetX = mouseX * 8
@@ -304,14 +309,26 @@ export function HeroCanvas({ className, diveProgress = 0 }: Props) {
 
     const animate = () => {
       raf = requestAnimationFrame(animate)
-      const time = clock.getElapsedTime()
+      const dt = Math.min(clock.getDelta(), 0.05)
+      const isFrozen = frozenRef.current
+
+      if (isFrozen) {
+        if (simTime === 0) simTime = FROZEN_TIME
+        mouseTargetX = 0
+        mouseTargetY = 15
+      } else {
+        simTime += dt
+      }
+
+      const time = simTime
       timeUniform.value = time
 
       const dive = diveRef.current
       const d = dive * dive * (3 - 2 * dive)
       diveUniform.value = d
 
-      // Głęboko pod powierzchnią, patrzymy do przodu — powierzchnia to sufit, nie „granica”
+      // Dive camera still follows scroll; wave/caustic time is frozen when reduced.
+      const camEase = isFrozen ? 0.12 : 0.04
       const camY = THREE.MathUtils.lerp(mouseTargetY, -18, d)
       const camZ = THREE.MathUtils.lerp(40, 16, d)
       const lookY = THREE.MathUtils.lerp(5, -4, d)
@@ -322,11 +339,11 @@ export function HeroCanvas({ className, diveProgress = 0 }: Props) {
         camera.updateProjectionMatrix()
       }
 
-      camera.position.x += (mouseTargetX * (1 - d * 0.7) - camera.position.x) * 0.02
-      camera.position.y += (camY - camera.position.y) * 0.04
-      camera.position.z += (camZ - camera.position.z) * 0.04
-      look.y += (lookY - look.y) * 0.045
-      look.z += (lookZ - look.z) * 0.045
+      camera.position.x += (mouseTargetX * (1 - d * 0.7) - camera.position.x) * (isFrozen ? 0.15 : 0.02)
+      camera.position.y += (camY - camera.position.y) * camEase
+      camera.position.z += (camZ - camera.position.z) * camEase
+      look.y += (lookY - look.y) * (isFrozen ? 0.14 : 0.045)
+      look.z += (lookZ - look.z) * (isFrozen ? 0.14 : 0.045)
       camera.lookAt(look)
 
       fog.color.setHex(d > 0.5 ? 0x021820 : BG)

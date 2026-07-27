@@ -13,7 +13,7 @@ export function MusicPage() {
     isPlaying,
     toggle,
     playbackIssue,
-    retryCurrent,
+    openYoutube,
     playlistName,
   } = useAudio()
   const goBack = useSiteBack('/')
@@ -53,9 +53,9 @@ export function MusicPage() {
             )}
             {playbackIssue === 'unavailable' && (
               <p className={`mono ${styles.issueWarn}`}>
-                Tymczasowo niedostępne —{' '}
-                <button type="button" className={styles.retry} onClick={retryCurrent}>
-                  spróbuj ponownie
+                „{current.title}” niedostępny na streamie.{' '}
+                <button type="button" className={styles.retry} onClick={openYoutube}>
+                  Posłuchaj na YouTube
                 </button>
               </p>
             )}

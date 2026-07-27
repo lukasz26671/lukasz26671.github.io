@@ -17,7 +17,6 @@
   .canvas {
     background:
       radial-gradient(circle at 50% 28%, #0a1828 0%, #040b14 78%),
-      url('/images/background3.gif') center / cover no-repeat,
       var(--sn-bg-base);
   }
 }

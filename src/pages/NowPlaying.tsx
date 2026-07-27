@@ -16,7 +16,6 @@ export function NowPlayingPage() {
     index,
     setIndex,
     playbackIssue,
-    retryCurrent,
     playlistName,
     songs,
   } = useAudio()
@@ -72,9 +71,9 @@ export function NowPlayingPage() {
           )}
           {playbackIssue === 'unavailable' && (
             <p className={`mono ${styles.issueWarn}`}>
-              Utwór tymczasowo niedostępny.{' '}
-              <button type="button" className={styles.retry} onClick={retryCurrent}>
-                Spróbuj ponownie
+              „{current.title}” niedostępny na streamie — możesz posłuchać na YouTube.{' '}
+              <button type="button" className={styles.retry} onClick={openYoutube}>
+                Otwórz YouTube
               </button>
             </p>
           )}

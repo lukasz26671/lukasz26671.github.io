@@ -229,7 +229,7 @@
   }
 
   .diveTrack {
-    height: 2rem;
+    height: 55vh;
   }
 
   .scrollHint {
@@ -237,7 +237,7 @@
   }
 
   .deep {
-    opacity: 1 !important;
+    /* bez slide-in; opacity z dive zostaje */
     transform: none !important;
   }
 }

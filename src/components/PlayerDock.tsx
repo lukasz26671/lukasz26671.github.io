@@ -22,7 +22,6 @@ export function PlayerDock() {
     setLoop,
     setVolume,
     setPlaylistName,
-    retryCurrent,
     openYoutube,
     shareCurrent,
   } = useAudio()
@@ -47,17 +46,17 @@ export function PlayerDock() {
           )}
           {playbackIssue === 'unavailable' && (
             <span className={`mono ${styles.noticeWarn}`}>
-              Niedostępne
+              Niedostępny
               <button
                 type="button"
                 className={styles.retryInline}
                 onClick={(e) => {
                   e.preventDefault()
                   e.stopPropagation()
-                  retryCurrent()
+                  openYoutube()
                 }}
               >
-                Retry
+                YouTube
               </button>
             </span>
           )}

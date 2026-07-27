@@ -86,3 +86,52 @@
   color: var(--sn-accent-main);
   border: 1px solid var(--sn-border-focus);
 }
+
+.prefs {
+  margin-top: auto;
+  padding-top: 1.25rem;
+  border-top: 1px solid var(--sn-border);
+}
+
+.prefsTitle {
+  color: var(--sn-accent-main);
+  font-size: 0.65rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin-bottom: 0.35rem;
+}
+
+.prefsHint {
+  color: var(--sn-text-muted);
+  font-size: 0.78rem;
+  margin-bottom: 0.75rem;
+  line-height: 1.4;
+}
+
+.prefsRow {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 0.35rem;
+}
+
+.prefBtn {
+  padding: 0.55rem 0.35rem;
+  border-radius: 10px;
+  border: 1px solid var(--sn-border);
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--sn-text-secondary);
+  font-size: 0.72rem;
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+.prefBtn:hover {
+  border-color: rgba(0, 210, 255, 0.35);
+  color: var(--sn-accent-main);
+}
+
+.prefBtnOn {
+  border-color: var(--sn-border-focus);
+  background: rgba(0, 210, 255, 0.12);
+  color: var(--sn-accent-main);
+}

@@ -69,18 +69,78 @@
   box-shadow: inset 0 0 80px rgba(0, 0, 0, 0.25);
 }
 
-@media (prefers-reduced-motion: reduce) {
-  .inner .canvasWrap,
-  .home .canvasWrap {
-    filter: none;
-    transform: none;
-  }
+.reduced .canvasWrap {
+  filter: none;
+  transform: none;
+}
 
-  .fallback,
-  .canvasWrap {
-    background:
-      linear-gradient(180deg, rgba(4, 11, 20, 0.45), rgba(4, 11, 20, 0.9)),
-      url('/images/background3.gif') center / cover no-repeat,
-      var(--sn-bg-base);
-  }
+/* lekki veil — scenę widać wyraźniej */
+.home.reduced .veil {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(4, 11, 20, calc(0.2 + var(--dive, 0) * 0.35)) 0%,
+      rgba(2, 18, 28, calc(0.35 + var(--dive, 0) * 0.35)) 55%,
+      rgba(1, 22, 30, calc(0.55 + var(--dive, 0) * 0.3)) 100%
+    );
+}
+
+.inner.reduced .veil {
+  background: linear-gradient(
+    180deg,
+    rgba(4, 11, 20, 0.5) 0%,
+    rgba(4, 11, 20, 0.65) 100%
+  );
+}
+
+.annotation {
+  position: fixed;
+  left: 1rem;
+  bottom: calc(var(--player-h) + 1rem);
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.2rem;
+  padding: 0.45rem 0.7rem;
+  border-radius: 10px;
+  border: 1px solid rgba(0, 210, 255, 0.22);
+  background: rgba(4, 11, 20, 0.78);
+  color: var(--sn-text-secondary);
+  font-size: 0.72rem;
+  text-align: left;
+  cursor: pointer;
+  max-width: min(260px, calc(100vw - 2rem));
+  backdrop-filter: blur(10px);
+  transition:
+    border-color 0.2s ease,
+    background 0.2s ease,
+    color 0.2s ease;
+}
+
+.annotation:hover,
+.annotation:focus-visible {
+  border-color: rgba(0, 210, 255, 0.45);
+  background: rgba(4, 18, 28, 0.9);
+  color: var(--sn-text-primary);
+  outline: none;
+}
+
+.annotationMono {
+  font-family: var(--sn-font-mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--sn-accent-main);
+}
+
+.annotationAction {
+  margin-top: 0.15rem;
+  font-size: 0.65rem;
+  color: var(--sn-accent-main);
+  opacity: 0.85;
+}
+
+:global(.app-shell:not(.with-player)) .annotation {
+  bottom: 1rem;
 }

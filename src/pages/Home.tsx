@@ -13,12 +13,7 @@ export function HomePage() {
   const commercialSolo = getCommercialStandalone()
 
   useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
-    if (reduced) {
-      setProgress(0)
-      return
-    }
-
+    // reduced-motion: bez Three.js, ale dive progress nadal napędza statyczną scenę
     const onScroll = () => {
       const track = trackRef.current
       const deep = deepRef.current
@@ -26,10 +21,8 @@ export function HomePage() {
       const viewH = window.innerHeight
       const trackRect = track.getBoundingClientRect()
 
-      // 0→1 przez tor nurkowania
       let raw = (viewH - trackRect.top) / (trackRect.height + viewH * 0.1)
 
-      // Gdy deep projects wjeżdżają — full underwater
       if (deep) {
         const deepRect = deep.getBoundingClientRect()
         if (deepRect.top < viewH * 0.85) {

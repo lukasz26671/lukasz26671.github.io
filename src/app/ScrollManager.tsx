@@ -16,7 +16,7 @@ export function ScrollManager() {
   const { pathname, hash, key } = useLocation()
 
   useEffect(() => {
-    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    const reduced = document.documentElement.dataset.motion === 'reduce'
     const behavior: ScrollBehavior = reduced ? 'auto' : 'smooth'
 
     if (!hash) {

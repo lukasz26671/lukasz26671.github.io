@@ -1,5 +1,6 @@
 import { NavLink, useLocation } from 'react-router-dom'
 import { useAudio } from '../app/AudioProvider'
+import { motionModeLabel, useMotionPreference, type MotionMode } from '../app/MotionPreference'
 import styles from './NavDrawer.module.css'
 
 type Props = {
@@ -17,9 +18,12 @@ const links = [
   { to: '/sources', label: 'Źródła', match: 'path' as const },
 ]
 
+const motionModes: MotionMode[] = ['system', 'reduce', 'full']
+
 export function NavDrawer({ open, onClose }: Props) {
   const { status } = useAudio()
   const { pathname, hash } = useLocation()
+  const { mode, setMode, reducedMotion, systemPrefersReduce } = useMotionPreference()
 
   return (
     <>
@@ -87,6 +91,27 @@ export function NavDrawer({ open, onClose }: Props) {
             Kalkulator ↗
           </a>
         </nav>
+
+        <div className={styles.prefs}>
+          <p className={`mono ${styles.prefsTitle}`}>prefers-reduced-motion</p>
+          <p className={styles.prefsHint}>
+            System: {systemPrefersReduce ? 'reduce' : 'no-preference'}
+            {reducedMotion ? ' · klatka zamrożona' : ' · animacja Three.js'}
+          </p>
+          <div className={styles.prefsRow} role="group" aria-label="Motion preference">
+            {motionModes.map((m) => (
+              <button
+                key={m}
+                type="button"
+                className={`${styles.prefBtn} ${mode === m ? styles.prefBtnOn : ''}`}
+                aria-pressed={mode === m}
+                onClick={() => setMode(m)}
+              >
+                {motionModeLabel(m)}
+              </button>
+            ))}
+          </div>
+        </div>
       </aside>
     </>
   )

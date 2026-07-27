@@ -58,8 +58,8 @@ type AudioContextValue = {
 const AudioCtx = createContext<AudioContextValue | null>(null)
 
 const VOL_KEY = 'sn-audio-volume'
-const MAX_STREAM_RETRIES = 3
-const RETRY_BASE_MS = 700
+const MAX_STREAM_RETRIES = 4
+const RETRY_BASE_MS = 800
 
 function readInitialVolume(): number {
   const raw = localStorage.getItem(VOL_KEY)
@@ -144,6 +144,14 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     retryTimerRef.current = 0
   }, [])
 
+  const stopAudioHard = useCallback(() => {
+    const audio = audioRef.current
+    if (!audio) return
+    audio.pause()
+    audio.removeAttribute('src')
+    audio.load()
+  }, [])
+
   const applyTrack = useCallback(
     (i: number, playAfter: boolean, opts?: { isRetry?: boolean }) => {
       const audio = audioRef.current
@@ -163,6 +171,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       }
 
       wantPlayRef.current = playAfter
+      setIsPlaying(false)
       setIndexState(clamped)
       indexRef.current = clamped
 
@@ -172,43 +181,50 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       audio.load()
 
       if (playAfter) {
+        // isPlaying tylko po evencie `playing` — inaczej miganie selected/playing
         void audio.play().then(
-          () => setIsPlaying(true),
+          () => undefined,
           () => setIsPlaying(false),
         )
-      } else {
-        setIsPlaying(false)
       }
     },
     [clearRetryTimer],
   )
 
   const scheduleRetry = useCallback(() => {
+    // już zaplanowane albo limit wyczerpany
+    if (retryTimerRef.current) return
+
     const attempt = retryCountRef.current
     if (attempt >= MAX_STREAM_RETRIES) {
       setPlaybackIssue('unavailable')
       setIsPlaying(false)
       wantPlayRef.current = false
+      stopAudioHard()
       return
     }
 
+    const delay = RETRY_BASE_MS * 2 ** attempt // 800 → 1600 → 3200 → 6400
     retryCountRef.current = attempt + 1
     setPlaybackIssue('retrying')
-    clearRetryTimer()
-    const gen = loadGenRef.current
-    const delay = RETRY_BASE_MS * retryCountRef.current
+    setIsPlaying(false)
 
+    const gen = loadGenRef.current
+    const shouldPlay = wantPlayRef.current
     retryTimerRef.current = window.setTimeout(() => {
+      retryTimerRef.current = 0
       if (gen !== loadGenRef.current) return
-      applyTrack(indexRef.current, wantPlayRef.current || true, { isRetry: true })
+      applyTrack(indexRef.current, shouldPlay, { isRetry: true })
     }, delay)
-  }, [applyTrack, clearRetryTimer])
+  }, [applyTrack, stopAudioHard])
 
   const retryCurrent = useCallback(() => {
     clearRetryTimer()
     retryCountRef.current = 0
     setPlaybackIssue('retrying')
+    setIsPlaying(false)
     loadGenRef.current += 1
+    wantPlayRef.current = true
     applyTrack(indexRef.current, true, { isRetry: true })
   }, [applyTrack, clearRetryTimer])
 
@@ -250,34 +266,32 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       }
       next()
     }
-    const onPlay = () => {
-      setIsPlaying(true)
-      setPlaybackIssue('none')
-      retryCountRef.current = 0
-    }
     const onPause = () => setIsPlaying(false)
     const onPlaying = () => {
-      setPlaybackIssue('none')
+      // prawdziwy start streamu — dopiero tu sukces (nie resetuj na samym `play`)
+      clearRetryTimer()
       retryCountRef.current = 0
+      setPlaybackIssue('none')
+      setIsPlaying(true)
     }
     const onError = () => {
+      // 1 = MEDIA_ERR_ABORTED (np. po zmianie src / stopAudioHard)
       if (audio.error?.code === 1) return
+      setIsPlaying(false)
       scheduleRetry()
     }
 
     audio.addEventListener('ended', onEnded)
-    audio.addEventListener('play', onPlay)
     audio.addEventListener('pause', onPause)
     audio.addEventListener('playing', onPlaying)
     audio.addEventListener('error', onError)
     return () => {
       audio.removeEventListener('ended', onEnded)
-      audio.removeEventListener('play', onPlay)
       audio.removeEventListener('pause', onPause)
       audio.removeEventListener('playing', onPlaying)
       audio.removeEventListener('error', onError)
     }
-  }, [next, scheduleRetry])
+  }, [clearRetryTimer, next, scheduleRetry])
 
   useEffect(() => {
     let cancelled = false
@@ -350,13 +364,13 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   const play = useCallback(() => {
     const audio = audioRef.current
     if (!audio) return
-    if (playbackIssue === 'unavailable') {
+    if (playbackIssue === 'unavailable' || playbackIssue === 'retrying') {
       retryCurrent()
       return
     }
     wantPlayRef.current = true
     void audio.play().then(
-      () => setIsPlaying(true),
+      () => undefined,
       () => {
         setIsPlaying(false)
         scheduleRetry()
