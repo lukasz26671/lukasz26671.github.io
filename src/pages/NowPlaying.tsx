@@ -1,6 +1,6 @@
 import { useAudio } from '../app/AudioProvider'
 import { AudioSpinner } from '../components/AudioSpinner'
-import { TrackList } from '../components/TrackList'
+import { StreamLyricsTabs } from '../components/StreamLyricsTabs'
 import { useSiteBack } from '../lib/useSiteBack'
 import styles from './NowPlaying.module.css'
 
@@ -14,7 +14,6 @@ export function NowPlayingPage() {
     openYoutube,
     shareCurrent,
     index,
-    setIndex,
     playbackIssue,
     playlistName,
     songs,
@@ -50,7 +49,8 @@ export function NowPlayingPage() {
 
         <article className={styles.card}>
           <p className={`mono ${styles.kicker}`}>
-            Now playing · {playlistName} · {index + 1}/{songs.length || '—'}
+            Now playing · {playlistName} ·{' '}
+            {index >= 0 ? `${index + 1}/${songs.length || '—'}` : 'spoza playlisty'}
           </p>
 
           <div className={`${styles.eq} ${isPlaying ? styles.eqLive : ''}`} aria-hidden="true">
@@ -96,8 +96,8 @@ export function NowPlayingPage() {
           </div>
 
           <div className={styles.links}>
-            <button type="button" className={styles.linkBtn} onClick={openYoutube}>
-              YouTube
+            <button type="button" className={styles.linkBtn} onClick={openYoutube} title="Otwórz film na YouTube">
+              Watch
             </button>
             <button type="button" className={styles.linkBtn} onClick={() => void shareCurrent()}>
               Share
@@ -106,14 +106,7 @@ export function NowPlayingPage() {
         </article>
       </div>
 
-      <TrackList
-        className={styles.list}
-        songs={songs}
-        index={index}
-        isPlaying={isPlaying}
-        onSelect={setIndex}
-        title="Playlista"
-      />
+      <StreamLyricsTabs className={styles.list} hideStreamActions />
     </div>
   )
 }

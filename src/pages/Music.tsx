@@ -1,14 +1,11 @@
 import { useAudio } from '../app/AudioProvider'
 import { AudioSpinner } from '../components/AudioSpinner'
-import { TrackList } from '../components/TrackList'
+import { StreamLyricsTabs } from '../components/StreamLyricsTabs'
 import { useSiteBack } from '../lib/useSiteBack'
 import styles from './Music.module.css'
 
 export function MusicPage() {
   const {
-    songs,
-    index,
-    setIndex,
     current,
     isPlaying,
     toggle,
@@ -72,12 +69,7 @@ export function MusicPage() {
         </section>
       )}
 
-      <TrackList
-        songs={songs}
-        index={index}
-        isPlaying={isPlaying}
-        onSelect={setIndex}
-      />
+      <StreamLyricsTabs />
     </div>
   )
 }

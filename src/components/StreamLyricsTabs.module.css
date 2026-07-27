@@ -1,0 +1,228 @@
+.wrap {
+  display: grid;
+  gap: 0.85rem;
+  width: 100%;
+}
+
+.tabs {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem;
+  padding: 0.3rem;
+  border-radius: 12px;
+  border: 1px solid var(--sn-border);
+  background: rgba(8, 14, 24, 0.55);
+}
+
+.tab {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.65rem 0.75rem;
+  border-radius: 9px;
+  border: 1px solid transparent;
+  color: var(--sn-text-secondary);
+  font-size: 0.88rem;
+  font-weight: 600;
+}
+
+.tab:hover {
+  color: var(--sn-accent-main);
+}
+
+.tabOn {
+  color: var(--sn-accent-main);
+  border-color: rgba(0, 210, 255, 0.35);
+  background: rgba(0, 210, 255, 0.1);
+}
+
+.panel {
+  display: grid;
+  gap: 1rem;
+}
+
+.tools {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 0.65rem;
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+}
+
+.action {
+  padding: 0.45rem 0.85rem;
+  border-radius: 999px;
+  border: 1px solid var(--sn-border);
+  color: var(--sn-text-secondary);
+  font-size: 0.82rem;
+  font-weight: 600;
+  background: rgba(255, 255, 255, 0.02);
+}
+
+.action:hover {
+  color: var(--sn-accent-main);
+  border-color: rgba(0, 210, 255, 0.4);
+  background: rgba(0, 210, 255, 0.08);
+}
+
+.lyricsLead {
+  color: var(--sn-text-muted);
+  font-size: 0.72rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.lyricsBody {
+  padding: 1rem 1.1rem;
+  border-radius: var(--sn-radius);
+  border: 1px solid var(--sn-border);
+  background: rgba(8, 14, 24, 0.55);
+}
+
+.lyricsToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.75rem;
+  margin-bottom: 0.75rem;
+}
+
+.lyricsSource {
+  color: var(--sn-accent-main);
+  font-size: 0.62rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  margin: 0;
+}
+
+.syncToggle {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  color: var(--sn-text-secondary);
+  font-size: 0.78rem;
+  font-weight: 600;
+  user-select: none;
+}
+
+.switch {
+  position: relative;
+  width: 42px;
+  height: 26px;
+  padding: 0;
+  border: none;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.18);
+  flex-shrink: 0;
+  transition: background 0.2s ease;
+}
+
+.switchOn {
+  background: var(--sn-accent-main);
+}
+
+.switchThumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  transition: transform 0.2s ease;
+  pointer-events: none;
+}
+
+.switchOn .switchThumb {
+  transform: translateX(16px);
+}
+
+.syncNote {
+  color: #ffb454;
+  font-size: 0.65rem;
+  letter-spacing: 0.04em;
+  line-height: 1.4;
+  margin: -0.25rem 0 0.75rem;
+}
+
+.lyricsText {
+  margin: 0;
+  white-space: pre-wrap;
+  font-family: var(--sn-font-mono);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  color: var(--sn-text-secondary);
+  max-height: min(52vh, 420px);
+  overflow: auto;
+  overscroll-behavior: contain;
+}
+
+.syncedList {
+  list-style: none;
+  margin: 0;
+  padding: 0.35rem 0.15rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  height: min(52vh, 420px);
+  max-height: min(52vh, 420px);
+  overflow-y: auto;
+  overflow-x: hidden;
+  overscroll-behavior: contain;
+  -webkit-overflow-scrolling: touch;
+  scroll-padding-block: 40%;
+}
+
+.syncedLine {
+  flex: 0 0 auto;
+  padding: 0.45rem 0.65rem;
+  border-radius: 8px;
+  color: var(--sn-text-muted);
+  font-family: var(--sn-font-mono);
+  font-size: 0.84rem;
+  line-height: 1.45;
+  transition: color 0.15s ease, background 0.15s ease;
+}
+
+.syncedActive {
+  color: var(--sn-accent-main);
+  background: rgba(0, 210, 255, 0.1);
+  font-weight: 600;
+}
+
+.lyricsList {
+  list-style: none;
+  display: grid;
+  gap: 0.4rem;
+  padding: 0;
+  margin: 0;
+}
+
+.lyricsList a {
+  display: block;
+  padding: 0.85rem 1rem;
+  border-radius: 12px;
+  border: 1px solid var(--sn-border);
+  background: rgba(8, 14, 24, 0.45);
+  color: var(--sn-text-primary);
+  font-weight: 600;
+  transition: border-color 0.18s ease, background 0.18s ease, color 0.18s ease;
+}
+
+.lyricsList a:hover {
+  color: var(--sn-accent-main);
+  border-color: rgba(0, 210, 255, 0.4);
+  background: rgba(0, 210, 255, 0.08);
+}
+
+.empty {
+  color: var(--sn-text-muted);
+  font-size: 0.8rem;
+  padding: 1rem 0.35rem;
+}

@@ -37,6 +37,12 @@ type AudioContextValue = {
   playlistName: string
   playlistNames: string[]
   playbackIssue: PlaybackIssue
+  /** Indeksy playlisty w kolejności odtwarzania (po current). Tylko przy shuffle. */
+  queueIndices: number[]
+  /** Utwory w kolejce shuffle (po current). */
+  queue: Song[]
+  /** Ostatnio grany utwór przed current. */
+  previous: Song | null
   /** @deprecated prefer playlistName — true gdy sheet ≈ Featured */
   featured: boolean
   play: () => void
@@ -45,6 +51,7 @@ type AudioContextValue = {
   next: () => void
   prev: () => void
   setIndex: (i: number) => void
+  playPrevious: () => void
   setShuffle: (v: boolean) => void
   setLoop: (v: boolean) => void
   setVolume: (v: number) => void
@@ -53,13 +60,17 @@ type AudioContextValue = {
   retryCurrent: () => void
   openYoutube: () => void
   shareCurrent: () => Promise<void>
+  /** Aktualny czas odtwarzania (s) — do synced lyrics */
+  getCurrentTime: () => number
 }
 
 const AudioCtx = createContext<AudioContextValue | null>(null)
 
 const VOL_KEY = 'sn-audio-volume'
+const TRACK_MEMORY_KEY = 'sn-audio-track-memory'
 const MAX_STREAM_RETRIES = 4
 const RETRY_BASE_MS = 800
+const SHUFFLE_HISTORY_MAX = 64
 
 function readInitialVolume(): number {
   const raw = localStorage.getItem(VOL_KEY)
@@ -68,12 +79,84 @@ function readInitialVolume(): number {
   return Number.isFinite(n) ? Math.min(1, Math.max(0, n)) : 0.15
 }
 
+function isSong(value: unknown): value is Song {
+  if (!value || typeof value !== 'object') return false
+  const s = value as Record<string, unknown>
+  return (
+    typeof s.id === 'string' &&
+    typeof s.title === 'string' &&
+    typeof s.author === 'string' &&
+    typeof s.youtubeId === 'string'
+  )
+}
+
+type TrackMemory = {
+  current: Song | null
+  previous: Song | null
+}
+
+function readTrackMemory(): TrackMemory {
+  try {
+    const raw = localStorage.getItem(TRACK_MEMORY_KEY)
+    if (!raw) return { current: null, previous: null }
+    const parsed = JSON.parse(raw) as Partial<TrackMemory>
+    return {
+      current: isSong(parsed.current) ? parsed.current : null,
+      previous: isSong(parsed.previous) ? parsed.previous : null,
+    }
+  } catch {
+    return { current: null, previous: null }
+  }
+}
+
+function writeTrackMemory(memory: TrackMemory) {
+  try {
+    localStorage.setItem(TRACK_MEMORY_KEY, JSON.stringify(memory))
+  } catch {
+    /* ignore quota / private mode */
+  }
+}
+
 function parseSongQuery(): number | null {
   const params = new URLSearchParams(window.location.search)
   const song = params.get('song')
   if (song == null) return null
   const n = Number(song)
   return Number.isFinite(n) && n >= 0 ? Math.floor(n) : null
+}
+
+/** Fisher–Yates bag of playlist indices, optionally excluding current track. */
+function buildShuffleBag(length: number, exclude?: number): number[] {
+  const bag: number[] = []
+  for (let i = 0; i < length; i++) {
+    if (i !== exclude) bag.push(i)
+  }
+  for (let i = bag.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1))
+    const tmp = bag[i]
+    bag[i] = bag[j]
+    bag[j] = tmp
+  }
+  return bag
+}
+
+/** Unikalne, poprawne indeksy; bez current. Max = length-1. */
+function sanitizeBag(bag: number[], length: number, exclude: number): number[] {
+  const seen = new Set<number>()
+  const out: number[] = []
+  for (const i of bag) {
+    if (!Number.isInteger(i) || i < 0 || i >= length || i === exclude || seen.has(i)) {
+      continue
+    }
+    seen.add(i)
+    out.push(i)
+  }
+  return out
+}
+
+function pushHistory(history: number[], index: number) {
+  history.push(index)
+  if (history.length > SHUFFLE_HISTORY_MAX) history.shift()
 }
 
 export function AudioProvider({ children }: { children: ReactNode }) {
@@ -93,6 +176,10 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     )
   })
   const [playbackIssue, setPlaybackIssue] = useState<PlaybackIssue>('none')
+  const [shuffleQueue, setShuffleQueue] = useState<number[]>([])
+  /** Utwór spoza nowej playlisty — dalej gra, dopóki next/prev/select. */
+  const [stickyCurrent, setStickyCurrent] = useState<Song | null>(null)
+  const [previous, setPrevious] = useState<Song | null>(() => readTrackMemory().previous)
   const audioRef = useRef<HTMLAudioElement | null>(null)
   const songsRef = useRef<Song[]>([])
   const indexRef = useRef(0)
@@ -103,6 +190,25 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   const retryCountRef = useRef(0)
   const retryTimerRef = useRef(0)
   const loadGenRef = useRef(0)
+  const shuffleBagRef = useRef<number[]>([])
+  const playHistoryRef = useRef<number[]>([])
+  const stickyCurrentRef = useRef<Song | null>(null)
+  const memoryBootRef = useRef(readTrackMemory())
+  const previousRef = useRef<Song | null>(memoryBootRef.current.previous)
+  const lastPlayedRef = useRef<Song | null>(memoryBootRef.current.current)
+  const bootedRef = useRef(false)
+
+  const clearSticky = useCallback(() => {
+    stickyCurrentRef.current = null
+    setStickyCurrent(null)
+  }, [])
+
+  const publishQueue = useCallback(() => {
+    const exclude = stickyCurrentRef.current ? -1 : indexRef.current
+    const len = songsRef.current.length
+    shuffleBagRef.current = sanitizeBag(shuffleBagRef.current, len, exclude)
+    setShuffleQueue([...shuffleBagRef.current])
+  }, [])
 
   useEffect(() => {
     songsRef.current = songs
@@ -164,10 +270,32 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       const isRetry = opts?.isRetry === true
 
       if (!isRetry) {
+        const hadPlayback = Boolean(audio.currentSrc)
+        let leaving =
+          stickyCurrentRef.current ??
+          (hadPlayback ? list[indexRef.current] : null)
+        // po refreshu: ostatnio grany utwór staje się previous
+        if (
+          !leaving &&
+          lastPlayedRef.current &&
+          lastPlayedRef.current.youtubeId !== song.youtubeId
+        ) {
+          leaving = lastPlayedRef.current
+        }
+        if (leaving && leaving.youtubeId !== song.youtubeId) {
+          previousRef.current = leaving
+          setPrevious(leaving)
+        }
+        lastPlayedRef.current = song
+        writeTrackMemory({
+          current: song,
+          previous: previousRef.current,
+        })
         clearRetryTimer()
         retryCountRef.current = 0
         setPlaybackIssue('none')
         loadGenRef.current += 1
+        clearSticky()
       }
 
       wantPlayRef.current = playAfter
@@ -181,14 +309,13 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       audio.load()
 
       if (playAfter) {
-        // isPlaying tylko po evencie `playing` — inaczej miganie selected/playing
         void audio.play().then(
           () => undefined,
           () => setIsPlaying(false),
         )
       }
     },
-    [clearRetryTimer],
+    [clearRetryTimer, clearSticky],
   )
 
   const scheduleRetry = useCallback(() => {
@@ -231,15 +358,38 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   const next = useCallback(() => {
     const list = songsRef.current
     if (list.length === 0) return
+
+    const sticky = stickyCurrentRef.current
+    const current = indexRef.current
     let nextIndex: number
+
     if (shuffleRef.current) {
-      nextIndex = Math.floor(Math.random() * list.length)
-    } else {
-      nextIndex = indexRef.current + 1
-      if (nextIndex >= list.length) nextIndex = 0
+      if (shuffleBagRef.current.length === 0) {
+        shuffleBagRef.current = buildShuffleBag(
+          list.length,
+          sticky ? undefined : current,
+        )
+      }
+      if (shuffleBagRef.current.length === 0) {
+        nextIndex = sticky ? 0 : current
+      } else {
+        nextIndex = shuffleBagRef.current.shift()!
+        if (!sticky) pushHistory(playHistoryRef.current, current)
+      }
+      applyTrack(nextIndex, true)
+      publishQueue()
+      return
     }
+
+    if (sticky) {
+      applyTrack(0, true)
+      return
+    }
+
+    nextIndex = current + 1
+    if (nextIndex >= list.length) nextIndex = 0
     applyTrack(nextIndex, true)
-  }, [applyTrack])
+  }, [applyTrack, publishQueue])
 
   const prev = useCallback(() => {
     const list = songsRef.current
@@ -249,10 +399,41 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       audio.currentTime = 0
       return
     }
+
+    if (stickyCurrentRef.current) {
+      // utwór spoza playlisty — prev tylko restart / pierwszy z nowej listy
+      applyTrack(0, true)
+      return
+    }
+
+    if (shuffleRef.current && playHistoryRef.current.length > 0) {
+      const current = indexRef.current
+      const prevIndex = playHistoryRef.current.pop()!
+      shuffleBagRef.current = shuffleBagRef.current.filter((x) => x !== prevIndex && x !== current)
+      shuffleBagRef.current.unshift(current)
+      applyTrack(prevIndex, true)
+      publishQueue()
+      return
+    }
+
     let prevIndex = indexRef.current - 1
     if (prevIndex < 0) prevIndex = list.length - 1
     applyTrack(prevIndex, true)
-  }, [applyTrack])
+  }, [applyTrack, publishQueue])
+
+  const setShuffleMode = useCallback(
+    (v: boolean) => {
+      setShuffle(v)
+      shuffleRef.current = v
+      if (v) {
+        shuffleBagRef.current = buildShuffleBag(songsRef.current.length, indexRef.current)
+      } else {
+        shuffleBagRef.current = []
+      }
+      publishQueue()
+    },
+    [publishQueue],
+  )
 
   useEffect(() => {
     const audio = audioRef.current
@@ -296,63 +477,145 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   useEffect(() => {
     let cancelled = false
 
-    async function boot() {
-      setStatus('checking')
-      const resolved = await resolveStreamingServer()
-      if (cancelled) return
-      if (!resolved) {
-        setStatus('unavailable')
-        setProvider(null)
-        setSongs([])
-        return
-      }
-
+    async function loadSheet(resolved: string, sheet: string): Promise<Song[]> {
       const names = await loadPlaylistNames(resolved)
-      if (cancelled) return
+      if (cancelled) return []
       setPlaylistNames(names)
 
-      const sheet = names.includes(playlistName)
-        ? playlistName
+      const resolvedSheet = names.includes(sheet)
+        ? sheet
         : resolveInitialPlaylistName(names)
-      if (sheet !== playlistName) {
-        setPlaylistNameState(sheet)
-        return
+      if (resolvedSheet !== sheet) {
+        setPlaylistNameState(resolvedSheet)
+        return []
       }
 
-      const alternates = names.filter((n) => n !== sheet)
-      let playlist: Song[] | null = await loadPlaylistFromSourceProvider(sheet)
+      const alternates = names.filter((n) => n !== resolvedSheet)
+      let playlist: Song[] | null = await loadPlaylistFromSourceProvider(resolvedSheet)
       if (!playlist?.length) {
         for (const alt of alternates) {
           playlist = await loadPlaylistFromSourceProvider(alt)
           if (playlist?.length) {
             if (!cancelled) setPlaylistNameState(alt)
-            break
+            return []
           }
         }
       }
       if (!playlist?.length) {
         playlist = await loadPlaylistFromJson().catch(() => [] as Song[])
       }
+      return playlist ?? []
+    }
 
-      if (cancelled) return
-      if (!playlist.length) {
-        setStatus('unavailable')
-        setProvider(null)
+    function adoptPlaylist(playlist: Song[], mode: 'boot' | 'soft') {
+      const audio = audioRef.current
+      const prevSong =
+        stickyCurrentRef.current ?? songsRef.current[indexRef.current] ?? null
+      const keepPlayback =
+        mode === 'soft' && Boolean(audio?.currentSrc) && Boolean(prevSong)
+
+      playHistoryRef.current = []
+      setSongs(playlist)
+      songsRef.current = playlist
+      setStatus('ready')
+
+      if (keepPlayback && prevSong) {
+        const found = playlist.findIndex(
+          (s) => s.youtubeId === prevSong.youtubeId || s.id === prevSong.id,
+        )
+        if (found >= 0) {
+          stickyCurrentRef.current = null
+          setStickyCurrent(null)
+          setIndexState(found)
+          indexRef.current = found
+          if (shuffleRef.current) {
+            shuffleBagRef.current = buildShuffleBag(playlist.length, found)
+          } else {
+            shuffleBagRef.current = []
+          }
+          setShuffleQueue(
+            sanitizeBag(shuffleBagRef.current, playlist.length, found),
+          )
+          return
+        }
+
+        // Gra utwór spoza nowej playlisty — nie przerywamy
+        stickyCurrentRef.current = prevSong
+        setStickyCurrent(prevSong)
+        setIndexState(0)
+        indexRef.current = 0
+        if (shuffleRef.current) {
+          shuffleBagRef.current = buildShuffleBag(playlist.length)
+        } else {
+          shuffleBagRef.current = []
+        }
+        setShuffleQueue(
+          sanitizeBag(shuffleBagRef.current, playlist.length, -1),
+        )
         return
       }
 
-      setProvider(resolved)
-      setSongs(playlist)
-      songsRef.current = playlist
-      providerRef.current = resolved
-      setStatus('ready')
-
+      stickyCurrentRef.current = null
+      setStickyCurrent(null)
       const q = parseSongQuery()
-      const start =
-        q != null && q < playlist.length
-          ? q
-          : Math.floor(Math.random() * playlist.length)
+      let start: number
+      if (mode === 'boot' && q != null && q < playlist.length) {
+        start = q
+      } else if (mode === 'boot' && lastPlayedRef.current) {
+        const remembered = playlist.findIndex(
+          (s) =>
+            s.youtubeId === lastPlayedRef.current!.youtubeId ||
+            s.id === lastPlayedRef.current!.id,
+        )
+        start =
+          remembered >= 0
+            ? remembered
+            : Math.floor(Math.random() * playlist.length)
+      } else {
+        start = Math.floor(Math.random() * playlist.length)
+      }
+      if (shuffleRef.current) {
+        shuffleBagRef.current = buildShuffleBag(playlist.length, start)
+      } else {
+        shuffleBagRef.current = []
+      }
       applyTrack(start, false)
+      setShuffleQueue(
+        sanitizeBag(shuffleBagRef.current, playlist.length, start),
+      )
+    }
+
+    async function boot() {
+      const isInitial = !bootedRef.current
+      if (isInitial) setStatus('checking')
+
+      let resolved = providerRef.current
+      if (!resolved) {
+        resolved = await resolveStreamingServer()
+        if (cancelled) return
+        if (!resolved) {
+          setStatus('unavailable')
+          setProvider(null)
+          if (isInitial) setSongs([])
+          return
+        }
+        setProvider(resolved)
+        providerRef.current = resolved
+      }
+
+      const playlist = await loadSheet(resolved, playlistName)
+      if (cancelled || playlist.length === 0) {
+        if (cancelled) return
+        // rename path already triggered another effect
+        if (!bootedRef.current) {
+          setStatus('unavailable')
+          setProvider(null)
+        }
+        return
+      }
+
+      adoptPlaylist(playlist, isInitial ? 'boot' : 'soft')
+      bootedRef.current = true
     }
 
     void boot()
@@ -390,9 +653,39 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   }, [isPlaying, pause, play])
 
   const setIndex = useCallback(
-    (i: number) => applyTrack(i, true),
-    [applyTrack],
+    (i: number) => {
+      const current = indexRef.current
+      const list = songsRef.current
+      if (list.length === 0) return
+      const clamped = ((i % list.length) + list.length) % list.length
+      const sticky = stickyCurrentRef.current
+      if (!sticky && clamped !== current) {
+        pushHistory(playHistoryRef.current, current)
+        if (shuffleRef.current) {
+          shuffleBagRef.current = shuffleBagRef.current.filter((x) => x !== clamped)
+        }
+      } else if (sticky && shuffleRef.current) {
+        shuffleBagRef.current = shuffleBagRef.current.filter((x) => x !== clamped)
+      }
+      applyTrack(clamped, true)
+      if (shuffleRef.current) publishQueue()
+    },
+    [applyTrack, publishQueue],
   )
+
+  const playPrevious = useCallback(() => {
+    const prevSong = previousRef.current
+    if (!prevSong) return
+    const list = songsRef.current
+    const found = list.findIndex(
+      (s) => s.youtubeId === prevSong.youtubeId || s.id === prevSong.id,
+    )
+    if (found >= 0) {
+      setIndex(found)
+      return
+    }
+    // spoza listy — nie da się odpalić streamem z indeksu
+  }, [setIndex])
 
   const setVolume = useCallback((v: number) => {
     setVolumeState(Math.min(1, Math.max(0, v)))
@@ -415,18 +708,32 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     [playlistNames],
   )
 
-  const current = songs[index] ?? null
+  const current = stickyCurrent ?? songs[index] ?? null
+  /** Indeks do podświetlenia w liście — brak gdy gra sticky spoza playlisty */
+  const listIndex = stickyCurrent ? -1 : index
+
+  const queueIndices = useMemo(() => {
+    if (!shuffle || songs.length === 0) return []
+    return sanitizeBag(shuffleQueue, songs.length, stickyCurrent ? -1 : index)
+  }, [shuffle, shuffleQueue, index, songs, stickyCurrent])
+
+  const queue = useMemo(
+    () => queueIndices.map((i) => songs[i]).filter((s): s is Song => Boolean(s)),
+    [queueIndices, songs],
+  )
 
   const openYoutube = useCallback(() => {
     if (!current) return
     window.open(youtubeUrl(current.youtubeId), '_blank', 'noopener,noreferrer')
   }, [current])
 
+  const getCurrentTime = useCallback(() => audioRef.current?.currentTime ?? 0, [])
+
   const shareCurrent = useCallback(async () => {
     if (!current) return
     const url = new URL(window.location.origin)
     url.pathname = '/now-playing'
-    url.searchParams.set('song', String(index))
+    if (!stickyCurrent) url.searchParams.set('song', String(index))
     url.searchParams.set('playlist', playlistName)
     if (featured) url.searchParams.set('featured', '1')
     try {
@@ -434,14 +741,14 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     } catch {
       window.prompt('Skopiuj link:', url.toString())
     }
-  }, [current, index, playlistName, featured])
+  }, [current, index, playlistName, featured, stickyCurrent])
 
   const value = useMemo<AudioContextValue>(
     () => ({
       status,
       provider,
       songs,
-      index,
+      index: listIndex,
       current,
       isPlaying,
       shuffle,
@@ -450,6 +757,9 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       playlistName,
       playlistNames,
       playbackIssue,
+      queueIndices,
+      queue,
+      previous,
       featured,
       play,
       pause,
@@ -457,7 +767,8 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       next,
       prev,
       setIndex,
-      setShuffle,
+      playPrevious,
+      setShuffle: setShuffleMode,
       setLoop,
       setVolume,
       setPlaylistName,
@@ -465,12 +776,13 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       retryCurrent,
       openYoutube,
       shareCurrent,
+      getCurrentTime,
     }),
     [
       status,
       provider,
       songs,
-      index,
+      listIndex,
       current,
       isPlaying,
       shuffle,
@@ -479,6 +791,9 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       playlistName,
       playlistNames,
       playbackIssue,
+      queueIndices,
+      queue,
+      previous,
       featured,
       play,
       pause,
@@ -486,12 +801,15 @@ export function AudioProvider({ children }: { children: ReactNode }) {
       next,
       prev,
       setIndex,
+      playPrevious,
+      setShuffleMode,
       setVolume,
       setPlaylistName,
       setFeatured,
       retryCurrent,
       openYoutube,
       shareCurrent,
+      getCurrentTime,
     ],
   )
 

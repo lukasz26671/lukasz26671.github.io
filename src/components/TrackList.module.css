@@ -23,6 +23,15 @@
   text-transform: uppercase;
 }
 
+.empty {
+  color: var(--sn-text-muted);
+  font-size: 0.8rem;
+  padding: 1rem 0.35rem;
+  border-radius: var(--sn-radius);
+  border: 1px dashed var(--sn-border);
+  background: rgba(8, 14, 24, 0.35);
+}
+
 .list {
   list-style: none;
   display: grid;

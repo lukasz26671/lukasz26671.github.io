@@ -208,12 +208,20 @@
   accent-color: var(--sn-accent-main);
 }
 
+.searchLinks {
+  flex-shrink: 0;
+}
+
 @media (max-width: 980px) {
   .eq {
     display: none;
   }
 
   .vol {
+    display: none;
+  }
+
+  .searchLinks {
     display: none;
   }
 }

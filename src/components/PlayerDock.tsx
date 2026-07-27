@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom'
 import { useAudio } from '../app/AudioProvider'
 import { AudioSpinner } from './AudioSpinner'
 import { PlaylistSelect } from './PlaylistSelect'
+import { TrackSearchLinks } from './TrackSearchLinks'
 import styles from './PlayerDock.module.css'
 
 export function PlayerDock() {
@@ -104,9 +105,7 @@ export function PlayerDock() {
           options={playlistNames}
           onChange={setPlaylistName}
         />
-        <button type="button" onClick={openYoutube} title="YouTube">
-          YT
-        </button>
+        <TrackSearchLinks song={current} compact className={styles.searchLinks} />
         <button type="button" onClick={() => void shareCurrent()} title="Udostępnij">
           Share
         </button>
