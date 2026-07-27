@@ -1,6 +1,7 @@
 import { useAudio } from '../app/AudioProvider'
 import { AudioSpinner } from '../components/AudioSpinner'
 import { StreamLyricsTabs } from '../components/StreamLyricsTabs'
+import { IconPause, IconPlay } from '../components/icons/MediaIcons'
 import { useSiteBack } from '../lib/useSiteBack'
 import styles from './Music.module.css'
 
@@ -64,7 +65,7 @@ export function MusicPage() {
             onClick={toggle}
             aria-label={isPlaying ? 'Pauza' : 'Odtwórz'}
           >
-            {isPlaying ? '❚❚' : '▶'}
+            {isPlaying ? <IconPause /> : <IconPlay />}
           </button>
         </section>
       )}

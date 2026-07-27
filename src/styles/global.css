@@ -125,6 +125,16 @@ button {
   padding-bottom: var(--player-h);
 }
 
+.app-shell.with-player.player-collapsed {
+  --player-h: 68px;
+}
+
+@media (max-width: 720px) {
+  .app-shell.with-player:not(.player-collapsed) {
+    --player-h: 132px;
+  }
+}
+
 .app-main {
   position: relative;
   z-index: 1;
@@ -144,7 +154,7 @@ button {
 .page {
   width: min(1100px, calc(100% - 2.5rem));
   margin: 0 auto;
-  padding: calc(var(--header-h) + 2.5rem) 0 4rem;
+  padding: calc(var(--header-offset) + 2.5rem) 0 4rem;
 }
 
 .page-header {

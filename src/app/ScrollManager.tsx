@@ -5,10 +5,15 @@ const HEADER_GAP = 16
 
 function headerOffset(): number {
   const raw = getComputedStyle(document.documentElement)
-    .getPropertyValue('--header-h')
+    .getPropertyValue('--header-offset')
     .trim()
   const parsed = Number.parseFloat(raw)
-  return (Number.isFinite(parsed) ? parsed : 64) + HEADER_GAP
+  if (Number.isFinite(parsed)) return parsed + HEADER_GAP
+  const fallback = getComputedStyle(document.documentElement)
+    .getPropertyValue('--header-h')
+    .trim()
+  const h = Number.parseFloat(fallback)
+  return (Number.isFinite(h) ? h : 64) + HEADER_GAP
 }
 
 /** Reset / scroll do #hash po zmianie trasy (SPA nie robi tego wiarygodnie). */

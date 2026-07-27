@@ -20,5 +20,9 @@
   --sn-radius: 16px;
   --sn-radius-sm: 10px;
   --header-h: 64px;
+  --safe-top: env(safe-area-inset-top, 0px);
+  --safe-bottom: env(safe-area-inset-bottom, 0px);
+  /* Wysokość topbara z Dynamic Island / notch (PWA) */
+  --header-offset: calc(var(--header-h) + var(--safe-top));
   --player-h: 80px;
 }

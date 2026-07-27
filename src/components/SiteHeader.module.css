@@ -3,13 +3,14 @@
   top: 0;
   left: 0;
   right: 0;
-  height: var(--header-h);
+  height: var(--header-offset);
   z-index: 30;
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 0 1.25rem;
-  background: linear-gradient(180deg, rgba(4, 11, 20, 0.85), rgba(4, 11, 20, 0));
+  padding: var(--safe-top) max(1.25rem, env(safe-area-inset-right, 0px)) 0
+    max(1.25rem, env(safe-area-inset-left, 0px));
+  background: linear-gradient(180deg, rgba(4, 11, 20, 0.92), rgba(4, 11, 20, 0.55) 70%, rgba(4, 11, 20, 0));
   pointer-events: none;
 }
 

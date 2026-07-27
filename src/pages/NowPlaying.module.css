@@ -294,7 +294,9 @@
   border: 1px solid var(--sn-border);
   background: rgba(255, 255, 255, 0.03);
   color: var(--sn-text-secondary);
-  font-size: 1rem;
+  font-size: 1.2rem;
+  display: inline-grid;
+  place-items: center;
   transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
 }
 
@@ -311,7 +313,9 @@
   border: 1px solid rgba(0, 210, 255, 0.5);
   background: rgba(0, 210, 255, 0.16);
   color: var(--sn-accent-main);
-  font-size: 1.25rem;
+  font-size: 1.45rem;
+  display: inline-grid;
+  place-items: center;
   transition: transform 0.2s ease, box-shadow 0.25s ease, background 0.2s ease;
 }
 

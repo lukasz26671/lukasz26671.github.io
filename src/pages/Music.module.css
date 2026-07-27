@@ -186,8 +186,10 @@
   border: 1px solid rgba(0, 210, 255, 0.45);
   background: rgba(0, 210, 255, 0.16);
   color: var(--sn-accent-main);
-  font-size: 1rem;
+  font-size: 1.15rem;
   flex-shrink: 0;
+  display: inline-grid;
+  place-items: center;
   transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease;
 }
 

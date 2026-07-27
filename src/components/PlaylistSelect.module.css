@@ -66,6 +66,7 @@
   left: auto;
   right: 0;
   bottom: calc(100% + 0.45rem);
+  top: auto;
   min-width: 11rem;
   list-style: none;
   margin: 0;
@@ -75,7 +76,7 @@
   background: rgba(6, 12, 22, 0.96);
   backdrop-filter: blur(16px);
   box-shadow: 0 12px 36px rgba(0, 0, 0, 0.45);
-  max-height: 220px;
+  max-height: min(220px, 40vh);
   overflow: auto;
 }
 
@@ -116,7 +117,8 @@
   .menu {
     left: 0;
     right: 0;
-    bottom: auto;
-    top: calc(100% + 0.45rem);
+    /* Zawsze w górę — dock jest na dole ekranu */
+    bottom: calc(100% + 0.45rem);
+    top: auto;
   }
 }

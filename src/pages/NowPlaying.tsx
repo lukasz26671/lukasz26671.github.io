@@ -1,6 +1,12 @@
 import { useAudio } from '../app/AudioProvider'
 import { AudioSpinner } from '../components/AudioSpinner'
 import { StreamLyricsTabs } from '../components/StreamLyricsTabs'
+import {
+  IconNext,
+  IconPause,
+  IconPlay,
+  IconPrev,
+} from '../components/icons/MediaIcons'
 import { useSiteBack } from '../lib/useSiteBack'
 import styles from './NowPlaying.module.css'
 
@@ -79,19 +85,20 @@ export function NowPlayingPage() {
           )}
 
           <div className={styles.controls}>
-            <button type="button" className={styles.ctrl} onClick={prev} title="Poprzedni">
-              ⏮
+            <button type="button" className={styles.ctrl} onClick={prev} title="Poprzedni" aria-label="Poprzedni">
+              <IconPrev />
             </button>
             <button
               type="button"
               className={`${styles.play} ${isPlaying ? styles.playOn : ''}`}
               onClick={toggle}
               title={isPlaying ? 'Pauza' : 'Play'}
+              aria-label={isPlaying ? 'Pauza' : 'Odtwórz'}
             >
-              {isPlaying ? '❚❚' : '▶'}
+              {isPlaying ? <IconPause /> : <IconPlay />}
             </button>
-            <button type="button" className={styles.ctrl} onClick={next} title="Następny">
-              ⏭
+            <button type="button" className={styles.ctrl} onClick={next} title="Następny" aria-label="Następny">
+              <IconNext />
             </button>
           </div>
 
