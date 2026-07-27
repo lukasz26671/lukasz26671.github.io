@@ -89,3 +89,15 @@ export function IconVolume(props: IconProps) {
     </svg>
   )
 }
+
+export function IconMusicOff(props: IconProps) {
+  return (
+    <svg {...base} {...props}>
+      <path d="M12 3v10.55A3.5 3.5 0 1 0 13.5 16V7.5l4.5 1V6.2L12 3z" opacity="0.9" />
+      <path
+        d="M3.2 4.6a1 1 0 0 1 1.4-.2l16 12a1 1 0 1 1-1.2 1.6L3.4 6a1 1 0 0 1-.2-1.4z"
+        fill="currentColor"
+      />
+    </svg>
+  )
+}

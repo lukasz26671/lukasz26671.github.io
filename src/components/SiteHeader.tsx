@@ -3,6 +3,7 @@ import { useState } from 'react'
 import { NavDrawer } from './NavDrawer'
 import { useAudio } from '../app/AudioProvider'
 import { AudioSpinner } from './AudioSpinner'
+import { IconMusicOff } from './icons/MediaIcons'
 import styles from './SiteHeader.module.css'
 
 export function SiteHeader() {
@@ -22,7 +23,14 @@ export function SiteHeader() {
             </span>
           )}
           {status === 'unavailable' && (
-            <span className={`${styles.badge} ${styles.offline}`}>muzyka offline</span>
+            <span
+              className={`${styles.badge} ${styles.offline}`}
+              title="Serwis audio niedostępny"
+              role="status"
+            >
+              <IconMusicOff className={styles.offlineIcon} />
+              <span className={styles.offlineText}>Serwis audio niedostępny</span>
+            </span>
           )}
           {status === 'ready' && (
             <Link to="/music" className={styles.badgeLive}>

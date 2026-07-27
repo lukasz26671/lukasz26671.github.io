@@ -5,9 +5,15 @@ type Props = {
   message: string | null
   onDismiss: () => void
   durationMs?: number
+  tone?: 'default' | 'danger'
 }
 
-export function Toast({ message, onDismiss, durationMs = 2200 }: Props) {
+export function Toast({
+  message,
+  onDismiss,
+  durationMs = 2200,
+  tone = 'default',
+}: Props) {
   useEffect(() => {
     if (!message) return
     const t = window.setTimeout(onDismiss, durationMs)
@@ -17,7 +23,11 @@ export function Toast({ message, onDismiss, durationMs = 2200 }: Props) {
   if (!message) return null
 
   return (
-    <div className={styles.toast} role="status" aria-live="polite">
+    <div
+      className={`${styles.toast} ${tone === 'danger' ? styles.danger : ''}`}
+      role="status"
+      aria-live="polite"
+    >
       {message}
     </div>
   )

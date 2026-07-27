@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useCallback, useEffect, useRef, useState } from 'react'
 import { Outlet } from 'react-router-dom'
 import { useAudio } from './AudioProvider'
 import { ScrollManager } from './ScrollManager'
@@ -7,6 +7,7 @@ import { SiteHeader } from '../components/SiteHeader'
 import { SiteBackground } from '../components/SiteBackground'
 import { PlayerDock } from '../components/PlayerDock'
 import { CookieNotice } from '../components/CookieNotice'
+import { Toast } from '../components/Toast'
 
 const DOCK_KEY = 'sn-player-dock-collapsed'
 const MOBILE_MQ = '(max-width: 720px)'
@@ -26,6 +27,9 @@ export function Layout() {
   const { status } = useAudio()
   const withPlayer = status === 'ready'
   const [dockCollapsed, setDockCollapsed] = useState(readDockCollapsed)
+  const [offlineToast, setOfflineToast] = useState<string | null>(null)
+  const prevStatus = useRef(status)
+  const dismissOfflineToast = useCallback(() => setOfflineToast(null), [])
 
   useEffect(() => {
     const mq = window.matchMedia(MOBILE_MQ)
@@ -45,6 +49,13 @@ export function Layout() {
     }
   }, [dockCollapsed])
 
+  useEffect(() => {
+    if (prevStatus.current === 'ready' && status === 'unavailable') {
+      setOfflineToast('Serwis audio niedostępny')
+    }
+    prevStatus.current = status
+  }, [status])
+
   return (
     <div
       className={`app-shell ${withPlayer ? 'with-player' : ''} ${withPlayer && dockCollapsed ? 'player-collapsed' : ''}`}
@@ -57,6 +68,12 @@ export function Layout() {
         <Outlet />
       </main>
       <PlayerDock collapsed={dockCollapsed} onCollapsedChange={setDockCollapsed} />
+      <Toast
+        message={offlineToast}
+        onDismiss={dismissOfflineToast}
+        tone="danger"
+        durationMs={4200}
+      />
       <CookieNotice />
       <footer className="site-footer">
         © {new Date().getFullYear()} Lukasz26671
