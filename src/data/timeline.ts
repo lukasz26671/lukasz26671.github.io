@@ -13,7 +13,7 @@ export const timeline: TimelineItem[] = [
   {
     year: '2023–obecnie',
     title: 'Fullstack .NET — Freeway IT',
-    body: 'Praca przy aplikacjach biznesowych end-to-end. Głównie C#, .NET i Blazor, czasem React oraz starsze rozwiązania MVC. Systemy obejmujące API, UI, integracje z SAP, komunikację ze sprzętem i procesy przemysłowe.',
+    body: 'Praca przy aplikacjach biznesowych end-to-end. Głównie C#, .NET i Blazor, czasem starsze rozwiązania MVC. Rozwiązania dla firm.',
   },
   {
     year: '2018–2022',
