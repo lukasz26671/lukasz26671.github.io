@@ -131,7 +131,7 @@ button {
 
 @media (max-width: 720px) {
   .app-shell.with-player:not(.player-collapsed) {
-    --player-h: 132px;
+    --player-h: 168px;
   }
 }
 

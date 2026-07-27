@@ -12,8 +12,8 @@
     'value chev';
   align-items: center;
   gap: 0 0.55rem;
-  min-width: 8.5rem;
-  max-width: 12rem;
+  min-width: 7.5rem;
+  max-width: 10.5rem;
   padding: 0.4rem 0.65rem;
   border-radius: 12px;
   border: 1px solid rgba(0, 210, 255, 0.22);
@@ -63,8 +63,8 @@
 
 .menu {
   position: absolute;
-  left: auto;
-  right: 0;
+  left: 0;
+  right: auto;
   bottom: calc(100% + 0.45rem);
   top: auto;
   min-width: 11rem;
@@ -108,6 +108,34 @@
   color: var(--sn-accent-main);
 }
 
+.compact .trigger {
+  display: flex;
+  align-items: center;
+  gap: 0.45rem;
+  min-width: 0;
+  max-width: none;
+  width: 100%;
+  padding: 0.4rem 0.6rem;
+}
+
+.compact .kicker {
+  flex-shrink: 0;
+}
+
+.compact .value {
+  flex: 1;
+  min-width: 0;
+}
+
+.compact .chev {
+  flex-shrink: 0;
+  transform: rotate(180deg);
+}
+
+.compact.open .chev {
+  transform: rotate(0deg);
+}
+
 @media (max-width: 720px) {
   .trigger {
     max-width: none;
@@ -120,5 +148,6 @@
     /* Zawsze w górę — dock jest na dole ekranu */
     bottom: calc(100% + 0.45rem);
     top: auto;
+    max-height: min(280px, 45vh);
   }
 }

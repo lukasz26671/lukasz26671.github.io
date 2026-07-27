@@ -121,6 +121,13 @@ export function PlayerDock({ collapsed, onCollapsedChange }: Props) {
               </span>
             )}
           </Link>
+
+          <PlaylistSelect
+            value={playlistName}
+            options={playlistNames}
+            onChange={setPlaylistName}
+            className={styles.desktopPlaylist}
+          />
         </div>
 
         <div className={styles.controls}>
@@ -162,11 +169,6 @@ export function PlayerDock({ collapsed, onCollapsedChange }: Props) {
         </div>
 
         <div className={styles.right}>
-          <PlaylistSelect
-            value={playlistName}
-            options={playlistNames}
-            onChange={setPlaylistName}
-          />
           <TrackSearchLinks song={current} compact className={styles.searchLinks} />
           <button
             type="button"
@@ -189,6 +191,14 @@ export function PlayerDock({ collapsed, onCollapsedChange }: Props) {
             />
           </label>
         </div>
+
+        <PlaylistSelect
+          value={playlistName}
+          options={playlistNames}
+          onChange={setPlaylistName}
+          compact
+          className={styles.mobilePlaylist}
+        />
 
         <button
           type="button"

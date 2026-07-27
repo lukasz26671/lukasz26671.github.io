@@ -7,6 +7,8 @@ type Props = {
   onChange: (value: string) => void
   label?: string
   className?: string
+  /** Jedna linia — lepsze na wąskim docku mobilnym */
+  compact?: boolean
 }
 
 export function PlaylistSelect({
@@ -15,6 +17,7 @@ export function PlaylistSelect({
   onChange,
   label = 'Playlista',
   className,
+  compact = false,
 }: Props) {
   const [open, setOpen] = useState(false)
   const rootRef = useRef<HTMLDivElement>(null)
@@ -39,7 +42,7 @@ export function PlaylistSelect({
   return (
     <div
       ref={rootRef}
-      className={`${styles.root} ${open ? styles.open : ''} ${className ?? ''}`}
+      className={`${styles.root} ${open ? styles.open : ''} ${compact ? styles.compact : ''} ${className ?? ''}`}
     >
       <button
         type="button"
