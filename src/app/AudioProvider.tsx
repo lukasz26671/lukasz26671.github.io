@@ -13,6 +13,7 @@ import {
   loadPlaylistFromJson,
   loadPlaylistFromSourceProvider,
   loadPlaylistNames,
+  probeStreamingProvider,
   resolveInitialPlaylistName,
   resolveStreamingServer,
   streamUrl,
@@ -197,6 +198,8 @@ export function AudioProvider({ children }: { children: ReactNode }) {
   const previousRef = useRef<Song | null>(memoryBootRef.current.previous)
   const lastPlayedRef = useRef<Song | null>(memoryBootRef.current.current)
   const bootedRef = useRef(false)
+  const healthFailRef = useRef(0)
+  const [bootKey, setBootKey] = useState(0)
 
   const clearSticky = useCallback(() => {
     stickyCurrentRef.current = null
@@ -257,6 +260,24 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     audio.removeAttribute('src')
     audio.load()
   }, [])
+
+  const markServerOffline = useCallback(() => {
+    wantPlayRef.current = false
+    clearRetryTimer()
+    stopAudioHard()
+    setIsPlaying(false)
+    setPlaybackIssue('none')
+    clearSticky()
+    setProvider(null)
+    providerRef.current = null
+    setSongs([])
+    songsRef.current = []
+    setShuffleQueue([])
+    shuffleBagRef.current = []
+    bootedRef.current = false
+    healthFailRef.current = 0
+    setStatus('unavailable')
+  }, [clearRetryTimer, clearSticky, stopAudioHard])
 
   const applyTrack = useCallback(
     (i: number, playAfter: boolean, opts?: { isRetry?: boolean }) => {
@@ -622,7 +643,54 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     return () => {
       cancelled = true
     }
-  }, [playlistName, applyTrack])
+  }, [playlistName, applyTrack, bootKey])
+
+  /** Health-check: utrata serwera → wyłącz player (dock / RequireAudio). */
+  useEffect(() => {
+    if (status !== 'ready' || !provider) return
+    let cancelled = false
+
+    const tick = async () => {
+      const ok = await probeStreamingProvider(provider)
+      if (cancelled) return
+      if (ok) {
+        healthFailRef.current = 0
+        return
+      }
+      healthFailRef.current += 1
+      if (healthFailRef.current >= 2) {
+        markServerOffline()
+      }
+    }
+
+    const id = window.setInterval(() => void tick(), 12_000)
+    return () => {
+      cancelled = true
+      window.clearInterval(id)
+    }
+  }, [status, provider, markServerOffline])
+
+  /** Próba powrotu gdy offline. */
+  useEffect(() => {
+    if (status !== 'unavailable') return
+    let cancelled = false
+
+    const tryReconnect = async () => {
+      const resolved = await resolveStreamingServer()
+      if (cancelled || !resolved) return
+      setProvider(resolved)
+      providerRef.current = resolved
+      setStatus('checking')
+      setBootKey((k) => k + 1)
+    }
+
+    const id = window.setInterval(() => void tryReconnect(), 20_000)
+    void tryReconnect()
+    return () => {
+      cancelled = true
+      window.clearInterval(id)
+    }
+  }, [status])
 
   const play = useCallback(() => {
     const audio = audioRef.current

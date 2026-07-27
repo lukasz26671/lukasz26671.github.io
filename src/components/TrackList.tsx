@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import type { Song } from '../lib/audio/providers'
 import styles from './TrackList.module.css'
 
@@ -15,6 +16,8 @@ type Props = {
   className?: string
   /** W kolejce nie ma „playing” na current — tylko pozycje następne */
   queueMode?: boolean
+  /** Filtr tytułu / autora (z sticky search) */
+  filter?: string
 }
 
 export function TrackList({
@@ -28,7 +31,25 @@ export function TrackList({
   emptyLabel = 'Brak utworów',
   className,
   queueMode = false,
+  filter = '',
 }: Props) {
+  const rows = useMemo(() => {
+    const needle = filter.trim().toLowerCase()
+    return songs
+      .map((song, i) => ({
+        song,
+        row: i,
+        playlistIndex: playlistIndices?.[i] ?? i,
+      }))
+      .filter(({ song }) => {
+        if (!needle) return true
+        return (
+          song.title.toLowerCase().includes(needle) ||
+          song.author.toLowerCase().includes(needle)
+        )
+      })
+  }, [songs, playlistIndices, filter])
+
   return (
     <section className={`${styles.section} ${className ?? ''}`}>
       {title != null && (
@@ -42,13 +63,14 @@ export function TrackList({
 
       {songs.length === 0 ? (
         <p className={`mono ${styles.empty}`}>{emptyLabel}</p>
+      ) : rows.length === 0 ? (
+        <p className={`mono ${styles.empty}`}>Brak wyników dla „{filter.trim()}”</p>
       ) : (
         <ul className={styles.list}>
-          {songs.map((song, i) => {
-            const playlistIndex = playlistIndices?.[i] ?? i
+          {rows.map(({ song, row, playlistIndex }) => {
             const active = !queueMode && playlistIndex === index
             return (
-              <li key={`${song.id}-${playlistIndex}-${i}`}>
+              <li key={`${song.id}-${playlistIndex}-${row}`}>
                 <button
                   type="button"
                   className={`${styles.row} ${active ? styles.active : ''}`}
@@ -58,7 +80,7 @@ export function TrackList({
                     {active && isPlaying ? (
                       <span className={styles.pulse} aria-hidden="true" />
                     ) : (
-                      String(i + 1).padStart(2, '0')
+                      String(row + 1).padStart(2, '0')
                     )}
                   </span>
                   <span className={styles.meta}>
@@ -70,7 +92,7 @@ export function TrackList({
                       {isPlaying ? 'playing' : 'selected'}
                     </span>
                   )}
-                  {queueMode && i === 0 && (
+                  {queueMode && row === 0 && !filter.trim() && (
                     <span className={`mono ${styles.badge}`}>next</span>
                   )}
                 </button>

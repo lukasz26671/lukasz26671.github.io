@@ -4,6 +4,24 @@
   width: 100%;
 }
 
+.stickyChrome {
+  position: sticky;
+  top: calc(var(--header-offset) + var(--stream-tabs-h, 3.5rem));
+  z-index: 14;
+  display: grid;
+  gap: 0.5rem;
+  padding: 0.25rem 0 0.55rem;
+  margin: 0 -0.15rem;
+  padding-inline: 0.15rem;
+  background: linear-gradient(
+    180deg,
+    rgba(4, 11, 20, 0.96) 55%,
+    rgba(4, 11, 20, 0.82) 100%
+  );
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+}
+
 .tabs {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -11,7 +29,7 @@
   padding: 0.3rem;
   border-radius: 12px;
   border: 1px solid var(--sn-border);
-  background: rgba(8, 14, 24, 0.55);
+  background: rgba(8, 14, 24, 0.85);
 }
 
 .tab {
@@ -46,4 +64,50 @@
 
 .tabOn .tabCount {
   color: var(--sn-accent-main);
+}
+
+.search {
+  position: relative;
+  display: block;
+}
+
+.search input {
+  width: 100%;
+  padding: 0.65rem 2.2rem 0.65rem 0.9rem;
+  border-radius: 11px;
+  border: 1px solid var(--sn-border);
+  background: rgba(8, 14, 24, 0.88);
+  color: var(--sn-text-primary);
+  font: inherit;
+  font-size: 0.88rem;
+}
+
+.search input::placeholder {
+  color: var(--sn-text-muted);
+}
+
+.search input:focus {
+  outline: none;
+  border-color: rgba(0, 210, 255, 0.45);
+  box-shadow: 0 0 0 1px rgba(0, 210, 255, 0.12);
+}
+
+.searchClear {
+  position: absolute;
+  top: 50%;
+  right: 0.35rem;
+  transform: translateY(-50%);
+  width: 28px;
+  height: 28px;
+  border-radius: 8px;
+  color: var(--sn-text-muted);
+  font-size: 1.15rem;
+  line-height: 1;
+  display: inline-grid;
+  place-items: center;
+}
+
+.searchClear:hover {
+  color: var(--sn-accent-main);
+  background: rgba(0, 210, 255, 0.08);
 }

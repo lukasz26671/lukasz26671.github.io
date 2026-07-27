@@ -7,6 +7,12 @@ import {
   type SyncedLyricLine,
 } from '../lib/audio/fetchLyrics'
 import { trackSearchQueryFromSong, LYRICS_SEARCH_LINKS } from '../lib/audio/searchLinks'
+import {
+  PREF_LYRICS_SYNCED,
+  PREF_STREAM_TAB,
+  readPref,
+  writePref,
+} from '../lib/prefs'
 import { PlaylistTabs } from './PlaylistTabs'
 import { TrackSearchLinks } from './TrackSearchLinks'
 import styles from './StreamLyricsTabs.module.css'
@@ -16,6 +22,14 @@ type Tab = 'stream' | 'lyrics'
 type Props = {
   className?: string
   hideStreamActions?: boolean
+}
+
+function readStreamTab(): Tab {
+  return readPref(PREF_STREAM_TAB, 'stream') === 'lyrics' ? 'lyrics' : 'stream'
+}
+
+function readSyncedPref(): boolean {
+  return readPref(PREF_LYRICS_SYNCED, '0') === '1'
 }
 
 function SyncedLyricsView({
@@ -47,7 +61,6 @@ function SyncedLyricsView({
 
     const listRect = list.getBoundingClientRect()
     const lineRect = line.getBoundingClientRect()
-    // pozycja linii w treści listy + wyśrodkowanie w viewportcie listy
     const nextTop =
       lineRect.top -
       listRect.top +
@@ -56,7 +69,6 @@ function SyncedLyricsView({
 
     const max = Math.max(0, list.scrollHeight - list.clientHeight)
     const clamped = Math.max(0, Math.min(nextTop, max))
-    // bez smooth — inaczej goni i "nie widać" aktywnej linii
     if (Math.abs(list.scrollTop - clamped) > 1) {
       list.scrollTop = clamped
     }
@@ -80,7 +92,7 @@ function SyncedLyricsView({
 }
 
 export function StreamLyricsTabs({ className, hideStreamActions }: Props) {
-  const [tab, setTab] = useState<Tab>('stream')
+  const [tab, setTab] = useState<Tab>(readStreamTab)
   const { current, openYoutube, shareCurrent, getCurrentTime } = useAudio()
   const query = current ? trackSearchQueryFromSong(current) : ''
 
@@ -88,7 +100,15 @@ export function StreamLyricsTabs({ className, hideStreamActions }: Props) {
   const [lyricsStatus, setLyricsStatus] = useState<'idle' | 'loading' | 'ready' | 'missing'>(
     'idle',
   )
-  const [syncedOn, setSyncedOn] = useState(false)
+  const [syncedOn, setSyncedOn] = useState(readSyncedPref)
+
+  useEffect(() => {
+    writePref(PREF_STREAM_TAB, tab)
+  }, [tab])
+
+  useEffect(() => {
+    writePref(PREF_LYRICS_SYNCED, syncedOn ? '1' : '0')
+  }, [syncedOn])
 
   useEffect(() => {
     if (tab !== 'lyrics' || !current) return
@@ -96,7 +116,6 @@ export function StreamLyricsTabs({ className, hideStreamActions }: Props) {
     let cancelled = false
     setLyricsStatus('loading')
     setLyrics(null)
-    setSyncedOn(false)
 
     void fetchLyrics(current).then((result) => {
       if (cancelled) return
