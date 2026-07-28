@@ -16,31 +16,31 @@ export type Project = {
 
 export const commercialProjects: Project[] = [
   {
-    id: 'sign-on-glass',
-    name: 'SignOnGlass',
+    id: 'dispatch',
+    name: 'Dispatch',
     description: 'Transport, dostawy i potwierdzanie dostaw dla kierowców.',
     longDescription:
-      'System obsługi transportu i dostaw obejmujący zamówienia, przewozy, kierowców, paletowanie oraz proces załadunku. Aplikacja mobilna wspierająca kierowców podczas załadunku, rozładunku i elektronicznego potwierdzania dostaw (proof of delivery).',
+      'System obsługi transportu i dostaw obejmujący zamówienia, przewozy, kierowców, paletowanie oraz proces załadunku. Aplikacja mobilna wspierająca kierowców podczas załadunku, rozładunku i elektronicznego potwierdzania dostaw (proof of delivery) typu Sign On Glass.',
     language: 'Komercyjne',
     commercial: true,
     moreUrl: '/about#commercial',
     tags: ['logistyka', 'mobile'],
   },
   {
-    id: 'sentinel',
-    name: 'Sentinel',
-    description: 'Kompletacja na hali: SAP, SignOnGlass, tablety, skanery i wagi.',
+    id: 'prime',
+    name: 'Prime',
+    description: 'Kompletacja na hali: SAP, "Dispatch", tablety, skanery i wagi.',
     longDescription:
-      'Integracja z SAP oraz SignOnGlass przy kompletowaniu przesyłek. Komunikacja z Kepware Server, aplikacje tabletowe realtime na stanowiskach pakujących, skanery, wagi przemysłowe i połączenie świata aplikacji webowych z fizyczną infrastrukturą.',
+      'Integracja z SAP oraz Dispatch przy kompletowaniu przesyłek. Komunikacja z Kepware Server, aplikacje tabletowe realtime na stanowiskach pakujących, skanery, wagi przemysłowe i połączenie świata aplikacji webowych z fizyczną infrastrukturą.',
     language: 'Komercyjne',
     commercial: true,
     moreUrl: '/about#commercial',
-    tags: ['SAP', 'real-time', 'industrial'],
+    tags: ['SAP', 'real-time'],
   },
   {
-    id: 'flow',
-    name: 'Flow',
-    description: 'Deklaracje celne NI↔UK z integracją TSS.',
+    id: 'fusion',
+    name: 'Fusion',
+    description: 'Deklaracje celne NI-UK z integracją TSS.',
     longDescription:
       'System wspierający obsługę deklaracji celnych dla przepływu towarów między Irlandią Północną a Wielką Brytanią, zintegrowany z TSS (Trader Support Service). Automatyzacja procesów wymagających wcześniej ręcznej obsługi i kontroli.',
     language: 'Komercyjne',
@@ -50,11 +50,11 @@ export const commercialProjects: Project[] = [
   },
 ]
 
-const LINKED_COMMERCIAL = new Set(['sign-on-glass', 'sentinel'])
+const LINKED_COMMERCIAL = new Set(['dispatch', 'prime'])
 
 export function getCommercialLinkedPair(): [Project, Project] {
-  const a = commercialProjects.find((p) => p.id === 'sign-on-glass')
-  const b = commercialProjects.find((p) => p.id === 'sentinel')
+  const a = commercialProjects.find((p) => p.id === 'dispatch')
+  const b = commercialProjects.find((p) => p.id === 'prime')
   if (!a || !b) throw new Error('Missing linked commercial projects')
   return [a, b]
 }

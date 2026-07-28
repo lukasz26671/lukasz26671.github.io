@@ -9,7 +9,7 @@ export function HomePage() {
   const { progress, setProgress } = useDive()
   const trackRef = useRef<HTMLDivElement>(null)
   const deepRef = useRef<HTMLElement>(null)
-  const [signOnGlass, sentinel] = getCommercialLinkedPair()
+  const [dispatch, prime] = getCommercialLinkedPair()
   const commercialSolo = getCommercialStandalone()
 
   useEffect(() => {
@@ -111,7 +111,7 @@ export function HomePage() {
         <div className={`grid-projects ${styles.deepGrid}`}>
           <div className={styles.linkedPair}>
             <div className={styles.linkedBody}>
-              <ProjectCard project={signOnGlass} className={styles.linkedCard} />
+              <ProjectCard project={dispatch} className={styles.linkedCard} />
               <div className={styles.linkedBridge} aria-hidden="true">
                 <span className={styles.linkedDot} />
                 <span className={styles.linkedLine} />
@@ -130,7 +130,7 @@ export function HomePage() {
                 <span className={styles.linkedLine} />
                 <span className={styles.linkedDot} />
               </div>
-              <ProjectCard project={sentinel} className={styles.linkedCard} />
+              <ProjectCard project={prime} className={styles.linkedCard} />
             </div>
           </div>
           {commercialSolo.map((p) => (
