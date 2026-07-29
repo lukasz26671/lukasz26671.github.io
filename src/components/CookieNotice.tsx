@@ -1,15 +1,17 @@
 import { useEffect, useState } from 'react'
+import { useLocation } from 'react-router-dom'
 import { useLocale } from '../i18n/LocaleContext'
+import { initAnalytics, trackPageView } from '../lib/analytics'
+import { acceptCookieConsent, hasCookieConsent } from '../lib/consent'
 import styles from './CookieNotice.module.css'
-
-const KEY = 'sn-cookie-ok'
 
 export function CookieNotice() {
   const { t } = useLocale()
+  const { pathname, search, hash } = useLocation()
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
-    if (!localStorage.getItem(KEY)) setVisible(true)
+    if (!hasCookieConsent()) setVisible(true)
   }, [])
 
   if (!visible) return null
@@ -21,7 +23,9 @@ export function CookieNotice() {
         type="button"
         className="btn btn-primary"
         onClick={() => {
-          localStorage.setItem(KEY, '1')
+          acceptCookieConsent()
+          initAnalytics()
+          trackPageView(`${pathname}${search}${hash}`)
           setVisible(false)
         }}
       >

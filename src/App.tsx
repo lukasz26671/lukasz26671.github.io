@@ -5,6 +5,7 @@ import { MotionProvider } from './app/MotionPreference'
 import { LocaleProvider } from './i18n/LocaleContext'
 import { Layout } from './app/Layout'
 import { RequireAudio } from './app/RequireAudio'
+import { Analytics } from './components/Analytics'
 import { HomePage } from './pages/Home'
 import { AboutPage } from './pages/About'
 import { TimelinePage } from './pages/Timeline'
@@ -20,6 +21,7 @@ export default function App() {
       <LocaleProvider>
         <AudioProvider>
           <BrowserRouter>
+            <Analytics />
             <DiveProvider>
               <Routes>
                 <Route element={<Layout />}>
