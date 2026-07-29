@@ -10,11 +10,6 @@ export function Analytics() {
   useEffect(() => {
     if (!hasCookieConsent()) return
     initAnalytics()
-  }, [])
-
-  useEffect(() => {
-    if (!hasCookieConsent()) return
-    initAnalytics()
     trackPageView(`${pathname}${search}${hash}`)
   }, [pathname, search, hash])
 

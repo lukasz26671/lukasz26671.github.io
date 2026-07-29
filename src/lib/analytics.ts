@@ -7,26 +7,34 @@ declare global {
   }
 }
 
-const MEASUREMENT_ID = (import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined)?.trim() ?? ''
+const MEASUREMENT_ID =
+  (import.meta.env.VITE_GA_MEASUREMENT_ID as string | undefined)?.trim() ?? ''
 
-let loaded = false
+let booted = false
 
 export function isAnalyticsConfigured(): boolean {
   return /^G-[A-Z0-9]+$/i.test(MEASUREMENT_ID)
 }
 
+function ensureGtagStub() {
+  window.dataLayer = window.dataLayer || []
+  if (typeof window.gtag === 'function') return
+
+  // Google’s queue expects the Arguments object (not a rest-param array).
+  window.gtag = function gtag() {
+    // eslint-disable-next-line prefer-rest-params
+    window.dataLayer.push(arguments)
+  }
+}
+
 /** Load gtag.js and configure GA4. No-op without consent or a valid measurement ID. */
 export function initAnalytics() {
-  if (loaded || !isAnalyticsConfigured() || !hasCookieConsent()) return
-  loaded = true
+  if (booted || !isAnalyticsConfigured() || !hasCookieConsent()) return
+  booted = true
 
-  window.dataLayer = window.dataLayer || []
-  window.gtag = function gtag(...args: unknown[]) {
-    window.dataLayer.push(args)
-  }
+  ensureGtagStub()
   window.gtag('js', new Date())
   window.gtag('config', MEASUREMENT_ID, {
-    anonymize_ip: true,
     send_page_view: false,
   })
 
@@ -37,10 +45,10 @@ export function initAnalytics() {
 }
 
 export function trackPageView(path: string) {
-  if (!loaded || !isAnalyticsConfigured()) return
-  window.gtag('event', 'page_view', {
+  if (!booted || !isAnalyticsConfigured() || typeof window.gtag !== 'function') return
+  window.gtag('config', MEASUREMENT_ID, {
     page_path: path,
-    page_location: window.location.href,
+    page_location: `${window.location.origin}${path}`,
     page_title: document.title,
   })
 }
