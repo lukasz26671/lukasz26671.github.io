@@ -1,12 +1,16 @@
 import { learningSources } from '../data/sources'
+import { useLocale } from '../i18n/LocaleContext'
+import { localize } from '../i18n/types'
 import styles from './Sources.module.css'
 
 export function SourcesPage() {
+  const { locale, t } = useLocale()
+
   return (
     <div className="page">
       <header className="page-header">
-        <h1>Źródła</h1>
-        <p>Materiały, z których kiedyś uczyłem się webu — wciąż dobre na start.</p>
+        <h1>{t('sources.title')}</h1>
+        <p>{t('sources.lead')}</p>
       </header>
       <ul className={styles.list}>
         {learningSources.map((s) => (
@@ -14,7 +18,7 @@ export function SourcesPage() {
             <a href={s.url} target="_blank" rel="noreferrer">
               {s.name}
             </a>
-            <span>{s.note}</span>
+            <span>{localize(locale, s.note)}</span>
           </li>
         ))}
       </ul>

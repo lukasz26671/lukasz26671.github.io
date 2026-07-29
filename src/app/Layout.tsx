@@ -8,6 +8,7 @@ import { SiteBackground } from '../components/SiteBackground'
 import { PlayerDock } from '../components/PlayerDock'
 import { CookieNotice } from '../components/CookieNotice'
 import { Toast } from '../components/Toast'
+import { useLocale } from '../i18n/LocaleContext'
 
 const DOCK_KEY = 'sn-player-dock-collapsed'
 const MOBILE_MQ = '(max-width: 720px)'
@@ -25,6 +26,7 @@ function readDockCollapsed(): boolean {
 
 export function Layout() {
   const { status } = useAudio()
+  const { t } = useLocale()
   const withPlayer = status === 'ready'
   const [dockCollapsed, setDockCollapsed] = useState(readDockCollapsed)
   const [offlineToast, setOfflineToast] = useState<string | null>(null)
@@ -51,10 +53,10 @@ export function Layout() {
 
   useEffect(() => {
     if (prevStatus.current === 'ready' && status === 'unavailable') {
-      setOfflineToast('Serwis audio niedostępny')
+      setOfflineToast(t('layout.audioOffline'))
     }
     prevStatus.current = status
-  }, [status])
+  }, [status, t])
 
   return (
     <div

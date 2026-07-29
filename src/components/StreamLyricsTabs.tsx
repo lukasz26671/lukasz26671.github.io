@@ -15,6 +15,7 @@ import {
 } from '../lib/prefs'
 import { PlaylistTabs } from './PlaylistTabs'
 import { TrackSearchLinks } from './TrackSearchLinks'
+import { useLocale } from '../i18n/LocaleContext'
 import styles from './StreamLyricsTabs.module.css'
 
 type Tab = 'stream' | 'lyrics'
@@ -94,6 +95,7 @@ function SyncedLyricsView({
 export function StreamLyricsTabs({ className, hideStreamActions }: Props) {
   const [tab, setTab] = useState<Tab>(readStreamTab)
   const { current, openYoutube, shareCurrent, getCurrentTime } = useAudio()
+  const { t } = useLocale()
   const query = current ? trackSearchQueryFromSong(current) : ''
 
   const [lyrics, setLyrics] = useState<LyricsResult | null>(null)
@@ -137,7 +139,7 @@ export function StreamLyricsTabs({ className, hideStreamActions }: Props) {
 
   return (
     <section className={`${styles.wrap} ${className ?? ''}`}>
-      <div className={styles.tabs} role="tablist" aria-label="Stream lub lyrics">
+      <div className={styles.tabs} role="tablist" aria-label={t('stream.tabsAria')}>
         <button
           type="button"
           role="tab"
@@ -147,7 +149,7 @@ export function StreamLyricsTabs({ className, hideStreamActions }: Props) {
           className={`${styles.tab} ${tab === 'stream' ? styles.tabOn : ''}`}
           onClick={() => setTab('stream')}
         >
-          Stream
+          {t('stream.stream')}
         </button>
         <button
           type="button"
@@ -158,7 +160,7 @@ export function StreamLyricsTabs({ className, hideStreamActions }: Props) {
           className={`${styles.tab} ${tab === 'lyrics' ? styles.tabOn : ''}`}
           onClick={() => setTab('lyrics')}
         >
-          Lyrics
+          {t('stream.lyrics')}
         </button>
       </div>
 
@@ -177,16 +179,16 @@ export function StreamLyricsTabs({ className, hideStreamActions }: Props) {
                     type="button"
                     className={styles.action}
                     onClick={openYoutube}
-                    title="Otwórz film na YouTube"
+                    title={t('stream.watchTitle')}
                   >
-                    Watch
+                    {t('stream.watch')}
                   </button>
                   <button
                     type="button"
                     className={styles.action}
                     onClick={() => void shareCurrent()}
                   >
-                    Share
+                    {t('stream.share')}
                   </button>
                 </div>
               </div>
@@ -197,10 +199,12 @@ export function StreamLyricsTabs({ className, hideStreamActions }: Props) {
           <div className={styles.panel}>
             {current && query ? (
               <>
-                <p className={`mono ${styles.lyricsLead}`}>Tekst · {query}</p>
+                <p className={`mono ${styles.lyricsLead}`}>
+                  {t('stream.lyricsLead', { query })}
+                </p>
 
                 {lyricsStatus === 'loading' && (
-                  <p className={`mono ${styles.empty}`}>Szukam tekstu…</p>
+                  <p className={`mono ${styles.empty}`}>{t('stream.searching')}</p>
                 )}
                 {lyricsStatus === 'ready' && lyrics && (
                   <article className={styles.lyricsBody}>
@@ -208,12 +212,12 @@ export function StreamLyricsTabs({ className, hideStreamActions }: Props) {
                       <p className={`mono ${styles.lyricsSource}`}>via {lyrics.source}</p>
                       {canSync && (
                         <label className={styles.syncToggle}>
-                          <span>Synced</span>
+                          <span>{t('stream.synced')}</span>
                           <button
                             type="button"
                             role="switch"
                             aria-checked={syncedOn}
-                            aria-label="Synced lyrics"
+                            aria-label={t('stream.syncedAria')}
                             className={`${styles.switch} ${syncedOn ? styles.switchOn : ''}`}
                             onClick={() => setSyncedOn((v) => !v)}
                           >
@@ -225,7 +229,7 @@ export function StreamLyricsTabs({ className, hideStreamActions }: Props) {
                     {syncedOn && canSync && lyrics.synced ? (
                       <>
                         <p className={`mono ${styles.syncNote}`} role="note">
-                          Może być niedokładne względem streamu (inny master / offset).
+                          {t('stream.syncNote')}
                         </p>
                         <SyncedLyricsView
                           lines={lyrics.synced}
@@ -238,9 +242,7 @@ export function StreamLyricsTabs({ className, hideStreamActions }: Props) {
                   </article>
                 )}
                 {lyricsStatus === 'missing' && (
-                  <p className={`mono ${styles.empty}`}>
-                    Nie znaleziono tekstu automatycznie — spróbuj poniżej.
-                  </p>
+                  <p className={`mono ${styles.empty}`}>{t('stream.missing')}</p>
                 )}
 
                 <ul className={styles.lyricsList}>
@@ -258,7 +260,7 @@ export function StreamLyricsTabs({ className, hideStreamActions }: Props) {
                 </ul>
               </>
             ) : (
-              <p className={`mono ${styles.empty}`}>Brak utworu.</p>
+              <p className={`mono ${styles.empty}`}>{t('stream.noTrack')}</p>
             )}
           </div>
         )}

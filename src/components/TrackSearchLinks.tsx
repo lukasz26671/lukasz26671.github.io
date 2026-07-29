@@ -4,6 +4,7 @@ import {
   type TrackSearchTarget,
 } from '../lib/audio/searchLinks'
 import type { Song } from '../lib/audio/providers'
+import { useLocale } from '../i18n/LocaleContext'
 import {
   AppleMusicNoteIcon,
   GeniusIcon,
@@ -41,6 +42,7 @@ export function TrackSearchLinks({
   compact,
   group = 'all',
 }: Props) {
+  const { t } = useLocale()
   const query = trackSearchQueryFromSong(song)
   if (!query) return null
 
@@ -51,7 +53,7 @@ export function TrackSearchLinks({
     <div
       className={`${styles.row} ${compact ? styles.compact : ''} ${className ?? ''}`}
       role="group"
-      aria-label={group === 'lyrics' ? 'Teksty utworu' : 'Szukaj utworu'}
+      aria-label={group === 'lyrics' ? t('searchLinks.lyricsAria') : t('searchLinks.streamAria')}
     >
       {links.map(({ id, label, Icon }) => (
         <a
@@ -61,7 +63,7 @@ export function TrackSearchLinks({
           target="_blank"
           rel="noopener noreferrer"
           title={`${label}: ${query}`}
-          aria-label={`Szukaj w ${label}: ${query}`}
+          aria-label={t('searchLinks.searchIn', { label, query })}
         >
           <Icon className={styles.icon} />
         </a>

@@ -19,3 +19,4 @@ export function writePref(key: string, value: string) {
 export const PREF_STREAM_TAB = 'sn-tab-stream-lyrics'
 export const PREF_LIST_TAB = 'sn-tab-playlist-queue'
 export const PREF_LYRICS_SYNCED = 'sn-lyrics-synced'
+export const PREF_LOCALE = 'sn-locale'

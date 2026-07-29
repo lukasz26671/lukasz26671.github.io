@@ -1,9 +1,11 @@
 import { useEffect, useState } from 'react'
+import { useLocale } from '../i18n/LocaleContext'
 import styles from './CookieNotice.module.css'
 
 const KEY = 'sn-cookie-ok'
 
 export function CookieNotice() {
+  const { t } = useLocale()
   const [visible, setVisible] = useState(false)
 
   useEffect(() => {
@@ -13,10 +15,8 @@ export function CookieNotice() {
   if (!visible) return null
 
   return (
-    <div className={styles.bar} role="dialog" aria-label="Informacja o cookies">
-      <p>
-        Korzystając z tej strony zgadzasz się na pliki cookies oraz (opcjonalnie) Google Analytics.
-      </p>
+    <div className={styles.bar} role="dialog" aria-label={t('cookie.aria')}>
+      <p>{t('cookie.body')}</p>
       <button
         type="button"
         className="btn btn-primary"
@@ -25,7 +25,7 @@ export function CookieNotice() {
           setVisible(false)
         }}
       >
-        OK
+        {t('cookie.ok')}
       </button>
     </div>
   )

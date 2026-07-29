@@ -7,6 +7,8 @@ import {
   useState,
   type ReactNode,
 } from 'react'
+import type { Locale } from '../i18n/types'
+import { catalogs } from '../i18n/translate'
 
 export type MotionMode = 'system' | 'full' | 'reduce'
 
@@ -89,8 +91,9 @@ export function useMotionPreference() {
   return ctx
 }
 
-export function motionModeLabel(mode: MotionMode): string {
-  if (mode === 'reduce') return 'Reduced motion'
-  if (mode === 'full') return 'Pełny motion'
-  return 'System'
+export function motionModeLabel(mode: MotionMode, locale: Locale = 'pl'): string {
+  const m = catalogs[locale].motion
+  if (mode === 'reduce') return m.reduce
+  if (mode === 'full') return m.full
+  return m.system
 }

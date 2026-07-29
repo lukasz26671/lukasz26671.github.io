@@ -2,6 +2,7 @@ import { lazy, Suspense, type CSSProperties } from 'react'
 import { useLocation } from 'react-router-dom'
 import { useDive } from '../app/DiveContext'
 import { useMotionPreference } from '../app/MotionPreference'
+import { useLocale } from '../i18n/LocaleContext'
 import styles from './SiteBackground.module.css'
 
 const HeroCanvas = lazy(() =>
@@ -14,6 +15,7 @@ export function SiteBackground() {
   const { progress } = useDive()
   const dive = isHome ? progress : 0
   const { reducedMotion, mode, setMode } = useMotionPreference()
+  const { t } = useLocale()
 
   return (
     <>
@@ -35,15 +37,13 @@ export function SiteBackground() {
           type="button"
           className={styles.annotation}
           onClick={() => setMode('full')}
-          title="Włącz pełny motion"
+          title={t('background.enableMotion')}
         >
           <span className={styles.annotationMono}>prefers-reduced-motion</span>
           <span>
-            {mode === 'system'
-              ? 'Ustawienie systemu · klatka zamrożona'
-              : 'Włączone w menu · klatka zamrożona'}
+            {mode === 'system' ? t('background.systemFrozen') : t('background.menuFrozen')}
           </span>
-          <span className={styles.annotationAction}>Kliknij, by włączyć motion</span>
+          <span className={styles.annotationAction}>{t('background.clickEnable')}</span>
         </button>
       )}
     </>

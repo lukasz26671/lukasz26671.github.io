@@ -20,6 +20,8 @@ import {
   youtubeUrl,
   type Song,
 } from '../lib/audio/providers'
+import { getStoredLocale } from '../i18n/LocaleContext'
+import { translate } from '../i18n/translate'
 
 export type AudioStatus = 'checking' | 'ready' | 'unavailable'
 
@@ -807,7 +809,7 @@ export function AudioProvider({ children }: { children: ReactNode }) {
     try {
       await navigator.clipboard.writeText(url.toString())
     } catch {
-      window.prompt('Skopiuj link:', url.toString())
+      window.prompt(translate(getStoredLocale(), 'audio.copyLink'), url.toString())
     }
   }, [current, index, playlistName, featured, stickyCurrent])
 

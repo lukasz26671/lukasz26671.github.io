@@ -4,11 +4,13 @@ import { NavDrawer } from './NavDrawer'
 import { useAudio } from '../app/AudioProvider'
 import { AudioSpinner } from './AudioSpinner'
 import { IconMusicOff } from './icons/MediaIcons'
+import { useLocale } from '../i18n/LocaleContext'
 import styles from './SiteHeader.module.css'
 
 export function SiteHeader() {
   const [open, setOpen] = useState(false)
   const { status } = useAudio()
+  const { t } = useLocale()
 
   return (
     <>
@@ -25,16 +27,16 @@ export function SiteHeader() {
           {status === 'unavailable' && (
             <span
               className={`${styles.badge} ${styles.offline}`}
-              title="Serwis audio niedostępny"
+              title={t('header.audioOffline')}
               role="status"
             >
               <IconMusicOff className={styles.offlineIcon} />
-              <span className={styles.offlineText}>Serwis audio niedostępny</span>
+              <span className={styles.offlineText}>{t('header.audioOffline')}</span>
             </span>
           )}
           {status === 'ready' && (
             <Link to="/music" className={styles.badgeLive}>
-              muzyka
+              {t('header.music')}
             </Link>
           )}
           <button
@@ -44,7 +46,7 @@ export function SiteHeader() {
             aria-controls="site-menu"
             onClick={() => setOpen(true)}
           >
-            Menu
+            {t('header.menu')}
           </button>
         </div>
       </header>

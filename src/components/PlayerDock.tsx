@@ -1,6 +1,7 @@
 import { useCallback, useState } from 'react'
 import { Link } from 'react-router-dom'
 import { useAudio } from '../app/AudioProvider'
+import { useLocale } from '../i18n/LocaleContext'
 import { AudioSpinner } from './AudioSpinner'
 import { PlaylistSelect } from './PlaylistSelect'
 import { Toast } from './Toast'
@@ -45,26 +46,27 @@ export function PlayerDock({ collapsed, onCollapsedChange }: Props) {
     openYoutube,
     shareCurrent,
   } = useAudio()
+  const { t } = useLocale()
   const [toast, setToast] = useState<string | null>(null)
   const dismissToast = useCallback(() => setToast(null), [])
 
   const onShare = useCallback(async () => {
     await shareCurrent()
-    setToast('Link skopiowany do schowka')
-  }, [shareCurrent])
+    setToast(t('player.linkCopied'))
+  }, [shareCurrent, t])
 
   if (status !== 'ready' || !current) return null
 
   if (collapsed) {
     return (
       <>
-        <div className={styles.mini} role="region" aria-label="Odtwarzacz (zwinięty)">
+        <div className={styles.mini} role="region" aria-label={t('player.miniAria')}>
           <button
             type="button"
             className={`${styles.miniPlay} ${isPlaying ? styles.playOn : ''}`}
             onClick={toggle}
-            title={isPlaying ? 'Pauza' : 'Play'}
-            aria-label={isPlaying ? 'Pauza' : 'Odtwórz'}
+            title={isPlaying ? t('player.pause') : 'Play'}
+            aria-label={isPlaying ? t('player.pause') : t('player.play')}
           >
             {isPlaying ? <IconPause /> : <IconPlay />}
           </button>
@@ -76,8 +78,8 @@ export function PlayerDock({ collapsed, onCollapsedChange }: Props) {
             type="button"
             className={styles.miniExpand}
             onClick={() => onCollapsedChange(false)}
-            title="Pokaż odtwarzacz"
-            aria-label="Pokaż odtwarzacz"
+            title={t('player.show')}
+            aria-label={t('player.show')}
           >
             <IconChevronUp />
           </button>
@@ -89,7 +91,7 @@ export function PlayerDock({ collapsed, onCollapsedChange }: Props) {
 
   return (
     <>
-      <div className={styles.dock} role="region" aria-label="Odtwarzacz audio">
+      <div className={styles.dock} role="region" aria-label={t('player.dockAria')}>
         <div className={styles.left}>
           <div className={`${styles.eq} ${isPlaying ? styles.eqLive : ''}`} aria-hidden="true">
             <span />
@@ -102,11 +104,11 @@ export function PlayerDock({ collapsed, onCollapsedChange }: Props) {
             <span className={styles.author}>{current.author}</span>
             <span className={styles.title}>{current.title}</span>
             {playbackIssue === 'retrying' && (
-              <AudioSpinner className={styles.notice} label="Ładowanie" size="sm" />
+              <AudioSpinner className={styles.notice} label={t('player.loading')} size="sm" />
             )}
             {playbackIssue === 'unavailable' && (
               <span className={`mono ${styles.noticeWarn}`}>
-                Niedostępny
+                {t('player.unavailable')}
                 <button
                   type="button"
                   className={styles.retryInline}
@@ -126,6 +128,7 @@ export function PlayerDock({ collapsed, onCollapsedChange }: Props) {
             value={playlistName}
             options={playlistNames}
             onChange={setPlaylistName}
+            label={t('player.playlist')}
             className={styles.desktopPlaylist}
           />
         </div>
@@ -136,24 +139,24 @@ export function PlayerDock({ collapsed, onCollapsedChange }: Props) {
             className={shuffle ? styles.on : undefined}
             onClick={() => setShuffle(!shuffle)}
             aria-pressed={shuffle}
-            title="Shuffle"
-            aria-label="Shuffle"
+            title={t('player.shuffle')}
+            aria-label={t('player.shuffle')}
           >
             <IconShuffle />
           </button>
-          <button type="button" onClick={prev} title="Poprzedni" aria-label="Poprzedni">
+          <button type="button" onClick={prev} title={t('player.prev')} aria-label={t('player.prev')}>
             <IconPrev />
           </button>
           <button
             type="button"
             className={`${styles.play} ${isPlaying ? styles.playOn : ''}`}
             onClick={toggle}
-            title={isPlaying ? 'Pauza' : 'Play'}
-            aria-label={isPlaying ? 'Pauza' : 'Odtwórz'}
+            title={isPlaying ? t('player.pause') : 'Play'}
+            aria-label={isPlaying ? t('player.pause') : t('player.play')}
           >
             {isPlaying ? <IconPause /> : <IconPlay />}
           </button>
-          <button type="button" onClick={next} title="Następny" aria-label="Następny">
+          <button type="button" onClick={next} title={t('player.next')} aria-label={t('player.next')}>
             <IconNext />
           </button>
           <button
@@ -161,8 +164,8 @@ export function PlayerDock({ collapsed, onCollapsedChange }: Props) {
             className={loop ? styles.on : undefined}
             onClick={() => setLoop(!loop)}
             aria-pressed={loop}
-            title="Loop"
-            aria-label="Loop"
+            title={t('player.loop')}
+            aria-label={t('player.loop')}
           >
             <IconLoop />
           </button>
@@ -174,14 +177,14 @@ export function PlayerDock({ collapsed, onCollapsedChange }: Props) {
             type="button"
             className={styles.iconBtn}
             onClick={() => void onShare()}
-            title="Udostępnij"
-            aria-label="Udostępnij — skopiuj link"
+            title={t('player.share')}
+            aria-label={t('player.shareAria')}
           >
             <IconShare />
           </button>
-          <label className={styles.vol} title="Głośność aplikacji">
+          <label className={styles.vol} title={t('player.volumeTitle')}>
             <IconVolume className={styles.volIcon} />
-            <span className="sr-only">Głośność</span>
+            <span className="sr-only">{t('player.volume')}</span>
             <input
               type="range"
               min={0}
@@ -196,6 +199,7 @@ export function PlayerDock({ collapsed, onCollapsedChange }: Props) {
           value={playlistName}
           options={playlistNames}
           onChange={setPlaylistName}
+          label={t('player.playlist')}
           compact
           className={styles.mobilePlaylist}
         />
@@ -204,8 +208,8 @@ export function PlayerDock({ collapsed, onCollapsedChange }: Props) {
           type="button"
           className={styles.collapse}
           onClick={() => onCollapsedChange(true)}
-          title="Ukryj odtwarzacz"
-          aria-label="Ukryj odtwarzacz"
+          title={t('player.hide')}
+          aria-label={t('player.hide')}
         >
           <IconChevronDown />
         </button>
@@ -214,8 +218,8 @@ export function PlayerDock({ collapsed, onCollapsedChange }: Props) {
           type="button"
           className={styles.mobileShare}
           onClick={() => void onShare()}
-          title="Udostępnij"
-          aria-label="Udostępnij — skopiuj link"
+          title={t('player.share')}
+          aria-label={t('player.shareAria')}
         >
           <IconShare />
         </button>

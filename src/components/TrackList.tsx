@@ -1,5 +1,6 @@
 import { useMemo } from 'react'
 import type { Song } from '../lib/audio/providers'
+import { useLocale } from '../i18n/LocaleContext'
 import styles from './TrackList.module.css'
 
 type Props = {
@@ -26,13 +27,19 @@ export function TrackList({
   isPlaying,
   onSelect,
   playlistIndices,
-  title = 'Playlista',
+  title,
   countLabel,
-  emptyLabel = 'Brak utworów',
+  emptyLabel,
   className,
   queueMode = false,
   filter = '',
 }: Props) {
+  const { t } = useLocale()
+  const resolvedTitle = title === undefined ? t('playlist.playlist') : title
+  const resolvedEmpty = emptyLabel ?? t('playlist.noTracks')
+  const resolvedCount =
+    countLabel ?? t('playlist.trackCount', { count: songs.length })
+
   const rows = useMemo(() => {
     const needle = filter.trim().toLowerCase()
     return songs
@@ -52,19 +59,19 @@ export function TrackList({
 
   return (
     <section className={`${styles.section} ${className ?? ''}`}>
-      {title != null && (
+      {resolvedTitle != null && (
         <div className={styles.head}>
-          <h2>{title}</h2>
-          <span className={`mono ${styles.count}`}>
-            {countLabel ?? `${songs.length} utworów`}
-          </span>
+          <h2>{resolvedTitle}</h2>
+          <span className={`mono ${styles.count}`}>{resolvedCount}</span>
         </div>
       )}
 
       {songs.length === 0 ? (
-        <p className={`mono ${styles.empty}`}>{emptyLabel}</p>
+        <p className={`mono ${styles.empty}`}>{resolvedEmpty}</p>
       ) : rows.length === 0 ? (
-        <p className={`mono ${styles.empty}`}>Brak wyników dla „{filter.trim()}”</p>
+        <p className={`mono ${styles.empty}`}>
+          {t('playlist.noResults', { query: filter.trim() })}
+        </p>
       ) : (
         <ul className={styles.list}>
           {rows.map(({ song, row, playlistIndex }) => {

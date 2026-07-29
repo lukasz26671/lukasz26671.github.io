@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { useAudio } from '../app/AudioProvider'
+import { useLocale } from '../i18n/LocaleContext'
 import { PREF_LIST_TAB, readPref, writePref } from '../lib/prefs'
 import { TrackList } from './TrackList'
 import styles from './PlaylistTabs.module.css'
@@ -17,6 +18,7 @@ type Props = {
 export function PlaylistTabs({ className }: Props) {
   const [tab, setTab] = useState<Tab>(readListTab)
   const [filter, setFilter] = useState('')
+  const { t } = useLocale()
   const {
     songs,
     index,
@@ -46,12 +48,12 @@ export function PlaylistTabs({ className }: Props) {
         onSelect={setIndex}
         queueMode
         filter={filter}
-        emptyLabel="Kolejka pusta — następny utwór przetasuje bag"
-        countLabel={`${queue.length} w shuffle`}
+        emptyLabel={t('playlist.queueEmpty')}
+        countLabel={t('playlist.shuffleCount', { count: queue.length })}
       />
     ) : (
       <TrackList
-        title={shuffle ? null : 'Playlista'}
+        title={shuffle ? null : t('playlist.playlist')}
         songs={songs}
         index={index}
         isPlaying={isPlaying}
@@ -64,7 +66,7 @@ export function PlaylistTabs({ className }: Props) {
     <section className={`${styles.wrap} ${className ?? ''}`}>
       <div className={styles.stickyChrome}>
         {shuffle && (
-          <div className={styles.tabs} role="tablist" aria-label="Playlista lub kolejka">
+          <div className={styles.tabs} role="tablist" aria-label={t('playlist.tabsAria')}>
             <button
               type="button"
               role="tab"
@@ -74,7 +76,7 @@ export function PlaylistTabs({ className }: Props) {
               className={`${styles.tab} ${tab === 'playlist' ? styles.tabOn : ''}`}
               onClick={() => setTab('playlist')}
             >
-              Playlista
+              {t('playlist.playlist')}
               <span className={`mono ${styles.tabCount}`}>{songs.length}</span>
             </button>
             <button
@@ -86,19 +88,19 @@ export function PlaylistTabs({ className }: Props) {
               className={`${styles.tab} ${tab === 'queue' ? styles.tabOn : ''}`}
               onClick={() => setTab('queue')}
             >
-              Kolejka
+              {t('playlist.queue')}
               <span className={`mono ${styles.tabCount}`}>{queue.length}</span>
             </button>
           </div>
         )}
 
         <label className={styles.search}>
-          <span className="sr-only">Szukaj utworu</span>
+          <span className="sr-only">{t('playlist.search')}</span>
           <input
             type="search"
             value={filter}
             onChange={(e) => setFilter(e.target.value)}
-            placeholder="Szukaj utworu…"
+            placeholder={t('playlist.searchPlaceholder')}
             autoComplete="off"
             enterKeyHint="search"
           />
@@ -107,7 +109,7 @@ export function PlaylistTabs({ className }: Props) {
               type="button"
               className={styles.searchClear}
               onClick={() => setFilter('')}
-              aria-label="Wyczyść wyszukiwanie"
+              aria-label={t('playlist.clearSearch')}
             >
               ×
             </button>

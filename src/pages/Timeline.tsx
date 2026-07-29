@@ -1,22 +1,26 @@
 import { timeline } from '../data/timeline'
+import { useLocale } from '../i18n/LocaleContext'
+import { localize } from '../i18n/types'
 import styles from './Timeline.module.css'
 
 export function TimelinePage() {
+  const { locale, t } = useLocale()
+
   return (
     <div className="page">
       <header className="page-header">
-        <h1>Timeline</h1>
-        <p>Od pierwszych linijek kodu w Javie, do pracy jako fullstack developer oraz studiów.</p>
+        <h1>{t('timeline.title')}</h1>
+        <p>{t('timeline.lead')}</p>
       </header>
 
       <div className={`glass ${styles.wrap}`}>
         <ol className={styles.list}>
           {timeline.map((item) => (
-            <li key={item.year} className={styles.item}>
-              <span className={`mono ${styles.year}`}>{item.year}</span>
+            <li key={item.year.pl} className={styles.item}>
+              <span className={`mono ${styles.year}`}>{localize(locale, item.year)}</span>
               <div className={styles.content}>
-                <h2>{item.title}</h2>
-                <p>{item.body}</p>
+                <h2>{localize(locale, item.title)}</h2>
+                <p>{localize(locale, item.body)}</p>
               </div>
             </li>
           ))}

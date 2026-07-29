@@ -1,6 +1,8 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import { projects } from '../data/projects'
+import { useLocale } from '../i18n/LocaleContext'
+import { localize } from '../i18n/types'
 import styles from './Labs.module.css'
 
 type LineKind = 'prompt' | 'out' | 'ok' | 'err' | 'accent'
@@ -39,37 +41,11 @@ const COMMANDS = [
   'exit',
 ] as const
 
-const FORTUNES = [
-  'Compile succeeded. Ship it.',
-  'Najlepszy kod to ten, którego nie musisz pisać drugi raz.',
-  'Blazor Server czeka cierpliwie. Ty też możesz.',
-  '404: Motywacja not found - spróbuj ponownie po kawie.',
-  'Refactor albo żałuj. Czasem oba naraz.',
-  'Three.js: bo płaskie portfolio to za mało głębi.',
-  'git push --force && ... nie, dziękuję.',
-  'NullReferenceException? Znajome...',
-  'Minecraft 1.7.10 - tam wszystko się zaczęło.',
-  'sudo make me a sandwich — brak uprawnień, ale dobra próba.',
-]
-
 function formatUptime(bootMs: number) {
   const s = Math.floor((Date.now() - bootMs) / 1000)
   const m = Math.floor(s / 60)
   const r = s % 60
   return `${m}m ${r}s`
-}
-
-function buildNeofetch(bootMs: number) {
-  return `
-  lukasz26671@site
-  ---------------------
-  OS: Windows / Linux / macOS (Twój wybór)
-  Shell: labs-terminal v0.2
-  Stack: .NET · Blazor · React · Rust
-  Site: lukasz26671.github.io
-  Uptime: ${formatUptime(bootMs)}
-  Coffee: ${Math.random() > 0.5 ? '☕ tak' : '☕ nie'}
-`.trim()
 }
 
 function cowsay(msg: string) {
@@ -97,15 +73,24 @@ function line(text: string, kind: LineKind = 'out'): LogLine {
 
 export function LabsPage() {
   const navigate = useNavigate()
+  const { locale, t, tList } = useLocale()
   const boot = useRef(Date.now())
   const inputRef = useRef<HTMLInputElement>(null)
-  const [log, setLog] = useState<LogLine[]>([
-    line('> labs ready — wpisz help', 'prompt'),
-    line('tip: strzałki ↑↓ historia, Tab uzupełnia', 'accent'),
+  const localeTag = locale === 'pl' ? 'pl-PL' : 'en-GB'
+  const [log, setLog] = useState<LogLine[]>(() => [
+    line(t('labs.ready'), 'prompt'),
+    line(t('labs.tip'), 'accent'),
   ])
   const [input, setInput] = useState('')
   const [history, setHistory] = useState<string[]>([])
   const [histIdx, setHistIdx] = useState(-1)
+  const bootLocale = useRef(locale)
+
+  useEffect(() => {
+    if (bootLocale.current === locale) return
+    bootLocale.current = locale
+    setLog([line(t('labs.ready'), 'prompt'), line(t('labs.tip'), 'accent')])
+  }, [locale, t])
 
   const append = useCallback((lines: LogLine[]) => {
     setLog((prev) => [...prev, ...lines].slice(-60))
@@ -119,22 +104,17 @@ export function LabsPage() {
       const c = raw.toLowerCase()
       const args = raw.slice(c.indexOf(' ') + 1).trim()
       const lines: LogLine[] = [line(`> ${raw}`, 'prompt')]
+      const fortunes = tList('labs.fortunes')
 
       if (c === 'hello' || c === 'hello world') {
         lines.push(line('Hello World!', 'ok'))
         window.alert('Hello World!')
       } else if (c === 'help') {
-        lines.push(
-          line('komendy:', 'accent'),
-          line('  hello · help · clear · whoami · history'),
-          line('  ls · date · uptime · stack · projects · fortune'),
-          line('  neofetch · cowsay <tekst> · echo <tekst> · ping'),
-          line('  github · minecraft · music · coffee · 404'),
-          line('  dotnet · git · npm · sudo · exit'),
-        )
+        lines.push(line(t('labs.helpHeader'), 'accent'))
+        tList('labs.helpLines').forEach((l) => lines.push(line(l)))
       } else if (c === 'whoami') {
         lines.push(line('lukasz26671 - full-stack .NET / Blazor / React'))
-        lines.push(line('strona z głębią i własnym playerem audio', 'accent'))
+        lines.push(line(t('labs.whoamiLine2'), 'accent'))
       } else if (c === 'clear') {
         setLog([])
         setInput('')
@@ -146,54 +126,65 @@ export function LabsPage() {
           (p) => lines.push(line(`  ${p}`)),
         )
       } else if (c === 'date') {
-        lines.push(line(new Date().toLocaleString('pl-PL')))
+        lines.push(line(new Date().toLocaleString(localeTag)))
       } else if (c === 'uptime') {
-        lines.push(line(`terminal online: ${formatUptime(boot.current)} (od wejścia na /labs)`))
+        lines.push(line(t('labs.uptime', { uptime: formatUptime(boot.current) })))
       } else if (c === 'stack' || c === 'tech') {
         lines.push(line('.NET · C# · Blazor · React · TypeScript · Rust · Java', 'ok'))
         lines.push(line('Three.js · Vite · CSS modules · GitHub Pages'))
       } else if (c === 'projects') {
         projects.slice(0, 6).forEach((p) => {
-          lines.push(line(`  ${p.name} - ${p.language}`, 'accent'))
+          lines.push(line(`  ${p.name} - ${localize(locale, p.language)}`, 'accent'))
         })
-        lines.push(line(`  … i ${Math.max(0, projects.length - 6)} więcej na /#projects`))
+        lines.push(line(t('labs.projectsMore', { count: Math.max(0, projects.length - 6) })))
       } else if (c === 'fortune') {
-        lines.push(line(pick(FORTUNES), 'ok'))
+        lines.push(line(pick(fortunes), 'ok'))
       } else if (c === 'neofetch') {
-        buildNeofetch(boot.current).split('\n').forEach((l) => lines.push(line(l)))
+        const coffee =
+          Math.random() > 0.5 ? t('labs.neofetchCoffeeYes') : t('labs.neofetchCoffeeNo')
+        ;`
+  lukasz26671@site
+  ---------------------
+  ${t('labs.neofetchOs')}
+  Shell: labs-terminal v0.2
+  Stack: .NET · Blazor · React · Rust
+  Site: lukasz26671.github.io
+  Uptime: ${formatUptime(boot.current)}
+  Coffee: ${coffee}
+`.trim().split('\n').forEach((l) => lines.push(line(l)))
       } else if (c.startsWith('cowsay')) {
         cowsay(args || 'moo').forEach((l) => lines.push(line(l, 'accent')))
       } else if (c.startsWith('echo ')) {
         lines.push(line(args || ''))
       } else if (c === 'echo') {
-        lines.push(line('echo czego? np. echo hello world'))
+        lines.push(line(t('labs.echoHint')))
       } else if (c.startsWith('ping')) {
         const target = args || 'lukasz26671.github.io'
         lines.push(line(`PING ${target}: 42 bytes`, 'accent'))
         lines.push(line(`Reply from ${target}: time=12ms`, 'ok'))
         lines.push(line(`Reply from ${target}: time=9ms`, 'ok'))
-        lines.push(line('Ping statistics — 0% packet loss. Portfolio reachable.'))
+        lines.push(line(t('labs.pingStats')))
       } else if (c === 'github') {
         lines.push(line('https://github.com/lukasz26671', 'ok'))
         window.open('https://github.com/lukasz26671', '_blank', 'noopener,noreferrer')
       } else if (c === 'minecraft') {
-        lines.push(line('Lukasz26671Utils — mod 1.7.10, tam zaczęła się przygoda z kodem', 'accent'))
+        lines.push(line(t('labs.minecraft'), 'accent'))
         lines.push(line('-> /minecraft'))
       } else if (c === 'music') {
-        lines.push(line('Własny player audio i playlisty — sekcja /music', 'accent'))
-        lines.push(line('(wymaga cookies / audio — jak reszta playera)'))
+        lines.push(line(t('labs.music'), 'accent'))
+        lines.push(line(t('labs.musicHint')))
       } else if (c.startsWith('sudo')) {
         lines.push(line('lukasz26671 is not in the sudoers file.', 'err'))
-        lines.push(line('Ale doceniam ambicję.', 'accent'))
+        lines.push(line(t('labs.sudoAmbition'), 'accent'))
       } else if (c === 'history') {
         if (history.length === 0) {
-          lines.push(line('(pusto - wpisz coś najpierw)'))
+          lines.push(line(t('labs.historyEmpty')))
         } else {
           history.forEach((h, i) => lines.push(line(`  ${i + 1}  ${h}`)))
         }
       } else if (c === 'coffee' || c === 'kawa') {
-        lines.push(line('☕  Brewing… done.', 'ok'))
-        lines.push(line('Productivity +15. Refactoring urge +300.'))
+        lines.push(line(t('labs.coffeeDone'), 'ok'))
+        lines.push(line(t('labs.coffeeStats')))
       } else if (c === '404') {
         lines.push(line('   _  _    ___  _  _ ', 'err'))
         lines.push(line('  | || |  / _ \\| || |', 'err'))
@@ -201,41 +192,41 @@ export function LabsPage() {
         lines.push(line('  |__   _| | | |__   _|', 'err'))
         lines.push(line('     | | | |_| | | |  ', 'err'))
         lines.push(line('     |_|  \\___/  |_|  ', 'err'))
-        lines.push(line('Strona istnieje. To ty wpisałeś złą komendę :)', 'accent'))
+        lines.push(line(t('labs.notFound'), 'accent'))
       } else if (c === 'dotnet' || c.startsWith('dotnet ')) {
-        lines.push(line('.NET SDK 8.x+ (w głowie autora)', 'ok'))
-        lines.push(line('Blazor Hybrid? Server? WASM? Tak.', 'accent'))
+        lines.push(line(t('labs.dotnetHead'), 'ok'))
+        lines.push(line(t('labs.dotnetBlazor'), 'accent'))
       } else if (c === 'git' || c.startsWith('git ')) {
-        lines.push(line('a1b2c3d feat: labs terminal smaczki', 'accent'))
-        lines.push(line('e4f5g6h fix: jedna linijka, trzy godziny debugowania'))
-        lines.push(line('h7i8j9k chore: bump dependencies (znów)'))
+        lines.push(line(t('labs.git1'), 'accent'))
+        lines.push(line(t('labs.git2')))
+        lines.push(line(t('labs.git3')))
       } else if (c === 'npm' || c.startsWith('npm ')) {
         lines.push(line('> build', 'accent'))
-        lines.push(line('vite v5.x building for production…'))
-        lines.push(line('✓ built in 4.2s (albo dłużej, jeśli Windows Defender patrzy)', 'ok'))
+        lines.push(line(t('labs.npmBuild')))
+        lines.push(line(t('labs.npmDone'), 'ok'))
       } else if (c === 'exit' || c === 'quit') {
-        lines.push(line('Zamykanie sesji…', 'accent'))
+        lines.push(line(t('labs.exitClosing'), 'accent'))
         lines.push(line('…', 'accent'))
-        lines.push(line('Nie da się wyjść :). Wpisz ls i zwiedź dalej.', 'ok'))
+        lines.push(line(t('labs.exitStuck'), 'ok'))
       } else if (c === 'rm -rf /' || c === 'rm -rf') {
-        lines.push(line('Nice try. Ten terminal jest tylko do zabawy.', 'err'))
+        lines.push(line(t('labs.rmRf'), 'err'))
       } else if (c === 'vim' || c === 'nano' || c === 'emacs') {
         lines.push(line(`${c}: how do I exit?`, 'err'))
-        lines.push(line('(Ctrl+C w prawdziwym życiu. Tu po prostu wpisz clear.)'))
+        lines.push(line(t('labs.editorExit')))
       } else if (c === 'cd' || c.startsWith('cd ')) {
-        lines.push(line('Jesteś już w ~/labs. Użyj ls.', 'accent'))
+        lines.push(line(t('labs.cdHint'), 'accent'))
       } else if (c === 'cat about.txt') {
         lines.push(line('Full-stack dev'))
       } else if (c === 'konami') {
         lines.push(line('↑↑↓↓←→←→BA — cheat code accepted.', 'ok'))
-        lines.push(line('+30 XP w terminalowych easter eggach'))
+        lines.push(line(t('labs.konamiXp')))
       } else if (c.startsWith('open ') || c.startsWith('goto ')) {
         const path = args.startsWith('/') ? args : `/${args}`
         lines.push(line(`→ ${path}`, 'ok'))
         navigate(path)
       } else {
-        lines.push(line(`nieznana komenda: ${c}`, 'err'))
-        lines.push(line('wpisz help — albo spróbuj fortune', 'accent'))
+        lines.push(line(t('labs.unknown', { cmd: c }), 'err'))
+        lines.push(line(t('labs.unknownHint'), 'accent'))
       }
 
       append(lines)
@@ -243,7 +234,7 @@ export function LabsPage() {
       setHistIdx(-1)
       setInput('')
     },
-    [append, history, navigate],
+    [append, history, locale, localeTag, navigate, t, tList],
   )
 
   const complete = useCallback(() => {
@@ -260,8 +251,8 @@ export function LabsPage() {
   return (
     <div className="page">
       <header className="page-header">
-        <h1>Labs</h1>
-        <p>Mały playground — easter eggi i eksperymenty.</p>
+        <h1>{t('labs.title')}</h1>
+        <p>{t('labs.lead')}</p>
       </header>
       <div className={`glass ${styles.term}`}>
         <div className={styles.chrome} aria-hidden="true">
@@ -318,8 +309,8 @@ export function LabsPage() {
                 }
               }
             }}
-            placeholder="wpisz hello albo help…"
-            aria-label="Komenda labs"
+            placeholder={t('labs.placeholder')}
+            aria-label={t('labs.inputAria')}
             className={`mono ${styles.input}`}
             autoComplete="off"
             spellCheck={false}

@@ -3,9 +3,11 @@ import { useEffect, useRef } from 'react'
 import { useDive } from '../app/DiveContext'
 import { projects, getCommercialLinkedPair, getCommercialStandalone } from '../data/projects'
 import { ProjectCard } from '../components/ProjectCard'
+import { useLocale } from '../i18n/LocaleContext'
 import styles from './Home.module.css'
 
 export function HomePage() {
+  const { t } = useLocale()
   const { progress, setProgress } = useDive()
   const trackRef = useRef<HTMLDivElement>(null)
   const deepRef = useRef<HTMLElement>(null)
@@ -13,7 +15,6 @@ export function HomePage() {
   const commercialSolo = getCommercialStandalone()
 
   useEffect(() => {
-    // reduced-motion: bez Three.js, ale dive progress nadal napędza statyczną scenę
     const onScroll = () => {
       const track = trackRef.current
       const deep = deepRef.current
@@ -70,18 +71,14 @@ export function HomePage() {
         >
           <p className={`mono ${styles.eyebrow}`}>Full-stack · .NET · Blazor · React</p>
           <h1 className={styles.brand}>Lukasz26671</h1>
-          <p className={styles.lead}>
-            Tworzę aplikacje, które łączą świat kodu z realnymi procesami. Od własnych projektów
-            webowych po systemy biznesowe i rozwiązania przemysłowe — i dobrze się przy tym bawię
-            :)
-          </p>
+          <p className={styles.lead}>{t('home.lead')}</p>
 
           <div className="cta-row">
             <button type="button" className="btn btn-primary" onClick={scrollToDeep}>
-              Deep dive — projekty
+              {t('home.ctaDive')}
             </button>
             <Link to="/about" className="btn btn-ghost">
-              O mnie
+              {t('home.ctaAbout')}
             </Link>
           </div>
 
@@ -101,11 +98,9 @@ export function HomePage() {
         }}
       >
         <header className={styles.deepHeader}>
-          <p className={`mono ${styles.deepEyebrow}`}>Deep dive</p>
-          <h2>Projekty</h2>
-          <p>
-            To, co warto pokazać.
-          </p>
+          <p className={`mono ${styles.deepEyebrow}`}>{t('home.deepEyebrow')}</p>
+          <h2>{t('home.deepTitle')}</h2>
+          <p>{t('home.deepLead')}</p>
         </header>
 
         <div className={`grid-projects ${styles.deepGrid}`}>
@@ -148,10 +143,10 @@ export function HomePage() {
             rel="noreferrer"
             className="btn btn-ghost"
           >
-            Wszystkie na GitHubie
+            {t('home.allOnGithub')}
           </a>
           <Link to="/about#commercial" className="btn btn-primary">
-            Więcej o komercyjnych
+            {t('home.moreCommercial')}
           </Link>
         </div>
       </section>

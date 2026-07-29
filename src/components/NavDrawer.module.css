@@ -115,6 +115,13 @@
   gap: 0.35rem;
 }
 
+.prefsRowLang {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0.35rem;
+  margin-bottom: 1.1rem;
+}
+
 .prefBtn {
   padding: 0.55rem 0.35rem;
   border-radius: 10px;

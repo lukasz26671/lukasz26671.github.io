@@ -1,38 +1,52 @@
+import type { LocalizedString } from '../i18n/types'
+
 export type Project = {
   id: string
   name: string
-  description: string
+  description: LocalizedString
   /** Pełniejszy opis (About) */
-  longDescription?: string
-  language: string
+  longDescription?: LocalizedString
+  language: string | LocalizedString
   repoUrl?: string
   liveUrl?: string
-  tags?: string[]
+  tags?: Array<string | LocalizedString>
   /** Alias komercyjny — bez publicznego repo */
   commercial?: boolean
   /** Link do dłuższej notki (np. About) */
   moreUrl?: string
 }
 
+const commercial: LocalizedString = { pl: 'Komercyjne', en: 'Commercial' }
+
 export const commercialProjects: Project[] = [
   {
     id: 'dispatch',
     name: 'Dispatch',
-    description: 'Transport, dostawy i potwierdzanie dostaw dla kierowców.',
-    longDescription:
-      'System obsługi transportu i dostaw obejmujący zamówienia, przewozy, kierowców, paletowanie oraz proces załadunku. Aplikacja mobilna wspierająca kierowców podczas załadunku, rozładunku i elektronicznego potwierdzania dostaw (proof of delivery) typu Sign On Glass.',
-    language: 'Komercyjne',
+    description: {
+      pl: 'Transport, dostawy i potwierdzanie dostaw dla kierowców.',
+      en: 'Transport, deliveries, and delivery confirmation for drivers.',
+    },
+    longDescription: {
+      pl: 'System obsługi transportu i dostaw obejmujący zamówienia, przewozy, kierowców, paletowanie oraz proces załadunku. Aplikacja mobilna wspierająca kierowców podczas załadunku, rozładunku i elektronicznego potwierdzania dostaw (proof of delivery) typu Sign On Glass.',
+      en: 'Transport and delivery system covering orders, shipments, drivers, palletizing, and loading. A mobile app supporting drivers during loading, unloading, and electronic proof of delivery (Sign On Glass).',
+    },
+    language: commercial,
     commercial: true,
     moreUrl: '/about#commercial',
-    tags: ['logistyka', 'mobile'],
+    tags: [{ pl: 'logistyka', en: 'logistics' }, 'mobile'],
   },
   {
     id: 'prime',
     name: 'Prime',
-    description: 'Kompletacja na hali: SAP, "Dispatch", tablety, skanery i wagi.',
-    longDescription:
-      'Integracja z SAP oraz Dispatch przy kompletowaniu przesyłek. Komunikacja z Kepware Server, aplikacje tabletowe realtime na stanowiskach pakujących, skanery, wagi przemysłowe i połączenie świata aplikacji webowych z fizyczną infrastrukturą.',
-    language: 'Komercyjne',
+    description: {
+      pl: 'Kompletacja na hali: SAP, "Dispatch", tablety, skanery i wagi.',
+      en: 'Warehouse picking: SAP, “Dispatch”, tablets, scanners, and scales.',
+    },
+    longDescription: {
+      pl: 'Integracja z SAP oraz Dispatch przy kompletowaniu przesyłek. Komunikacja z Kepware Server, aplikacje tabletowe realtime na stanowiskach pakujących, skanery, wagi przemysłowe i połączenie świata aplikacji webowych z fizyczną infrastrukturą.',
+      en: 'SAP and Dispatch integration for shipment picking. Kepware Server connectivity, realtime tablet apps at packing stations, scanners, industrial scales, and bridging web apps with physical infrastructure.',
+    },
+    language: commercial,
     commercial: true,
     moreUrl: '/about#commercial',
     tags: ['SAP', 'real-time'],
@@ -40,13 +54,18 @@ export const commercialProjects: Project[] = [
   {
     id: 'fusion',
     name: 'Fusion',
-    description: 'Deklaracje celne NI-UK z integracją TSS.',
-    longDescription:
-      'System wspierający obsługę deklaracji celnych dla przepływu towarów między Irlandią Północną a Wielką Brytanią, zintegrowany z TSS (Trader Support Service). Automatyzacja procesów wymagających wcześniej ręcznej obsługi i kontroli.',
-    language: 'Komercyjne',
+    description: {
+      pl: 'Deklaracje celne NI-UK z integracją TSS.',
+      en: 'NI–UK customs declarations with TSS integration.',
+    },
+    longDescription: {
+      pl: 'System wspierający obsługę deklaracji celnych dla przepływu towarów między Irlandią Północną a Wielką Brytanią, zintegrowany z TSS (Trader Support Service). Automatyzacja procesów wymagających wcześniej ręcznej obsługi i kontroli.',
+      en: 'System supporting customs declarations for goods flowing between Northern Ireland and Great Britain, integrated with TSS (Trader Support Service). Automating processes that previously needed manual handling and checks.',
+    },
+    language: commercial,
     commercial: true,
     moreUrl: '/about#commercial',
-    tags: ['integracje', 'SaaS'],
+    tags: [{ pl: 'integracje', en: 'integrations' }, 'SaaS'],
   },
 ]
 
@@ -67,7 +86,10 @@ export const projects: Project[] = [
   {
     id: 'fast-search-resolver',
     name: 'FastSearchResolver',
-    description: 'Szybki resolver wyszukiwania — inspirowany Unduck by t3.',
+    description: {
+      pl: 'Szybki resolver wyszukiwania — inspirowany Unduck by t3.',
+      en: 'Fast search resolver — inspired by Unduck by t3.',
+    },
     language: 'C#',
     repoUrl: 'https://github.com/lukasz26671/FastSearchResolver',
     tags: ['C#', '.NET'],
@@ -75,7 +97,10 @@ export const projects: Project[] = [
   {
     id: 'web-src-provider',
     name: 'webSrcProvider',
-    description: 'Provider źródła playlisty / metadanych audio (TypeScript).',
+    description: {
+      pl: 'Provider źródła playlisty / metadanych audio (TypeScript).',
+      en: 'Playlist / audio metadata source provider (TypeScript).',
+    },
     language: 'TypeScript',
     repoUrl: 'https://github.com/lukasz26671/webSrcProvider',
     liveUrl: 'https://web-src-provider.vercel.app',
@@ -84,7 +109,10 @@ export const projects: Project[] = [
   {
     id: 'web-audio-prov',
     name: 'webAudioProv',
-    description: 'Web audio provider — streaming i integracja z playerem.',
+    description: {
+      pl: 'Web audio provider — streaming i integracja z playerem.',
+      en: 'Web audio provider — streaming and player integration.',
+    },
     language: 'JavaScript',
     repoUrl: 'https://github.com/lukasz26671/webAudioProv',
     liveUrl: 'https://web-audio-prov.vercel.app',
@@ -93,7 +121,10 @@ export const projects: Project[] = [
   {
     id: 'r-web-audio-prov',
     name: 'r_webAudioProv',
-    description: 'Web source provider przepisany w Rust.',
+    description: {
+      pl: 'Web source provider przepisany w Rust.',
+      en: 'Web source provider rewritten in Rust.',
+    },
     language: 'Rust',
     repoUrl: 'https://github.com/lukasz26671/r_webAudioProv',
     tags: ['Rust', 'Audio'],
@@ -101,7 +132,10 @@ export const projects: Project[] = [
   {
     id: 'ulid-framework',
     name: 'UlidFramework',
-    description: 'Biblioteka ULID w C#.',
+    description: {
+      pl: 'Biblioteka ULID w C#.',
+      en: 'ULID library in C#.',
+    },
     language: 'C#',
     repoUrl: 'https://github.com/lukasz26671/UlidFramework',
     tags: ['C#', 'Library'],
@@ -109,7 +143,10 @@ export const projects: Project[] = [
   {
     id: 'st-build',
     name: 'StBuild',
-    description: 'Narzędzia / tooling build w C#.',
+    description: {
+      pl: 'Narzędzia / tooling build w C#.',
+      en: 'Build tools / tooling in C#.',
+    },
     language: 'C#',
     repoUrl: 'https://github.com/lukasz26671/StBuild',
     tags: ['C#', 'Tooling'],
@@ -117,7 +154,10 @@ export const projects: Project[] = [
   {
     id: 'web-server-test',
     name: 'WebServerTest',
-    description: 'Build your own X — eksperymenty z serwerem HTTP w C#.',
+    description: {
+      pl: 'Build your own X — eksperymenty z serwerem HTTP w C#.',
+      en: 'Build your own X — HTTP server experiments in C#.',
+    },
     language: 'C#',
     repoUrl: 'https://github.com/lukasz26671/WebServerTest',
     tags: ['C#', 'Learning'],
@@ -125,7 +165,10 @@ export const projects: Project[] = [
   {
     id: 'dlz-studios',
     name: 'DLZStudiosWebpage',
-    description: 'Stronka grupki, współtworzona ze znajomym. Obecnie nie jest nigdzie hostowana.',
+    description: {
+      pl: 'Stronka grupki, współtworzona ze znajomym. Obecnie nie jest nigdzie hostowana.',
+      en: 'A group site, co-built with a friend. Currently not hosted anywhere.',
+    },
     language: 'JavaScript',
     repoUrl: 'https://github.com/lukasz26671/DLZStudiosWebpage',
     tags: ['JavaScript', 'Web'],
@@ -133,7 +176,10 @@ export const projects: Project[] = [
   {
     id: 'hacker-typer-2',
     name: 'HackerTyper2',
-    description: 'Symulator hackera — wciskaj klawisze, kod pisze się sam.',
+    description: {
+      pl: 'Symulator hackera — wciskaj klawisze, kod pisze się sam.',
+      en: 'Hacker simulator — mash keys and the code writes itself.',
+    },
     language: 'JavaScript',
     repoUrl: 'https://github.com/lukasz26671/HackerTyper2',
     liveUrl: '/HackerTyper2/',
@@ -142,7 +188,10 @@ export const projects: Project[] = [
   {
     id: 'kalkulator',
     name: 'Kalkulator',
-    description: 'Kalkulator webowy — jeden z wcześniejszych projektów.',
+    description: {
+      pl: 'Kalkulator webowy — jeden z wcześniejszych projektów.',
+      en: 'Web calculator — one of the earlier projects.',
+    },
     language: 'JavaScript',
     repoUrl: 'https://github.com/lukasz26671/Kalkulator',
     liveUrl: '/Kalkulator/',
@@ -151,7 +200,10 @@ export const projects: Project[] = [
   {
     id: 'utils-mod',
     name: 'Lukasz26671Utils',
-    description: 'Minecraft utils mod (1.7.10).',
+    description: {
+      pl: 'Minecraft utils mod (1.7.10).',
+      en: 'Minecraft utils mod (1.7.10).',
+    },
     language: 'Java',
     repoUrl: 'https://github.com/lukasz26671/Lukasz26671Utils',
     liveUrl: 'https://github.com/lukasz26671/Lukasz26671Utils/releases',
@@ -160,7 +212,10 @@ export const projects: Project[] = [
   {
     id: 'wifi-extractor',
     name: 'rust_wifi_password_extractor',
-    description: 'CLI do odczytu zapisanych haseł Wi‑Fi (Rust).',
+    description: {
+      pl: 'CLI do odczytu zapisanych haseł Wi‑Fi (Rust).',
+      en: 'CLI to read saved Wi‑Fi passwords (Rust).',
+    },
     language: 'Rust',
     repoUrl: 'https://github.com/lukasz26671/rust_wifi_password_extractor',
     tags: ['Rust', 'CLI'],
@@ -168,7 +223,10 @@ export const projects: Project[] = [
   {
     id: 'this-site',
     name: 'lukasz26671.github.io',
-    description: 'Ta strona — portfolio, landing 3D i odtwarzacz audio.',
+    description: {
+      pl: 'Ta strona — portfolio, landing 3D i odtwarzacz audio.',
+      en: 'This site — portfolio, 3D landing, and audio player.',
+    },
     language: 'TypeScript',
     repoUrl: 'https://github.com/lukasz26671/lukasz26671.github.io',
     liveUrl: '/',
