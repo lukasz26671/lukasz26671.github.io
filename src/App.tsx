@@ -48,7 +48,6 @@ export default function App() {
                       </RequireAudio>
                     }
                   />
-                  <Route path="*" element={<Navigate to="/" replace />} />
                 </Route>
               </Routes>
             </DiveProvider>
