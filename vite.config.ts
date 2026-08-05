@@ -1,15 +1,33 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 import { VitePWA } from 'vite-plugin-pwa'
-import { copyFileSync } from 'node:fs'
+import { copyFileSync, mkdirSync } from 'node:fs'
 import { resolve } from 'node:path'
 
-function spaFallback() {
+/** SPA routes that should work on direct load / refresh (GitHub Pages has no server router). */
+const SPA_ROUTE_DIRS = [
+  'about',
+  'timeline',
+  'labs',
+  'minecraft',
+  'sources',
+  'music',
+  'now-playing',
+  'projects',
+] as const
+
+/** Copy index.html into each route folder. Do NOT use root 404.html — that rewrites every unknown URL to the app. */
+function spaRouteHtml() {
   return {
-    name: 'spa-fallback-404',
+    name: 'spa-route-html',
     closeBundle() {
       const dist = resolve(__dirname, 'dist')
-      copyFileSync(resolve(dist, 'index.html'), resolve(dist, '404.html'))
+      const index = resolve(dist, 'index.html')
+      for (const route of SPA_ROUTE_DIRS) {
+        const dir = resolve(dist, route)
+        mkdirSync(dir, { recursive: true })
+        copyFileSync(index, resolve(dir, 'index.html'))
+      }
     },
   }
 }
@@ -55,7 +73,22 @@ export default defineConfig({
       workbox: {
         globPatterns: ['**/*.{js,css,html,ico,png,svg,webp,woff2}'],
         navigateFallback: '/index.html',
-        navigateFallbackDenylist: [/^\/api\//],
+        navigateFallbackAllowlist: [
+          /^\/$/,
+          /^\/about\/?$/,
+          /^\/timeline\/?$/,
+          /^\/labs\/?$/,
+          /^\/minecraft\/?$/,
+          /^\/sources\/?$/,
+          /^\/music\/?$/,
+          /^\/now-playing\/?$/,
+          /^\/projects\/?$/,
+        ],
+        navigateFallbackDenylist: [
+          /^\/api\//,
+          /^\/HackerTyper2(\/|$)/i,
+          /^\/Kalkulator(\/|$)/i,
+        ],
         runtimeCaching: [
           {
             urlPattern: /^https:\/\/fonts\.googleapis\.com\/.*/i,
@@ -103,7 +136,7 @@ export default defineConfig({
         enabled: false,
       },
     }),
-    spaFallback(),
+    spaRouteHtml(),
   ],
   base: '/',
 })
