@@ -84,6 +84,18 @@ export function getCommercialStandalone(): Project[] {
 
 export const projects: Project[] = [
   {
+    id: 'epub-reader-dx',
+    name: 'EpubReaderDX',
+    description: {
+      pl: 'Czytnik EPUB — MAUI Hybrid + Blazor WASM (desktop, Android, web).',
+      en: 'EPUB reader — MAUI Hybrid + Blazor WASM (desktop, Android, web).',
+    },
+    language: 'C#',
+    repoUrl: 'https://github.com/lukasz26671/EpubReaderDX',
+    liveUrl: 'https://lukasz26671.github.io/EpubReaderDX/',
+    tags: ['C#', 'MAUI', 'Blazor'],
+  },
+  {
     id: 'fast-search-resolver',
     name: 'FastSearchResolver',
     description: {
